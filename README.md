@@ -21,14 +21,55 @@ dotfiles/
 - **`tmux/`**: Configuration for [tmux](https://github.com/tmux/tmux).
 - **`nvim/`**: Configuration for [Neovim](https://neovim.io/).
 - **`git/`**: Global Git configurations.
-- **`zsh/`**: Configuration for [Zsh](https://www.zsh.org/).
+- **`fish/`**: Configuration for [Fish](https://fishshell.com).
 
 ## 🛠️ Prerequisites
 
 Before using these dotfiles, ensure the following tools are installed:
 
 - **GNU Stow**: For managing symlinks.
-- Relevant applications (`tmux`, `neovim`, `fish`, etc.).
+- Install HomeBrew
+
+```
+sudo apt update
+sudo apt install build-essential curl file git -y
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+- Add PATH of Homebrew to bash shell
+
+```
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+```
+
+- Install other application by BrewFile
+
+```
+brew bundle --file=Brewfile
+```
+
+- Create BrewFile (optional) to use in other PC
+
+```
+brew bundle dump --file=Brewfile
+```
+
+- Update Brewfile
+
+```
+brew bundle dump --force --file=Brewfile
+```
+
+- Use Fish Shell
+
+```
+echo /usr/bin/fish | sudo tee -a /etc/shells
+chsh -s /usr/bin/fish
+fish
+```
+
+- Close terminal and reopen
 
 ## 🚀 Installation
 
@@ -36,7 +77,7 @@ Follow these steps to set up your dotfiles:
 
 ### Clone the repository
 
-```bash
+```
 git clone git@github.com:ThongVu1996/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
@@ -45,7 +86,7 @@ cd ~/dotfiles
 
 Run the following commands for the desired tools:
 
-```shell
+```
 stow tmux
 stow nvim
 stow git
@@ -58,13 +99,13 @@ This creates symlinks in your home directory, pointing to the respective configu
 
 If you want to remove a configuration, use:
 
-```bash
+```
 stow -D <folder_name>
 ```
 
 For example:
 
-```bash
+```
 stow -D tmux
 ```
 
@@ -105,11 +146,22 @@ Here’s how my terminal looks after applying these configurations:
 - [GNU Stow Documentation](https://www.gnu.org/software/stow/)
 - [tmux GitHub Repository](https://github.com/tmux/tmux)
 - [Neovim Documentation](https://neovim.io/)
-- [Zsh Documentation](https://www.zsh.org/)
+- [Fish Documentation](https://fishshell.com/docs/current/index.html)
 
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to fork this repository and submit a pull request with your improvements.
+
+## 📒 Note
+
+- If you are php backend dev:
+  - Add .phpactor.json and other files generate in processing setting nvim to .git/info/exclude
+- Force loading PHP lsp
+
+```
+LspStart phpactor
+LspRestart
+```
 
 ## 📝 License
 
