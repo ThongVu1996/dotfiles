@@ -37,3 +37,6 @@ set -U fish_user_paths $HOME/.local/share/nvim/mason/bin $fish_user_paths
 # fastafetch
 export PATH="/usr/local/bin:$PATH"
 
+#cargo PATH
+set -gx PATH "$HOME/.cargo/bin" $PATH
+
