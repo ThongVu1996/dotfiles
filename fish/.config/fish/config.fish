@@ -40,3 +40,56 @@ export PATH="/usr/local/bin:$PATH"
 #cargo PATH
 set -gx PATH "$HOME/.cargo/bin" $PATH
 
+function switch-php
+  if test -z "$argv[1]"
+    # Get the name of the calling function or alias
+    set cmd (status current-command)
+    echo "Usage: $cmd <php-version>"
+    return 1
+  end
+
+  set php_version "php@$argv[1]"
+
+  # Check if the specified PHP version is installed
+  if not brew list --formula | grep -q "^$php_version\$"
+    echo "PHP version $php_version is not installed."
+    return 1
+  end
+
+  # Unlink the current PHP version (if it exists)
+  if brew list --formula | grep -q "^php\$"
+    brew unlink php >/dev/null 2>&1
+  end
+
+  # Unlink the specified PHP version if it's already linked
+  if brew list --formula | grep -q "^$php_version\$"
+    brew unlink $php_version >/dev/null 2>&1
+  end
+
+  # Link the specified PHP version
+  brew link --force --overwrite $php_version >/dev/null 2>&1
+
+  # Add the new PHP version to PATH
+  set php_path "/home/linuxbrew/.linuxbrew/opt/$php_version"
+  if test -d "$php_path/bin"
+    fish_add_path "$php_path/bin"
+  end
+  if test -d "$php_path/sbin"
+    fish_add_path "$php_path/sbin"
+  end
+
+  # Verify the active PHP version
+  php -v
+end
+
+# Aliases for specific PHP versions
+alias php74="switch-php 7.4"
+alias php80="switch-php 8.0"
+alias php81="switch-php 8.1"
+alias php82="switch-php 8.2"
+
+# Alias to dotfiles with echo messages
+alias fish-cf="cd ~/dotfiles/fish/.config/fish && echo 'You can configure Fish'"
+alias nvim-cf="cd ~/dotfiles/nvim/.config/nvim && echo 'You can configure Neovim'"
+alias starship-cf="cd ~/dotfiles/starship/.config/starship && echo 'You can configure Starship'"
+alias tmux-cf="cd ~/dotfiles/tmux && echo 'You can configure Tmux'"
