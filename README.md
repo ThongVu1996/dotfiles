@@ -27,7 +27,6 @@ dotfiles/
 
 Before using these dotfiles, ensure the following tools are installed:
 
-- **GNU Stow**: For managing symlinks.
 - Install HomeBrew
 
 ```
@@ -43,11 +42,32 @@ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 ```
 
+- Install Nerd Font (Deafalt Use Hack Nerd Font)
+```
+git clone https://github.com/ryanoasis/nerd-fonts.git
+cd nerd-fonts
+./install.sh Hack
+```
+
+
+## 🚀 Installation
+
+Follow these steps to set up your dotfiles:
+
+### Clone the repository
+
+```
+git clone git@github.com:ThongVu1996/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+```
+
 - Install other application by BrewFile
 
 ```
 brew bundle --file=Brewfile
 ```
+
+- If you use wsl in Windown you must install wezterm in Window. Don't use wezterm installed by brew
 
 - Create BrewFile (optional) to use in other PC
 
@@ -69,19 +89,15 @@ chsh -s /usr/bin/fish
 fish
 ```
 
-- Close terminal and reopen
-
-## 🚀 Installation
-
-Follow these steps to set up your dotfiles:
-
-### Clone the repository
-
+- Copy config fish
 ```
-git clone git@github.com:ThongVu1996/dotfiles.git ~/dotfiles
+cd ~/dotfiles/fish/.config/fish
+cp config.fish  ~/.config/fish/config.fish
 cd ~/dotfiles
+source ~/.config/fish/config.fish
 ```
 
+- Close and reopen terminal
 ### Apply configurations using GNU Stow
 
 Run the following commands for the desired tools:
@@ -89,8 +105,7 @@ Run the following commands for the desired tools:
 ```
 stow tmux
 stow nvim
-stow git
-stow fish
+stow wezterm
 ```
 
 This creates symlinks in your home directory, pointing to the respective configuration files in the repository.
