@@ -22,9 +22,35 @@ return {
 		indent = { enabled = true },
 		input = { enabled = true },
 		notifier = { enabled = true },
+		notify = { enabled = true },
+		dim = {
+			enabled = true,
+			scope = {
+				min_size = 5,
+				max_size = 20,
+				siblings = true,
+			},
+		},
 		quickfile = { enabled = true },
 		scroll = { enabled = true },
 		statuscolumn = { enabled = true },
 		words = { enabled = true },
+	},
+
+	keys = {
+		{
+			"<leader>n",
+			function()
+				Snacks.notifier.show_history()
+			end,
+			desc = "Notification History",
+		},
+		{
+			"<leader>un",
+			function()
+				Snacks.notifier.hide()
+			end,
+			desc = "Dismiss All Notifications",
+		},
 	},
 }
