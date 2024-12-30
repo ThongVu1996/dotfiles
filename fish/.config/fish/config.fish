@@ -5,7 +5,7 @@ end
 # Config starship
 set -U fish_greeting ""
 starship init fish | source
-set -Ux STARSHIP_CONFIG ~/.config/starship/starship.toml
+set -Ux STARSHIP_CONFIG ~/.config/starship.toml
 
 # bat 
 alias bat='batcat'
@@ -91,5 +91,5 @@ alias php82="switch-php 8.2"
 # Alias to dotfiles with echo messages
 alias fish-cf="cd ~/dotfiles/fish/.config/fish && echo 'You can configure Fish'"
 alias nvim-cf="cd ~/dotfiles/nvim/.config/nvim && echo 'You can configure Neovim'"
-alias starship-cf="cd ~/dotfiles/starship/.config/starship && echo 'You can configure Starship'"
 alias tmux-cf="cd ~/dotfiles/tmux && echo 'You can configure Tmux'"
+alias starship-cf="cd ~/dotfiles/starship/ && echo 'You can configure Starship'"

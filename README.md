@@ -1,6 +1,9 @@
+
 # Dotfiles Repository
 
 This repository contains my personal configuration files (dotfiles) for tools and environments I use daily. These dotfiles are organized for efficient management using [GNU Stow](https://www.gnu.org/software/stow/).
+
+---
 
 ## 📂 Repository Structure
 
@@ -23,119 +26,113 @@ dotfiles/
 - **`git/`**: Global Git configurations.
 - **`fish/`**: Configuration for [Fish](https://fishshell.com).
 
+---
+
 ## 🛠️ Prerequisites
 
 Before using these dotfiles, ensure the following tools are installed:
 
-- Install HomeBrew
+### Install Homebrew
 
-```
+```bash
 sudo apt update
 sudo apt install build-essential curl file git -y
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-- Add PATH of Homebrew to bash shell
+Add PATH of Homebrew to bash shell:
 
-```
+```bash
 echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 ```
 
-- Install Nerd Font (Deafalt Use Hack Nerd Font)
-```
+### Install Nerd Font (Default: Hack Nerd Font)
+
+```bash
 git clone https://github.com/ryanoasis/nerd-fonts.git
 cd nerd-fonts
 ./install.sh Hack
 ```
 
+---
 
 ## 🚀 Installation
 
-Follow these steps to set up your dotfiles:
-
 ### Clone the repository
 
-```
+```bash
 git clone git@github.com:ThongVu1996/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-- Install other application by BrewFile
+### Install other applications by BrewFile
 
-```
+```bash
 brew bundle --file=Brewfile
 ```
 
-- If you use wsl in Windown you must install wezterm in Window. Don't use wezterm installed by brew
+> **Note**: If you use WSL in Windows, you must install WezTerm in Windows. Do not use WezTerm installed by brew.
 
-- Create BrewFile (optional) to use in other PC
+### Create BrewFile (optional)
 
-```
+```bash
 brew bundle dump --file=Brewfile
 ```
 
-- Update Brewfile
+### Update BrewFile
 
-```
+```bash
 brew bundle dump --force --file=Brewfile
 ```
 
-- Use Fish Shell
+---
 
-```
+## 🐟 Use Fish Shell
+
+```bash
 echo /usr/bin/fish | sudo tee -a /etc/shells
 chsh -s /usr/bin/fish
 fish
 ```
 
-- Copy config fish
-```
-cd ~/dotfiles/fish/.config/fish
-cp config.fish  ~/.config/fish/config.fish
-cd ~/dotfiles
+### Remove file config.fish (eg: ~/.config/fish/config.fish or ~/.config/config.fish)
+Create symlink
+
+```bash
+ln -s ~/dotfiles/fish/.config/fish/config.fish ~/.config/fish/config.fish
 source ~/.config/fish/config.fish
 ```
 
-- Close and reopen terminal
-### Apply configurations using GNU Stow
+> **Note**: Close and reopen the terminal.
 
-Run the following commands for the desired tools:
+---
 
-```
+## 📋 Apply configurations using GNU Stow
+
+### Apply configurations
+
+```bash
 stow tmux
 stow nvim
-stow wezterm
+stow wezterm -- Don't need if you use wsl
 ```
-
-This creates symlinks in your home directory, pointing to the respective configuration files in the repository.
 
 ### Remove configurations
 
 If you want to remove a configuration, use:
 
-```
+```bash
 stow -D <folder_name>
 ```
 
-For example:
+Example:
 
-```
+```bash
 stow -D tmux
 ```
 
-## 📋 Usage
-
-### Add new configurations
-
-1. Create a new folder in the `dotfiles` directory.
-2. Add configuration files to the folder, mirroring the structure of `$HOME`.
-3. Use `stow <folder_name>` to apply the new configuration.
-
-### Update configurations
-
-1. Edit the configuration files directly in the `dotfiles` repository.
-2. Commit and push changes to the repository for backup.
+---
 
 ## 🖼️ Screenshots
 
@@ -144,11 +141,13 @@ Here’s how my terminal looks after applying these configurations:
 - **Neovim:**
   ![Neovim Screenshot](images/nvim.png)
 
-- **Wezterm:**
-  ![Wezterm Screenshot](images/wezterm.png)
+- **WezTerm:**
+  ![WezTerm Screenshot](images/wezterm.png)
 
 - **Tmux:**
   ![Tmux Screenshot](images/tmux.png)
+
+---
 
 ## ✨ Features
 
@@ -156,28 +155,94 @@ Here’s how my terminal looks after applying these configurations:
 - Easy to customize and extend for other tools.
 - Supports configurations for tmux, Neovim, Git, and Zsh.
 
+---
+
+## 🐧 WSL Configuration
+
+### Fix Date and Time
+#### Open comment setting  ram, cpu for wsl in file .tmux.conf. Commend ram,cpu for native linux 
+Set Windows to Use Local Time:
+
+```bash
+sudo timedatectl set-timezone your_time_zone
+```
+
+Example
+
+```bash
+sudo timedatectl set-timezone America/New_York
+```
+
+or 
+```bash
+sudo timedatectl set-timezone Asia/Ho_Chi_Minh
+```
+
+
+Restart your computer.
+
+Verify Time in WSL:
+
+```bash
+date
+```
+
+### Display CPU and RAM Usage
+
+Install Required Tools:
+
+```bash
+sudo apt update
+sudo apt install sysstat procps
+```
+
+Create Scripts for CPU and RAM Usage:
+
+#### CPU Usage Script
+
+```bash
+echo '#!/bin/bash
+top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk "{print int(100 - \$1)}"' > ~/.tmux/cpu_usage.sh
+chmod +x ~/.tmux/cpu_usage.sh
+```
+
+#### RAM Usage Script
+
+```bash
+echo '#!/bin/bash
+free | grep Mem | awk "{print int(\$3/\$2 * 100.0)}"' > ~/.tmux/ram_usage.sh
+chmod +x ~/.tmux/ram_usage.sh
+```
+
+Update `tmux.conf`:
+
+```bash
+set -g status-right "#(~/.tmux/cpu_usage.sh)% CPU | #(~/.tmux/ram_usage.sh)% RAM | %H:%M"
+```
+
+Reload tmux Configuration:
+
+```bash
+tmux source-file ~/.tmux.conf
+```
+
+---
+
 ## 📖 References
 
 - [GNU Stow Documentation](https://www.gnu.org/software/stow/)
 - [tmux GitHub Repository](https://github.com/tmux/tmux)
 - [Neovim Documentation](https://neovim.io/)
-- [Fish Documentation](https://fishshell.com/docs/current/index.html)
+- [Fish Documentation](https://fishshell.com)
+
+---
 
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to fork this repository and submit a pull request with your improvements.
 
-## 📒 Note
-
-- If you are php backend dev:
-  - Add .phpactor.json and other files generate in processing setting nvim to .git/info/exclude
-- Force loading PHP lsp
-
-```
-LspStart phpactor
-LspRestart
-```
+---
 
 ## 📝 License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+This project is licensed under the MIT License. See the LICENSE file for details.
