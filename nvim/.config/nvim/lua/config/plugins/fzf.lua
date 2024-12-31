@@ -10,16 +10,35 @@ return {
 		fzf.setup({
 			"telescope", -- Hiển thị như telescope
 			winopts = {
-				height = 0.85, -- Chiều cao cửa sổ popup
-				width = 0.80, -- Chiều rộng cửa sổ popup
-				row = 0.35, -- Vị trí từ trên xuống
-				col = 0.50, -- Vị trí ngang
-				border = "rounded", -- Viền tròn
+				-- height = 0.9, -- Chiều cao cửa sổ popup
+				-- width = 0.9, -- Chiều rộng cửa sổ popup
+				-- row = 0.35, -- Vị trí từ trên xuống
+				-- col = 0.50, -- Vị trí ngang
+				-- border = "rounded", -- Viền tròn
+				fullscreen = true,
 				preview = {
 					layout = "horizontal", -- Preview theo chiều dọc
+					-- layout = "vertical", -- Preview theo chiều dọc
 					scrollbar = "border", -- Hiển thị thanh cuộn ở viền
 					hidden = "nohidden",
 					defautl = "bat",
+					horizontal = "right:70%",
+					vertical = "up:70%",
+				},
+			},
+			previewers = {
+				codeaction = {
+					-- options for vim.diff(): https://neovim.io/doc/user/lua.html#vim.diff()
+					diff_opts = { ctxlen = 3 },
+					algorithm = "myers", -- Thuật toán diff (myers, minimal, patience, histogram)
+					indent_heuristic = true, -- Tăng độ chính xác cho diff khi indent
+				},
+				codeaction_native = {
+					diff_opts = { ctxlen = 3, algorithm = "myers" },
+					-- git-delta is automatically detected as pager, set `pager=false`
+					-- to disable, can also be set under 'lsp.code_actions.preview_pager'
+					-- recommended styling for delta
+					pager = [[delta --width=$COLUMNS --hunk-header-style="omit" --file-style="omit"]],
 				},
 			},
 			keymap = {
