@@ -1,46 +1,94 @@
 return {
-
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
 	---@type snacks.Config
 	opts = {
-		-- your configuration comes here
-		-- or leave it empty to use the default settings
-		-- refer to the configuration section below
 		bigfile = { enabled = true },
 		dashboard = {
-			enabled = true,
+			preset = {
+				header = [[
+  /$$$$$$  /$$$$$$$$ /$$   /$$  /$$$$$$ 
+ /$$__  $$| $$_____/| $$  /$$/ /$$__  $$
+| $$  \ $$| $$      | $$ /$$/ | $$  \__/
+| $$$$$$$$| $$$$$   | $$$$$/  | $$      
+| $$__  $$| $$__/   | $$  $$  | $$      
+| $$  | $$| $$      | $$\  $$ | $$    $$
+| $$  | $$| $$$$$$$$| $$ \  $$|  $$$$$$/
+|__/  |__/|________/|__/  \__/ \______/ 
+        ]],
+			},
+			enable = true,
+			formats = {
+				key = function(item)
+					return { { "[", hl = "special" }, { item.key, hl = "key" }, { "]", hl = "special" } }
+				end,
+			},
 			sections = {
-				{ section = "header" },
-				{ icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
-				{ icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-				{ icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-				{ section = "startup" },
+				{ section = "header", indent = 60 },
+				{
+					{ section = "keys", gap = 1, padding = 1 },
+					{ section = "startup" },
+				},
+				{
+					pane = 2,
+					section = "terminal",
+					cmd = "",
+					height = 5,
+					padding = 6,
+					indent = 10,
+				},
+				{
+					pane = 2,
+					{
+						icon = " ",
+						title = "Recent Files",
+						padding = 1,
+					},
+					{
+						section = "recent_files",
+						indent = 2,
+						padding = 1,
+					},
+					{
+						icon = " ",
+						title = "Projects",
+						padding = 1,
+					},
+					{
+						section = "projects",
+						indent = 2,
+						padding = 1,
+					},
+				},
 			},
 		},
 		indent = { enabled = true },
 		input = { enabled = true },
-		notifier = { enabled = true },
-		notify = { enabled = true },
-		dim = {
+		rename = { enabled = true },
+		notifier = {
 			enabled = true,
-			scope = {
-				min_size = 5,
-				max_size = 20,
-				siblings = true,
-			},
+			style = "fancy",
+			vim.api.nvim_create_autocmd("LspProgress", {
+				---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
+				callback = function(ev)
+					local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+					vim.notify(vim.lsp.status(), "info", {
+						id = "lsp_progress",
+						title = "LSP Progress",
+						opts = function(notif)
+							notif.icon = ev.data.params.value.kind == "end" and " "
+								or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+						end,
+					})
+				end,
+			}),
 		},
+		notify = { enabled = true },
+		dim = { enabled = true },
 		quickfile = { enabled = true },
 		scroll = { enabled = true },
 		statuscolumn = { enabled = true },
-		lazygit = {
-			enable = true,
-			popup = {
-				width = 0.9, -- Chiếm 90% chiều rộng của Neovim
-				height = 0.9, -- Chiếm 90% chiều cao của Neovim
-			},
-		},
 		words = { enabled = true },
 	},
 
@@ -51,13 +99,6 @@ return {
 				Snacks.notifier.show_history()
 			end,
 			desc = "Notification History",
-		},
-		{
-			"<leader>un",
-			function()
-				Snacks.notifier.hide()
-			end,
-			desc = "Dismiss All Notifications",
 		},
 		{
 			"<leader>gB",
@@ -94,6 +135,13 @@ return {
 				Snacks.lazygit.log()
 			end,
 			desc = "Lazygit Log (cwd)",
+		},
+		{
+			"<leader>rf",
+			function()
+				Snacks.rename.rename_file()
+			end,
+			desc = "Rename File",
 		},
 	},
 }
