@@ -4,7 +4,7 @@ return {
 	dependencies = {
 		"Saghen/blink.cmp",
 		-- Auto update reference when change name file, name variable
-		{ "antosha417/nvim-lsp-file-operations", config = true },
+		-- { "antosha417/nvim-lsp-file-operations", config = true },
 		-- Enhance LSP for lua
 		{ "folke/neodev.nvim", opts = {} },
 	},
