@@ -4,6 +4,19 @@ return {
 		"echasnovski/mini.icons",
 		"mfussenegger/nvim-dap",
 	},
+	cmd = { "FzfLua" },
+	keys = {
+		{ "<leader>ff", "<cmd>FzfLua files<CR>", desc = "Find files in cwd" },
+		{ "<leader>fr", "<cmd>FzfLua oldfiles<CR>", desc = "Find recent files" },
+		{ "<leader>fs", "<cmd>FzfLua live_grep<CR>", desc = "Live grep" },
+		{ "<leader>fc", "<cmd>FzfLua grep_cword<CR>", desc = "Find word under cursor" },
+		{ "<leader>fb", "<cmd>FzfLua buffers<CR>", desc = "Find buffers" },
+		{ "<leader>ft", "<cmd>FzfLua grep { search = 'TODO|FIXME' }<CR>", desc = "Find TODO/FIXME" },
+		{ "<leader>gf", "<cmd>FzfLua git_files<CR>", desc = "Find git files" },
+		{ "<leader>gs", "<cmd>FzfLua git_status<CR>", desc = "Git status" },
+		{ "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Git commits" },
+		{ "<leader>gb", "<cmd>FzfLua git_branches<CR>", desc = "Git branches" },
+	},
 	config = function()
 		local fzf = require("fzf-lua")
 

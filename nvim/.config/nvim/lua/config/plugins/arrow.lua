@@ -1,6 +1,6 @@
 return {
 	"otavioschwanck/arrow.nvim",
-	event = { "BufRead", "BufNewFile" },
+	keys = { "\t", "m" },
 	dependencies = {
 		{ "echasnovski/mini.icons" },
 	},
