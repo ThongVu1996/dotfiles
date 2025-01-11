@@ -1,5 +1,8 @@
 return {
 	"nvim-tree/nvim-tree.lua",
+	lazy = true,
+	enabled = false,
+	cmd = { "NvimTreeToggle", "NvimTreeFocus" },
 	config = function()
 		local nvimtree = require("nvim-tree")
 
@@ -37,7 +40,7 @@ return {
 				},
 			},
 			filters = {
-				custom = { ".DS_Store" },
+				custom = { ".DS_Store", ".git" },
 			},
 			git = {
 				ignore = false,
