@@ -10,19 +10,19 @@ return {
 		fzf.setup({
 			"telescope", -- Hiển thị như telescope
 			winopts = {
-				-- height = 0.9, -- Chiều cao cửa sổ popup
-				-- width = 0.9, -- Chiều rộng cửa sổ popup
-				-- row = 0.35, -- Vị trí từ trên xuống
-				-- col = 0.50, -- Vị trí ngang
+				height = 0.8, -- Chiều cao cửa sổ popup
+				width = 0.8, -- Chiều rộng cửa sổ popup
+				row = 0.35, -- Vị trí từ trên xuống
+				col = 0.50, -- Vị trí ngang
 				-- border = "rounded", -- Viền tròn
-				fullscreen = true,
+				-- fullscreen = true,
 				preview = {
 					layout = "horizontal", -- Preview theo chiều dọc
 					-- layout = "vertical", -- Preview theo chiều dọc
 					scrollbar = "border", -- Hiển thị thanh cuộn ở viền
 					hidden = "nohidden",
 					defautl = "bat",
-					horizontal = "right:70%",
+					horizontal = "right:60%",
 					vertical = "up:70%",
 				},
 			},
