@@ -16,20 +16,20 @@ config.window_padding = {
 	bottom = 0,
 }
 
-config.window_background_image_hsb = {
-	brightness = 0.1,
-	hue = 1.0,
-	saturation = 1.0,
-}
+--[[ config.window_background_image_hsb = { ]]
+--[[ 	brightness = 0.1, ]]
+--[[ 	hue = 1.0, ]]
+--[[ 	saturation = 1.0, ]]
+--[[ } ]]
 
 -- end image setting
 
 config.color_scheme = "tokyonight_moon"
-config.window_background_image = user_home .. "/.config/wezterm/bg/bg.jpg"
+config.window_background_image = user_home .. "/.config/wezterm/bg/bg.png"
 
 config.font = wezterm.font("Hack Nerd Font", { weight = "Medium", stretch = "Expanded" })
 config.font_size = 15
-config.line_height = 1.5
+config.line_height = 1.2
 config.window_decorations = "RESIZE|TITLE"
 config.enable_tab_bar = false
 
