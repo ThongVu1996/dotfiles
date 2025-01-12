@@ -38,7 +38,7 @@ config.default_cursor_style = "BlinkingBar"
 config.disable_default_key_bindings = true
 
 -- mouse_bindings
-config.keys = { { key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") } }
+config.keys = { { key = "V", mods = "CTRL", action = act.PasteFrom("Clipboard") } }
 config.mouse_bindings = mouse_bindings
 
 mouse_bindings = {

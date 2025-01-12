@@ -10,6 +10,9 @@ set -Ux STARSHIP_CONFIG ~/.config/starship.toml
 # bat 
 alias bat='batcat'
 
+# open nvim
+alias vi='nvim'
+
 # fzf
 fzf --fish | source
 alias f=fzf
@@ -89,7 +92,8 @@ alias php81="switch-php 8.1"
 alias php82="switch-php 8.2"
 
 # Alias to dotfiles with echo messages
-alias fish-cf="cd ~/dotfiles/fish/.config/fish && echo 'You can configure Fish'"
-alias nvim-cf="cd ~/dotfiles/nvim/.config/nvim && echo 'You can configure Neovim'"
-alias tmux-cf="cd ~/dotfiles/tmux && echo 'You can configure Tmux'"
-alias starship-cf="cd ~/dotfiles/starship/ && echo 'You can configure Starship'"
+alias fcf="cd ~/dotfiles/fish/.config/fish && echo 'You can configure Fish'"
+alias vcf="cd ~/dotfiles/nvim/.config/nvim && echo 'You can configure Neovim'"
+alias tcf="cd ~/dotfiles/tmux && echo 'You can configure Tmux'"
+alias scf="cd ~/dotfiles/starship/ && echo 'You can configure Starship'"
+alias wcf="cd ~/dotfiles/wezterm/.config/wezterm"

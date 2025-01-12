@@ -22,6 +22,7 @@ return {
 
 		fzf.setup({
 			"telescope", -- Hiển thị như telescope
+			silent = true,
 			winopts = {
 				height = 0.8, -- Chiều cao cửa sổ popup
 				width = 0.8, -- Chiều rộng cửa sổ popup
@@ -69,7 +70,7 @@ return {
 			},
 			grep = {
 				prompt = "🔍 Live Grep: ",
-				cmd = "rg --vimgrep --smart-case --column", -- Tìm kiếm với ripgrep
+				cmd = "rg --vimgrep --smart-case --column --line-number", -- Tìm kiếm với ripgrep
 			},
 			git = {
 				files = { prompt = "🔍 Git Related Files: " }, -- Prompt tùy chỉnh cho Git Files
@@ -115,5 +116,12 @@ return {
 
 		-- Xem các nhánh Git
 		keymap.set("n", "<leader>gb", "<cmd>FzfLua git_branches<CR>", { desc = "Git branches" })
+
+		-- Key map xem nơi nơi sử dụng
+		keymap.set("n", "<leader>lr", "<cmd>FzfLua lsp_references<CR>", { desc = "LSP References" })
+		keymap.set("n", "<leader>ld", "<cmd>FzfLua lsp_definitions<CR>", { desc = "LSP Definitions" })
+		keymap.set("n", "<leader>lD", "<cmd>FzfLua lsp_declarations<CR>", { desc = "LSP Declarations" })
+		keymap.set("n", "<leader>ls", "<cmd>FzfLua lsp_workspace_symbols<CR>", { desc = "LSP Workspace Symbols" })
+		keymap.set("n", "<leader>li", "<cmd>FzfLua lsp_implementations<CR>", { desc = "LSP Implementations" })
 	end,
 }
