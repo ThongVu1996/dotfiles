@@ -7,6 +7,12 @@ local opt = vim.opt
 opt.relativenumber = true
 opt.number = true
 
+-- set check spell
+
+opt.spell = true
+opt.spelllang = "en_us"
+opt.spelloptions = "camel"
+
 -- tabs & indentation
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
 opt.shiftwidth = 2 -- 2 spaces for indent width

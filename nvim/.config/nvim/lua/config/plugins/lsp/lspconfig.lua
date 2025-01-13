@@ -67,13 +67,23 @@ return {
 			phpactor = {
 				capabilities = capabilities,
 				root_dir = lspconfig.util.root_pattern("composer.json", ".git") or vim.loop.cwd(),
+				handlers = {
+					["textDocument/publishDiagnostics"] = function() end,
+				},
 			},
 			intelephense = {
 				capabilities = capabilities,
 				settings = {
 					intelephense = {
 						files = { maxSize = 5000000 },
+						diagnostics = {
+							enable = true,
+						},
 					},
+				},
+				root_dir = lspconfig.util.root_pattern("composer.json", ".git"),
+				flags = {
+					debounce_text_changes = 150,
 				},
 			},
 			ts_ls = {
@@ -116,6 +126,7 @@ return {
 						telemetry = { enable = false },
 					},
 				},
+				filetypes = { "lua" },
 				typos_lsp = {
 					cmd = { "typos-lsp" }, -- Đảm bảo rằng `typos-lsp` đã được cài đặt và có trong PATH
 					filetypes = {
@@ -131,8 +142,7 @@ return {
 						"html", -- HTML
 						"css", -- CSS
 					},
-					root_dir = lspconfig.util.root_pattern(".git", vim.loop.cwd()), -- Thư mục root
-					capabilities = capabilities,
+					root_dir = lspconfig.util.root_pattern(".git", vim.loop.cwd()),
 				},
 			},
 		}
@@ -142,27 +152,11 @@ return {
 			lspconfig[server].setup(config)
 		end
 
-		vim.diagnostic.config({
-			virtual_text = {
-				prefix = "●", -- Customize virtual text prefix
-			},
-			signs = {
-				active = {
-					{ name = "DiagnosticSignError", text = "" },
-					{ name = "DiagnosticSignWarn", text = "" },
-					{ name = "DiagnosticSignHint", text = "󰠠" },
-					{ name = "DiagnosticSignInfo", text = "" },
-				},
-			},
-			underline = true,
-			update_in_insert = false,
-			severity_sort = true,
-		})
 		-- Force type for php
-		vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-			pattern = "*.php",
-			command = "LspStart phpactor",
-		})
+		-- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+		-- 	pattern = "*.php",
+		-- 	command = "LspStart phpactor",
+		-- })
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -198,29 +192,8 @@ return {
 				opts.desc = "Rename symbol"
 				keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
 
-				-- Xem diagnostics của buffer
-				opts.desc = "Buffer diagnostics"
-				keymap("n", "<leader>D", function()
-					vim.diagnostic.setqflist({ open = true })
-				end, opts)
-
-				-- Xem diagnostics của workspace
-				opts.desc = "Workspace diagnostics"
-				keymap("n", "<leader>wD", function()
-					vim.diagnostic.setqflist({ open = true, workspace = true })
-				end, opts)
-
-				-- Xem diagnostic hiện tại
-				opts.desc = "Line diagnostics"
-				keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
-
-				-- Diagnostic trước
-				opts.desc = "Previous diagnostic"
-				keymap("n", "[d", vim.diagnostic.goto_prev, opts)
-
-				-- Diagnostic tiếp theo
-				opts.desc = "Next diagnostic"
-				keymap("n", "]d", vim.diagnostic.goto_next, opts)
+				opts.desc = "Close quick-list fix"
+				keymap("n", "<leader>q", "<cmd>cclose<CR>", opts)
 
 				-- Tài liệu hover
 				opts.desc = "Hover documentation"
