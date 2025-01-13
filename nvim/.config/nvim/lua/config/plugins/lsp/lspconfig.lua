@@ -11,6 +11,42 @@ return {
 	config = function(_, opts)
 		local lspconfig = require("lspconfig")
 
+		local log = require("plenary.log").new({
+			plugin = "lsp_debug",
+			level = "debug",
+			use_console = false,
+		})
+
+		local function filter(arr, fn)
+			if type(arr) ~= "table" then
+				vim.notify("Input is not a table!", vim.log.levels.WARN)
+				return arr
+			end
+
+			local filtered = {}
+			for k, v in pairs(arr) do
+				if fn(v, k, arr) then
+					table.insert(filtered, v)
+				end
+			end
+			-- In danh sách sau khi lọc
+			vim.notify("Filtered results: " .. vim.inspect(filtered), vim.log.levels.INFO)
+
+			return filtered
+		end
+
+		local function filterReactDTS(value)
+			vim.notify("Inspecting value: " .. vim.inspect(value), vim.log.levels.DEBUG)
+
+			local uri = value.uri or value.targetUri
+			if not uri then
+				vim.notify("Value does not have a valid URI!", vim.log.levels.WARN)
+				return false
+			end
+
+			return not string.match(uri, "%.d.ts")
+		end
+
 		-- Configure Blink CMP capabilities
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
@@ -45,6 +81,23 @@ return {
 				on_attach = function(client, _)
 					client.server_capabilities.documentFormattingProvider = false -- Prettier formatting
 				end,
+				handlers = {
+					["textDocument/definition"] = function(err, result, method, ...)
+						-- In kết quả ban đầu
+						vim.notify("Original results: " .. vim.inspect(result), vim.log.levels.INFO)
+
+						if vim.islist(result) and #result > 1 then
+							local filtered_result = filter(result, filterReactDTS)
+
+							-- In kết quả sau khi lọc
+							vim.notify("Filtered results: " .. vim.inspect(filtered_result), vim.log.levels.INFO)
+
+							return vim.lsp.handlers["textDocument/definition"](err, filtered_result, method, ...)
+						end
+
+						vim.lsp.handlers["textDocument/definition"](err, result, method, ...)
+					end,
+				},
 			},
 			volar = {
 				capabilities = capabilities,
