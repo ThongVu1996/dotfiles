@@ -30,13 +30,13 @@ return {
 				end
 			end
 			-- In danh sách sau khi lọc
-			vim.notify("Filtered results: " .. vim.inspect(filtered), vim.log.levels.INFO)
+			-- vim.notify("Filtered results: " .. vim.inspect(filtered), vim.log.levels.INFO)
 
 			return filtered
 		end
 
 		local function filterReactDTS(value)
-			vim.notify("Inspecting value: " .. vim.inspect(value), vim.log.levels.DEBUG)
+			-- vim.notify("Inspecting value: " .. vim.inspect(value), vim.log.levels.DEBUG)
 
 			local uri = value.uri or value.targetUri
 			if not uri then
@@ -84,13 +84,13 @@ return {
 				handlers = {
 					["textDocument/definition"] = function(err, result, method, ...)
 						-- In kết quả ban đầu
-						vim.notify("Original results: " .. vim.inspect(result), vim.log.levels.INFO)
+						-- vim.notify("Original results: " .. vim.inspect(result), vim.log.levels.INFO)
 
 						if vim.islist(result) and #result > 1 then
 							local filtered_result = filter(result, filterReactDTS)
 
 							-- In kết quả sau khi lọc
-							vim.notify("Filtered results: " .. vim.inspect(filtered_result), vim.log.levels.INFO)
+							-- vim.notify("Filtered results: " .. vim.inspect(filtered_result), vim.log.levels.INFO)
 
 							return vim.lsp.handlers["textDocument/definition"](err, filtered_result, method, ...)
 						end
