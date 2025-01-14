@@ -115,7 +115,7 @@ return {
 			},
 			emmet_ls = {
 				capabilities = capabilities,
-				filetypes = { "html", "css", "typescriptreact", "javascriptreact", "vue" },
+				filetypes = { "html", "css", "scss", "typescriptreact", "javascriptreact", "vue", "jsx" },
 			},
 			lua_ls = {
 				capabilities = capabilities,
