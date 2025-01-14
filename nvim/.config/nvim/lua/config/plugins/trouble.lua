@@ -1,37 +1,58 @@
 return {
 	"folke/trouble.nvim",
-	opts = {}, -- for default options, refer to the configuration section for custom setup.
+	opts = {
+		modes = {
+			diagnostics = {
+				mode = "document_diagnostics",
+				preview = {
+					type = "split",
+					relative = "win",
+					position = "right",
+					size = 0.4,
+				},
+			},
+		},
+		-- Preview
+		action_keys = {
+			preview = "p",
+		},
+	},
 	cmd = "Trouble",
 	keys = {
 		{
-			"<leader>xx",
+			"<leader>dl",
 			"<cmd>Trouble diagnostics toggle<cr>",
-			desc = "Diagnostics (Trouble)",
+			desc = "Project Diagnostics",
 		},
 		{
-			"<leader>xX",
-			"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-			desc = "Buffer Diagnostics (Trouble)",
+			"<leader>db",
+			"<cmd>Trouble diagnostics lter.buf=0<cr>",
+			desc = "Buffer Diagnostics",
 		},
 		{
-			"<leader>cs",
-			"<cmd>Trouble symbols toggle focus=false<cr>",
-			desc = "Symbols (Trouble)",
+			"<leader>dc",
+			function()
+				local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+				if #diagnostics > 0 then
+					local message = diagnostics[1].message
+					vim.fn.setreg("+", message)
+					print("Copied diagnostic: " .. message)
+				else
+					print("No diagnostic at cursor")
+				end
+			end,
+			{ noremap = true, silent = true },
+			desc = "Copy diagnostic to clipboard",
 		},
 		{
-			"<leader>cl",
-			"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-			desc = "LSP Definitions / references / ... (Trouble)",
+			"<leader>dn",
+			vim.diagnostic.goto_next,
+			desc = "Next diagnostic",
 		},
 		{
-			"<leader>xL",
-			"<cmd>Trouble loclist toggle<cr>",
-			desc = "Location List (Trouble)",
-		},
-		{
-			"<leader>xQ",
-			"<cmd>Trouble qflist toggle<cr>",
-			desc = "Quickfix List (Trouble)",
+			"<leader>dp",
+			vim.diagnostic.goto_prev,
+			desc = "Prev diagnostic",
 		},
 	},
 }
