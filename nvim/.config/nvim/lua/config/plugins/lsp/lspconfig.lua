@@ -208,6 +208,26 @@ return {
 				keymap("n", "<leader>fd", function()
 					vim.lsp.buf.format({ async = true })
 				end, opts)
+
+				vim.keymap.set("n", "<leader>fm", function()
+					local filetype = vim.bo.filetype
+					local symbols_map = {
+						python = "function",
+						javascript = "function",
+						typescript = "function",
+						java = "class",
+						lua = "function",
+						go = { "method", "struct", "interface" },
+					}
+					local symbols = symbols_map[filetype] or "function"
+
+					-- Convert the symbols into a format fzf-lua understands
+					if type(symbols) == "table" then
+						symbols = table.concat(symbols, ",")
+					end
+
+					require("fzf-lua").lsp_document_symbols({ kinds = symbols })
+				end, {})
 			end,
 		})
 	end,
