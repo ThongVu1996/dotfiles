@@ -157,6 +157,7 @@ return {
 		-- 	pattern = "*.php",
 		-- 	command = "LspStart phpactor",
 		-- })
+		--
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -209,14 +210,18 @@ return {
 					vim.lsp.buf.format({ async = true })
 				end, opts)
 
-				vim.keymap.set("n", "<leader>fm", function()
+				opts.desc = "All function"
+				keymap("n", "<leader>fm", function()
 					local filetype = vim.bo.filetype
+					vim.notify("filetype " .. filetype)
 					local symbols_map = {
 						python = "function",
-						javascript = "function",
-						typescript = "function",
+						javascript = "Variable",
+						typescript = "Variable",
+						typescriptreact = "Variable",
 						java = "class",
 						lua = "function",
+						php = "Method",
 						go = { "method", "struct", "interface" },
 					}
 					local symbols = symbols_map[filetype] or "function"
@@ -225,9 +230,10 @@ return {
 					if type(symbols) == "table" then
 						symbols = table.concat(symbols, ",")
 					end
-
-					require("fzf-lua").lsp_document_symbols({ kinds = symbols })
-				end, {})
+					require("fzf-lua").lsp_document_symbols({
+						kinds = symbols,
+					})
+				end, opts)
 			end,
 		})
 	end,
