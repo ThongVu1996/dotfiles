@@ -12,7 +12,6 @@ return {
 				},
 			},
 		},
-		-- Preview
 		action_keys = {
 			preview = "p",
 		},
@@ -21,12 +20,16 @@ return {
 	keys = {
 		{
 			"<leader>dl",
-			"<cmd>Trouble diagnostics toggle<cr>",
+			function()
+				require("diagnostic_helper").show_diagnostics("workspace")
+			end,
 			desc = "Project Diagnostics",
 		},
 		{
 			"<leader>db",
-			"<cmd>Trouble diagnostics lter.buf=0<cr>",
+			function()
+				require("diagnostic_helper").show_diagnostics("document")
+			end,
 			desc = "Buffer Diagnostics",
 		},
 		{
