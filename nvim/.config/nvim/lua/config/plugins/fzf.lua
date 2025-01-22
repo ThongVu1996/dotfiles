@@ -70,7 +70,7 @@ return {
 			},
 			grep = {
 				prompt = "🔍 Live Grep: ",
-				cmd = "rg --vimgrep --smart-case --column --line-number", -- Tìm kiếm với ripgrep
+				cmd = "rg -F --vimgrep --smart-case --column --line-number", -- Tìm kiếm với ripgrep
 			},
 			git = {
 				files = { prompt = "🔍 Git Related Files: " }, -- Prompt tùy chỉnh cho Git Files
