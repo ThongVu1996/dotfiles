@@ -7,14 +7,11 @@ return {
 		dashboard = {
 			preset = {
 				header = [[
-  /$$$$$$  /$$$$$$$$ /$$   /$$  /$$$$$$
- /$$__  $$| $$_____/| $$  /$$/ /$$__  $$
-| $$  \ $$| $$      | $$ /$$/ | $$  \__/
-| $$$$$$$$| $$$$$   | $$$$$/  | $$
-| $$__  $$| $$__/   | $$  $$  | $$
-| $$  | $$| $$      | $$\  $$ | $$    $$
-| $$  | $$| $$$$$$$$| $$ \  $$|  $$$$$$/
-|__/  |__/|________/|__/  \__/ \______/
+
+
+
+
+
         ]],
 			},
 			enable = true,
@@ -26,16 +23,16 @@ return {
 			sections = {
 				{ section = "header", indent = 60 },
 				{
-					{ section = "keys", gap = 1, padding = 1 },
+					{ section = "keys", gap = 1, padding = 3 },
 					{ section = "startup", indent = 60, padding = 5 },
 				},
 				{
 					pane = 2,
 					section = "terminal",
-					cmd = "",
+					cmd = " ~/dotfiles/nvim/.config/nvim/plugin/dynamic_header.sh 'AEKC'",
 					height = 5,
-					padding = 6,
-					indent = 10,
+					padding = 3,
+					indent = -60,
 				},
 				{
 					pane = 2,

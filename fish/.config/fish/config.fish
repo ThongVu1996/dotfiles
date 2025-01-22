@@ -7,6 +7,8 @@ set -U fish_greeting ""
 starship init fish | source
 set -Ux STARSHIP_CONFIG ~/.config/starship.toml
 
+# PATH font 
+set -x FIGLET_FONT_PATH /home/linuxbrew/.linuxbrew/Cellar/figlet/2.2.5/share/figlet/
 # bat 
 alias bat='batcat'
 
