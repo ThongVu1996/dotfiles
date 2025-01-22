@@ -111,11 +111,11 @@ return {
 			},
 			volar = {
 				capabilities = capabilities,
-				filetypes = { "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+				filetypes = { "vue" },
 			},
 			emmet_ls = {
 				capabilities = capabilities,
-				filetypes = { "html", "css", "scss", "typescriptreact", "javascriptreact", "vue", "jsx" },
+				filetypes = { "html", "css", "scss" },
 			},
 			lua_ls = {
 				capabilities = capabilities,
