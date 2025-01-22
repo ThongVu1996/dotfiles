@@ -27,7 +27,7 @@ return {
 				{ section = "header", indent = 60 },
 				{
 					{ section = "keys", gap = 1, padding = 1 },
-					{ section = "startup" },
+					{ section = "startup", indent = 60, padding = 5 },
 				},
 				{
 					pane = 2,
@@ -46,6 +46,7 @@ return {
 					},
 					{
 						section = "recent_files",
+						opts = { limit = 3 },
 						indent = 2,
 						padding = 1,
 					},
@@ -56,6 +57,7 @@ return {
 					},
 					{
 						section = "projects",
+						opts = { limit = 3 },
 						indent = 2,
 						padding = 1,
 					},
@@ -68,20 +70,6 @@ return {
 		notifier = {
 			enabled = true,
 			style = "fancy",
-			vim.api.nvim_create_autocmd("LspProgress", {
-				---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
-				callback = function(ev)
-					local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-					vim.notify(vim.lsp.status(), "info", {
-						id = "lsp_progress",
-						title = "LSP Progress",
-						opts = function(notif)
-							notif.icon = ev.data.params.value.kind == "end" and " "
-								or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
-						end,
-					})
-				end,
-			}),
 		},
 		notify = { enabled = true },
 		dim = { enabled = true },
