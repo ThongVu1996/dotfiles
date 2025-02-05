@@ -99,3 +99,21 @@ alias vcf="cd ~/dotfiles/nvim/.config/nvim && echo 'You can configure Neovim'"
 alias tcf="cd ~/dotfiles/tmux && echo 'You can configure Tmux'"
 alias scf="cd ~/dotfiles/starship/ && echo 'You can configure Starship'"
 alias wcf="cd ~/dotfiles/wezterm/.config/wezterm"
+
+# Function to toggle delta side-by-side mode
+function toggle_side_by_side
+    # Get the current value from Git config
+    set current_value (git config --global delta.side-by-side)
+
+    # Toggle the value
+    if test "$current_value" = "true"
+        git config --global delta.side-by-side false
+        echo "❌ Side-by-side mode disabled"
+    else
+        git config --global delta.side-by-side true
+        echo "✅ Side-by-side mode enabled"
+    end
+end
+
+# Bind Ctrl + G to toggle
+bind \cg toggle_side_by_side
