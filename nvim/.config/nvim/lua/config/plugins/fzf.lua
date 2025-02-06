@@ -66,7 +66,8 @@ return {
 			},
 			files = {
 				prompt = "🔍 Related Files: ", -- Prompt tùy chỉnh cho Find Files
-				cmd = "fd --type f --hidden --exclude .git",
+				-- cmd = "fd --type f --hidden --exclude .git",
+				cmd = "(fd --type f --hidden --no-ignore -g '.env*' --exclude .git --exclude node_modules; fd --type f --no-ignore --exclude .git --exclude node_modules)",
 			},
 			grep = {
 				prompt = "🔍 Live Grep: ",
