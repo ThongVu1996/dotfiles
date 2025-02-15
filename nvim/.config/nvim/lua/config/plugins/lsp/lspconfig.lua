@@ -145,6 +145,20 @@ return {
 					root_dir = lspconfig.util.root_pattern(".git", vim.loop.cwd()),
 				},
 			},
+			pyright = {
+				capabilities = capabilities,
+				filetypes = { "python" },
+				settings = {
+					python = {
+						analysis = {
+							typeCheckingMode = "basic", -- Options: off, basic, strict
+							autoImportCompletions = true,
+							diagnosticMode = "workspace", -- Options: openFiles, workspace
+							useLibraryCodeForTypes = true,
+						},
+					},
+				},
+			},
 		}
 
 		-- Setup LSP servers using the updated capabilities from Blink CMP
@@ -162,6 +176,7 @@ return {
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
+				require("document-color").buf_attach(ev.buf)
 				local keymap = vim.keymap.set
 				local opts = { buffer = ev.buf, silent = true }
 

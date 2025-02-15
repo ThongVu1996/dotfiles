@@ -39,6 +39,7 @@ return {
 				"emmet_ls",
 				"volar",
 				"ts_ls",
+				"pyright",
 			},
 		})
 
@@ -49,6 +50,7 @@ return {
 				"eslint_d",
 				"phpcs", -- check formatter
 				"php-cs-fixer", -- fixed formatter
+				"black",
 			},
 		})
 	end,
