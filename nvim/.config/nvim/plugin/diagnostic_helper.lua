@@ -1,5 +1,17 @@
 local M = {}
 
+local signs = {
+	Error = " ", -- Error symbol
+	Warn = " ", -- Warning symbol
+	Hint = " ", -- Hint (light bulb)
+	Info = " ", -- Info symbol
+}
+
+for type, icon in pairs(signs) do
+	local hl = "DiagnosticSign" .. type
+	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
 function M.show_diagnostics(scope)
 	local config = require("fzf-lua.config")
 	local actions = require("trouble.sources.fzf").actions

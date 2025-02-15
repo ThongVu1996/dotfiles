@@ -12,6 +12,13 @@ return {
 				},
 			},
 		},
+		icons = {
+			error = " ",
+			warning = " ",
+			hint = " ",
+			information = " ",
+		},
+		use_diagnostic_signs = true, -- Use Neovim's built-in diagnostic signs
 		action_keys = {
 			preview = "p",
 		},
