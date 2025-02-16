@@ -1,6 +1,9 @@
 return {
 	"akinsho/flutter-tools.nvim",
-	dependencies = { "dart-lang/dart-vim-plugin", "reisub0/hot-reload.vim" },
+	dependencies = {
+		"dart-lang/dart-vim-plugin",
+		-- "reisub0/hot-reload.vim"
+	},
 	lazy = true, -- Lazy load only when a Dart project is detected
 	cond = function()
 		-- Check if any Dart file exists in the project directory
@@ -47,8 +50,8 @@ return {
 		vim.keymap.set(
 			"n",
 			"<leader>fF",
-			require("flutter_fzf").flutter_fzf,
-			{ noremap = true, silent = true, desc = "Flutter Tools with FZF" }
+			require("flutter_snack_picker").flutter_snack_picker,
+			{ noremap = true, silent = true, desc = "Flutter Tools with Snack" }
 		)
 	end,
 }
