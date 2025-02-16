@@ -180,25 +180,25 @@ return {
 				local keymap = vim.keymap.set
 				local opts = { buffer = ev.buf, silent = true }
 
-				-- Tìm tham chiếu
-				opts.desc = "Find references"
-				keymap("n", "gR", vim.lsp.buf.references, opts)
-
-				-- Đi tới khai báo
-				opts.desc = "Go to declaration"
-				keymap("n", "gD", vim.lsp.buf.declaration, opts)
-
-				-- Đi tới định nghĩa
-				opts.desc = "Find definitions"
-				keymap("n", "gd", vim.lsp.buf.definition, opts)
-
-				-- Tìm các implementation
-				opts.desc = "Find implementations"
-				keymap("n", "gi", vim.lsp.buf.implementation, opts)
-
-				-- Tìm type definitions
-				opts.desc = "Find type definitions"
-				keymap("n", "gt", vim.lsp.buf.type_definition, opts)
+				-- -- Tìm tham chiếu
+				-- opts.desc = "Find references"
+				-- keymap("n", "gR", vim.lsp.buf.references, opts)
+				--
+				-- -- Đi tới khai báo
+				-- opts.desc = "Go to declaration"
+				-- keymap("n", "gD", vim.lsp.buf.declaration, opts)
+				--
+				-- -- Đi tới định nghĩa
+				-- opts.desc = "Find definitions"
+				-- keymap("n", "gd", vim.lsp.buf.definition, opts)
+				--
+				-- -- Tìm các implementation
+				-- opts.desc = "Find implementations"
+				-- keymap("n", "gi", vim.lsp.buf.implementation, opts)
+				--
+				-- -- Tìm type definitions
+				-- opts.desc = "Find type definitions"
+				-- keymap("n", "gt", vim.lsp.buf.type_definition, opts)
 
 				-- Thao tác code
 				opts.desc = "Code actions"

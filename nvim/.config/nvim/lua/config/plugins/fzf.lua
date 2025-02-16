@@ -4,6 +4,7 @@ return {
 		"echasnovski/mini.icons",
 		"mfussenegger/nvim-dap",
 	},
+	enabled = false,
 	cmd = { "FzfLua" },
 	keys = {
 		{ "<leader>ff", "<cmd>FzfLua files<CR>", desc = "Find files in cwd" },
