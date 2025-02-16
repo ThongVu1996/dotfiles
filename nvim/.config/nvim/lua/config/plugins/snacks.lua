@@ -220,9 +220,24 @@ return {
 		{
 			"<leader>fs",
 			function()
-				Snacks.picker.grep()
+				Snacks.picker.grep({
+					regex = false, -- Force plain text mode
+					args = { "-F" }, -- Use fixed-string search
+					prompt = "🔍 Plain Text Search: ",
+				})
 			end,
-			desc = "Grep",
+			desc = "Grep (Fixed-String Mode)",
+		},
+		-- Use regex
+		{
+			"<leader>fr",
+			function()
+				Snacks.picker.grep({
+					regex = true, -- Force regex mode
+					prompt = "🔍 Regex Search: ",
+				})
+			end,
+			desc = "Grep (Regex Mode)",
 		},
 		-- LSP
 		{
