@@ -37,8 +37,32 @@ return {
 		require("mason-nvim-dap").setup({
 			automatic_setup = true,
 			automatic_installation = true,
+
+			handlers = {
+				function(config)
+					require("mason-nvim-dap").default_setup(config)
+				end,
+				php = function(config)
+					config.configurations = {
+						{
+							type = "php",
+							request = "launch",
+							name = "Listen for XDebug",
+							port = 9004,
+							log = true,
+							pathMappings = {
+								["/var/www/html/"] = vim.fn.getcwd() .. "/",
+							},
+							hostname = "127.0.0.1",
+						},
+					}
+
+					require("mason-nvim-dap").default_setup(config) -- don't forget this!
+				end,
+			},
 			ensure_installed = {
 				"debugpy", -- Python
+				"php-debug-adapter'",
 			},
 		})
 
