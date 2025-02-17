@@ -19,7 +19,7 @@ return {
 				graphql = { "prettier" },
 				liquid = { "prettier" },
 				lua = { "stylua" },
-				php = { "phpcbf" },
+				php = { "pint", "phpcbf" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
