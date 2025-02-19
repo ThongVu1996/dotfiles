@@ -88,6 +88,9 @@ return {
 				},
 			},
 		},
+		gitbrowse = {
+			what = "branch",
+		},
 	},
 
 	keys = {
@@ -293,5 +296,46 @@ return {
 		vim.keymap.set("n", "<leader>lr", function()
 			Snacks.picker.lsp_references({ layout = { position = "center", width = 0.8, height = 0.6 } })
 		end, { desc = "LSP References in Floating Picker" }),
+		-- git browser
+		vim.keymap.set("n", "<leader>go", function()
+			require("snacks").gitbrowse()
+		end, { desc = "Open current branch in browser" }),
+
+		-- Copy permalink of the current line or selected range to clipboard
+		vim.keymap.set({ "n", "v" }, "<leader>gp", function()
+			local start_line, end_line = nil, nil
+
+			-- Get the start and end line if in Visual mode
+			if vim.fn.mode() == "v" or vim.fn.mode() == "V" then
+				start_line = vim.fn.line("'<") -- Start line of the selected range
+				end_line = vim.fn.line("'>") -- End line of the selected range
+			else
+				start_line = vim.fn.line(".") -- If not in Visual mode, use the current line
+				end_line = start_line
+			end
+
+			-- Call gitbrowse with line range information
+			require("snacks").gitbrowse.open({
+				what = "permalink",
+				line_start = start_line,
+				line_end = end_line,
+				open = function(url)
+					vim.fn.setreg("+", url) -- Copy URL to clipboard
+					vim.notify("Permalink copied to clipboard: Lines " .. start_line .. "-" .. end_line)
+				end,
+			})
+		end, { desc = "Copy permalink of current line or selected range to clipboard" }),
+
+		vim.keymap.set("n", "<leader>gF", function()
+			require("snacks").gitbrowse({ what = "branch" })
+		end, { desc = "Open current file in browser" }),
 	},
+
+	vim.keymap.set("n", "<leader>gc", function()
+		require("snacks").gitbrowse({ what = "commit" })
+	end, { desc = "Open current commit in browser" }),
+
+	vim.keymap.set("n", "<leader>gr", function()
+		require("snacks").gitbrowse({ what = "repo" })
+	end, { desc = "Open entire repository in browser" }),
 }
