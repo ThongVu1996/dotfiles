@@ -214,6 +214,30 @@ return {
 				-- Tài liệu hover
 				opts.desc = "Hover documentation"
 				keymap("n", "K", vim.lsp.buf.hover, opts)
+				keymap("n", "K", function()
+					vim.lsp.buf.hover() -- Show hover doc
+
+					-- Auto-focus the floating window using nvim_input()
+					vim.defer_fn(function()
+						-- Simulate `<C-w>w` to cycle to the floating window
+						vim.api.nvim_input("<C-w>w")
+					end, 50) -- Small delay to ensure the window appears first
+
+					-- Scroll inside the hover window using win_execute
+					vim.keymap.set("n", "<C-d>", function()
+						local win = vim.api.nvim_get_current_win()
+						vim.api.nvim_win_call(win, function()
+							vim.cmd("normal! <C-d>")
+						end)
+					end, { buffer = true })
+
+					vim.keymap.set("n", "<C-u>", function()
+						local win = vim.api.nvim_get_current_win()
+						vim.api.nvim_win_call(win, function()
+							vim.cmd("normal! <C-u>")
+						end)
+					end, { buffer = true })
+				end, opts)
 
 				-- Restart LSP
 				opts.desc = "Restart LSP"
