@@ -8,7 +8,7 @@ starship init fish | source
 set -Ux STARSHIP_CONFIG ~/.config/starship.toml
 
 # PATH font 
-set -x FIGLET_FONT_PATH /home/linuxbrew/.linuxbrew/Cellar/figlet/2.2.5/share/figlet/
+set -x FIGLET_FONT_PATH /home/linuxbrew/.linuxbrew/Cellar/figlet/2.2.5/share/figlet/fonts/
 # bat 
 alias bat='batcat'
 
