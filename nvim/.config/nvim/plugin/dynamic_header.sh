@@ -10,7 +10,7 @@ while :; do
   tput cup 0 0             # Move cursor to the top-left
 
   # Use figlet with lolcat to display dynamic text
-  figlet -f /home/linuxbrew/.linuxbrew/Cellar/figlet/2.2.5/share/figlet/ansi_shadow.flf -ct "$1" | lolcat -F 0.5 -S "$counter" -f
+  figlet -f /home/linuxbrew/.linuxbrew/Cellar/figlet/2.2.5/share/figlet/fonts/ansi_shadow.flf -ct "$1" | lolcat -F 0.5 -S "$counter" -f
   # lolcat $1 -S $counter -f
 
   # Adjust sleep duration to control update speed
