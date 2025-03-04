@@ -1,71 +1,131 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	event = { "BufRead", "BufNewFile" },
-	config = function()
-		local lualine = require("lualine")
-		local lazy_status = require("lazy.status") -- to configure lazy pending updates count
+	event = "VeryLazy",
+	init = function()
+		vim.g.lualine_laststatus = vim.o.laststatus
+		if vim.fn.argc(-1) > 0 then
+			vim.o.statusline = " "
+		else
+			vim.o.laststatus = 0
+		end
+	end,
+	opts = function()
+		local lualine_require = require("lualine_require")
+		lualine_require.require = require
+		local icons = require("icons")
+		vim.o.laststatus = vim.g.lualine_laststatus
 
-		local colors = {
-			blue = "#65D1FF",
-			green = "#3EFFDC",
-			violet = "#FF61EF",
-			yellow = "#FFDA7B",
-			red = "#FF4A4A",
-			fg = "#c3ccdc",
-			bg = "#112638",
-			inactive_bg = "#2c3043",
-		}
-
-		local my_lualine_theme = {
-			normal = {
-				a = { bg = colors.blue, fg = colors.bg, gui = "bold" },
-				b = { bg = colors.bg, fg = colors.fg },
-				c = { bg = colors.bg, fg = colors.fg },
-			},
-			insert = {
-				a = { bg = colors.green, fg = colors.bg, gui = "bold" },
-				b = { bg = colors.bg, fg = colors.fg },
-				c = { bg = colors.bg, fg = colors.fg },
-			},
-			visual = {
-				a = { bg = colors.violet, fg = colors.bg, gui = "bold" },
-				b = { bg = colors.bg, fg = colors.fg },
-				c = { bg = colors.bg, fg = colors.fg },
-			},
-			command = {
-				a = { bg = colors.yellow, fg = colors.bg, gui = "bold" },
-				b = { bg = colors.bg, fg = colors.fg },
-				c = { bg = colors.bg, fg = colors.fg },
-			},
-			replace = {
-				a = { bg = colors.red, fg = colors.bg, gui = "bold" },
-				b = { bg = colors.bg, fg = colors.fg },
-				c = { bg = colors.bg, fg = colors.fg },
-			},
-			inactive = {
-				a = { bg = colors.inactive_bg, fg = colors.semilightgray, gui = "bold" },
-				b = { bg = colors.inactive_bg, fg = colors.semilightgray },
-				c = { bg = colors.inactive_bg, fg = colors.semilightgray },
-			},
-		}
-
-		-- configure lualine with modified theme
-		lualine.setup({
+		local opts = {
 			options = {
-				theme = my_lualine_theme,
+				theme = "auto",
+				globalstatus = vim.o.laststatus == 3,
+				disabled_filetypes = { statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
 			},
 			sections = {
+				lualine_a = { "mode" },
+				lualine_b = { "branch" },
+
+				lualine_c = {
+					{ "filetype", separator = "", icon_only = true, padding = { left = 1, right = 0 } },
+					{ "filename", separator = "", icon_only = true, padding = { left = 1, right = 0 } },
+				},
 				lualine_x = {
+					-- Snacks.profiler.status(),
+					-- {
+					-- 	function()
+					-- 		return require("noice").api.status.command.get()
+					-- 	end,
+					-- 	cond = function()
+					-- 		return package.loaded["noice"] and require("noice").api.status.command.has()
+					-- 	end,
+					-- 	color = function()
+					-- 		return { fg = Snacks.util.color("Statement") }
+					-- 	end,
+					-- },
+					-- {
+					-- 	function()
+					-- 		return require("noice").api.status.mode.get()
+					-- 	end,
+					-- 	cond = function()
+					-- 		return package.loaded["noice"] and require("noice").api.status.mode.has()
+					-- 	end,
+					-- 	color = function()
+					-- 		return { fg = Snacks.util.color("Constant") }
+					-- 	end,
+					-- },
+					-- {
+					-- 	function()
+					-- 		return "  " .. require("dap").status()
+					-- 	end,
+					-- 	cond = function()
+					-- 		return package.loaded["dap"] and require("dap").status() ~= ""
+					-- 	end,
+					-- 	color = function()
+					-- 		return { fg = Snacks.util.color("Debug") }
+					-- 	end,
+					-- },
+					-- {
+					-- 	require("lazy.status").updates,
+					-- 	cond = require("lazy.status").has_updates,
+					-- 	color = function()
+					-- 		return { fg = Snacks.util.color("Special") }
+					-- 	end,
+					-- },
 					{
-						lazy_status.updates,
-						cond = lazy_status.has_updates,
-						color = { fg = "#ff9e64" },
+						"diff",
+						symbols = {
+							added = icons.git.added,
+							modified = icons.git.modified,
+							removed = icons.git.removed,
+						},
+						source = function()
+							local gitsigns = vim.b.gitsigns_status_dict
+							if gitsigns then
+								return {
+									added = gitsigns.added,
+									modified = gitsigns.changed,
+									removed = gitsigns.removed,
+								}
+							end
+						end,
 					},
-					{ "encoding" },
-					{ "fileformat" },
-					{ "filetype" },
+				},
+				lualine_y = {
+					{
+						"diagnostics",
+						symbols = {
+							error = icons.diagnostics.Error,
+							warn = icons.diagnostics.Warn,
+							info = icons.diagnostics.Info,
+							hint = icons.diagnostics.Hint,
+						},
+					},
+				},
+				lualine_z = {
+					{ "progress", separator = " ", padding = { left = 1, right = 0 } },
+					{ "location", padding = { left = 0, right = 1 } },
 				},
 			},
-		})
+		}
+
+		if vim.g.trouble_lualine then
+			local trouble = require("trouble")
+			local symbols = trouble.statusline({
+				mode = "symbols",
+				groups = {},
+				title = false,
+				filter = { range = true },
+				format = "{kind_icon}{symbol.name:Normal}",
+				hl_group = "lualine_c_normal",
+			})
+			table.insert(opts.sections.lualine_c, {
+				symbols and symbols.get,
+				cond = function()
+					return vim.b.trouble_lualine ~= false and symbols.has()
+				end,
+			})
+		end
+
+		return opts
 	end,
 }
