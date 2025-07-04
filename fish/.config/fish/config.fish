@@ -35,7 +35,7 @@ end
 
 set -x PATH ~/.local/bin $PATH
 set -U fish_user_paths /home/linuxbrew/.linuxbrew/bin $fish_user_paths
-eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+# eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 set -U fish_user_paths $HOME/.local/share/nvim/mason/bin $fish_user_paths
 
@@ -117,3 +117,8 @@ end
 
 # Bind Ctrl + G to toggle
 bind \cg toggle_side_by_side
+
+set -x LANG en_US.UTF-8
+set -x LC_ALL en_US.UTF-8
+set -U fish_user_paths /usr/sbin $fish_user_paths
+
