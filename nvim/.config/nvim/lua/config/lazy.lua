@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 local plugin_path = vim.fn.stdpath("config") .. "/plugin"
 package.path = package.path .. ";" .. plugin_path .. "/?.lua"
 
-require("lazy").setup({ { import = "config.plugins" }, { import = "config.plugins.lsp" } }, {
+require("lazy").setup({ { import = "config.plugins" } }, {
 	checker = {
 		enabled = true,
 		notify = false,
