@@ -1,5 +1,5 @@
 vim.g.mapleader = " " -- Set leader key
-
+vim.g.maplocalleader = ","
 local keymap = vim.keymap -- Alias for conciseness
 
 -- Exit insert mode
