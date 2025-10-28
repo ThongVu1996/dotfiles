@@ -27,7 +27,7 @@ config.window_background_image_hsb = {
 config.color_scheme = "JetBrains Darcula"
 config.window_background_image = user_home .. "/.config/wezterm/bg/bg.jpg"
 
-config.font = wezterm.font("Hack Nerd Font", { weight = "Medium", stretch = "Expanded" })
+config.font = wezterm.font("JetBrains Mono", { weight = "Medium", stretch = "Expanded" })
 config.font_size = 15
 config.line_height = 1.2
 config.window_decorations = "RESIZE|TITLE"
