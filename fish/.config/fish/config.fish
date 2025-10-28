@@ -8,7 +8,7 @@ starship init fish | source
 set -Ux STARSHIP_CONFIG ~/.config/starship.toml
 
 # bat 
-alias bat='batcat'
+# alias bat='batcat'
 
 # open nvim
 alias vi='nvim'
