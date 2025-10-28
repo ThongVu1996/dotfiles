@@ -5,61 +5,11 @@ return {
 	opts = {
 		bigfile = { enabled = true },
 		dashboard = {
-			preset = {
-				header = [[
-
-
-
-
-
-        ]],
-			},
-			enable = true,
-			formats = {
-				key = function(item)
-					return { { "[", hl = "special" }, { item.key, hl = "key" }, { "]", hl = "special" } }
-				end,
-			},
-			sections = {
-				{ section = "header", indent = 60 },
-				{
-					{ section = "keys", gap = 1, padding = 3 },
-					{ section = "startup", indent = 60, padding = 5 },
-				},
-				{
-					pane = 2,
-					section = "terminal",
-					cmd = " ~/dotfiles/nvim/.config/nvim/plugin/dynamic_header.sh 'NEOVIM'",
-					height = 5,
-					padding = 3,
-					indent = -60,
-				},
-				{
-					pane = 2,
-					{
-						icon = " ",
-						title = "Recent Files",
-						padding = 1,
-					},
-					{
-						section = "recent_files",
-						opts = { limit = 3 },
-						indent = 2,
-						padding = 1,
-					},
-					{
-						icon = " ",
-						title = "Projects",
-						padding = 1,
-					},
-					{
-						section = "projects",
-						opts = { limit = 3 },
-						indent = 2,
-						padding = 1,
-					},
-				},
-			},
+  sections = {
+    { section = "header" },
+    { section = "keys", gap = 1, padding = 1 },
+    { section = "startup" },
+  },
 		},
 		indent = { enabled = true },
 		input = { enabled = true },
