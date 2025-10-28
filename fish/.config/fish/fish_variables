@@ -1,6 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export STARSHIP_CONFIG:/home/thong/\x2econfig/starship\x2etoml
+SETUVAR --export STARSHIP_CONFIG:/Users/thongvu/\x2econfig/starship\x2etoml
 SETUVAR __fish_initialized:3800
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr
@@ -31,4 +31,4 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/usr/sbin\x1e/home/thong/\x2elocal/share/nvim/mason/bin\x1e/home/linuxbrew/\x2elinuxbrew/bin\x1e/mnt/c/Program\x5c\x20Files/PostgreSQL/12/bin\x1e/home/thong/\x2enpm\x2dglobal/bin
+SETUVAR fish_user_paths:/usr/sbin\x1e/Users/thongvu/\x2elocal/share/nvim/mason/bin\x1e/home/linuxbrew/\x2elinuxbrew/bin\x1e/home/thong/\x2elocal/share/nvim/mason/bin\x1e/mnt/c/Program\x5c\x20Files/PostgreSQL/12/bin\x1e/home/thong/\x2enpm\x2dglobal/bin
