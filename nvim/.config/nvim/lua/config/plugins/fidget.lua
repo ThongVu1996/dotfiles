@@ -1,12 +1,11 @@
 return {
 	"j-hui/fidget.nvim",
-	lazy = true,
-	enable = true,
+	event = "VeryLazy", -- Chỉ tải khi LSP khởi động
 	opts = {
 		notification = {
 			window = {
-				winblend = 0,
-				border = "none",
+				winblend = 0, -- Tắt độ trong suốt (giống trong ảnh)
+				border = "none", -- Tắt viền
 			},
 		},
 	},
