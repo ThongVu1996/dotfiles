@@ -1,9 +1,9 @@
 return {
 	-- Mason for managing LSP, linters, and formatters
-	"williamboman/mason.nvim",
+	"mason-org/mason.nvim",
 	cmd = { "Mason", "MasonInstall", "MasonUpdate", "MasonUninstall", "MasonUninstallAll", "MasonLog" }, -- Load only when Mason command is used
 	dependencies = {
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	config = function()
@@ -32,11 +32,13 @@ return {
 				"lua_ls",
 				"graphql",
 				"emmet_ls",
-				"volar",
 				"ts_ls",
 				"pyright",
 				"intelephense",
 				"phpactor",
+				"cspell-lsp", --cspell like vscode
+				"vue-language-server",
+				"vtls",
 			},
 			automatic_installation = true, -- Ensure automatic installation when needed
 		})
@@ -50,9 +52,6 @@ return {
 				"phpcs", -- PHP Code Sniffer
 				"php-cs-fixer", -- PHP Code Style Fixer
 				"black", -- Formatter for Python
-				"cspell", -- Code Spell Checker
-				"misspell", -- English Misspelling Checker
-				"codespell", -- Code Spell Checker
 				"debugpy",
 			},
 			auto_update = true, -- Update tools automatically
