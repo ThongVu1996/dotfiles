@@ -29,7 +29,8 @@
 	    shell = pkgs.fish;
           };
           programs.fish.enable = true;
-
+	  environment.shells = [ pkgs.fish ];
+          nixpkgs.config.allowUnfree = true;
           system.primaryUser = username;
           nix.settings.trusted-users = [ "root" username ];
 	  
@@ -43,8 +44,12 @@
             git
             neofetch
             mkalias
+            docker
+            lazydocker
+            lazygit
             # Apps GUI
             wezterm
+            vscode
             aerospace
 	    fish
           ];

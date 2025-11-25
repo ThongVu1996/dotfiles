@@ -20,6 +20,7 @@
   # Cú pháp: xdg.configFile."TÊN_TRONG_CONFIG".source = ĐƯỜNG_DẪN_THỰC_TẾ;
    xdg.configFile."starship.toml".source = ./dotfiles/starship/.config/starship.toml;
    xdg.configFile."lazygit/config.yml".source = ./dotfiles/lazygit/.config/lazygit/config.yml;
+   xdg.configFile."nvim".source = ./dotfiles/nvim/.config/nvim;
    xdg.configFile."fish/config.fish".source = ./dotfiles/fish/.config/fish/config.fish;
    xdg.configFile."wezterm".source = ./dotfiles/wezterm/.config/wezterm;
    home.file.".tmux.conf".source = ./dotfiles/tmux/.tmux.conf;
