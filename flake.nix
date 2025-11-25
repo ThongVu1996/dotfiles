@@ -26,8 +26,10 @@
           users.users."${username}" = {
             home = "/Users/${username}";
             description = username;
+	    shell = pkgs.fish;
           };
-          
+          programs.fish.enable = true;
+
           system.primaryUser = username;
           nix.settings.trusted-users = [ "root" username ];
 	  
@@ -44,6 +46,7 @@
             # Apps GUI
             wezterm
             aerospace
+	    fish
           ];
 
           system.defaults = {
