@@ -18,6 +18,8 @@
   {
     darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
       inherit system;
+      specialArgs = { inherit username; };
+
       modules = [
         ({ pkgs, config, ... }: {
           
@@ -34,7 +36,6 @@
             git
             neofetch
             mkalias
- 	    tmux	           
             # Apps GUI
             wezterm
             aerospace
@@ -75,6 +76,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+	  home-manager.extraSpecialArgs = { inherit username; };
           home-manager.users."${username}" = import ./home.nix;
         }
       ];
