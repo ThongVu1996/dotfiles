@@ -30,7 +30,12 @@
           
           system.primaryUser = username;
           nix.settings.trusted-users = [ "root" username ];
-
+	  
+	  fonts.packages = [
+            pkgs.jetbrains-mono
+            pkgs.nerd-fonts.jetbrains-mono
+          ];
+	
           environment.systemPackages = with pkgs; [
             vim
             git

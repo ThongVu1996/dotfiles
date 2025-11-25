@@ -27,7 +27,7 @@ config.window_padding = {
 config.color_scheme = "tokyonight_moon"
 config.window_background_image = user_home .. "/.config/wezterm/bg/bg.png"
 
-config.font = wezterm.font("Hack Nerd Font", { weight = "Medium", stretch = "Expanded" })
+config.font = wezterm.font("JetBrains Mono", { weight = "Medium", stretch = "Expanded" })
 config.font_size = 15
 config.line_height = 1.2
 config.window_decorations = "RESIZE|TITLE"
