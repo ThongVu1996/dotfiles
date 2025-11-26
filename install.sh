@@ -77,7 +77,7 @@ export NIXPKGS_ALLOW_UNFREE=1
 
 # Chạy lệnh cài đặt
 # --impure: Để đọc biến môi trường NIXPKGS_ALLOW_UNFREE
-nix run --extra-experimental-features 'nix-command flakes' \
+sudo -E nix run --extra-experimental-features 'nix-command flakes' \
     nix-darwin -- switch --flake . --impure
 
 echo -e "\n${GREEN}===============================================${NC}"
