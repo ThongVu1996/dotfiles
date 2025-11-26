@@ -61,6 +61,10 @@ return {
 			},
 		},
 	},
+	on_attach = function(client, bufnr)
+		-- Disable rename của tailwind
+		client.server_capabilities.renameProvider = false
+	end,
 	capabilities = vim.tbl_deep_extend(
 		"force",
 		{},

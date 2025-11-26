@@ -11,6 +11,10 @@ return {
 	},
 	root_markers = { "index.html", ".git" },
 	init_options = { provideFormatter = true },
+	on_attach = function(client, bufnr)
+		-- Disable rename
+		client.server_capabilities.renameProvider = false
+	end,
 	capabilities = vim.tbl_deep_extend(
 		"force",
 		{},
