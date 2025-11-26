@@ -75,6 +75,13 @@ sudo rm \-rf /nix
 
 **4\. Xóa các file cấu hình còn sót lại trong /etc:**
 
+Trước tiên hãy check để thay thế vào các file flake.nix và home.nix cho hợp lý
+
+```
+whoami # kiểm trả username
+scutil --get LocalHostName # kiểm tra hostname
+```
+
 ```
 sudo rm \-rf /etc/nix  
 sudo rm \-f /etc/synthetic.conf
