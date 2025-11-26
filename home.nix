@@ -17,6 +17,7 @@
     stats
     hidden-bar
     nodejs_22
+    wl-clipboard
   ];
 
   # 2. LIÊN KẾT CẤU HÌNH TỪ THƯ MỤC 'dot' (QUAN TRỌNG NHẤT)
@@ -39,7 +40,11 @@
    xdg.configFile."aerospace/aerospace.toml".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/aerospace/.config/aerospace/aerospace.toml";
   # 3. Kích hoạt Home Manager
   programs.home-manager.enable = true;
-
+  # 4 Cài đặt direnv cho môi trường từng dự án
+  programs.direnv = {
+  enable = true;
+  nix-direnv.enable = true; # Quan trọng: giúp cache nhanh hơn, ko bị garbage collect
+};
   # 4. Cấu hình biến môi trường (Optional)
   home.sessionVariables = {
     EDITOR = "nvim";
