@@ -15,7 +15,7 @@ alias vi='nvim'
 alias ls='eza'
 
 # System Rebuild Alias
-alias nixss="sudo nix run nix-darwin -- switch --flake ~/nix-config#MacBook-Pro"
+alias nixss="sudo nix run nix-darwin -- switch --flake ~/nix-config#(scutil --get LocalHostName)"
 
 # fzf
 fzf --fish | source
