@@ -48,6 +48,7 @@ alias vcf="cd ~/nix-config/dotfiles/nvim/.config/nvim && echo 'You can configure
 alias tcf="cd ~/nix-config/dotfiles/tmux && echo 'You can configure Tmux'"
 alias scf="cd ~/nix-config/dotfiles/starship/ && echo 'You can configure Starship'"
 alias wcf="cd ~/nix-config/dotfiles/wezterm/.config/wezterm"
+alias acf="cd ~/nix-config/dotfiles/aerospace/.config/aerospace"
 
 # Function to toggle delta side-by-side mode
 function toggle_side_by_side

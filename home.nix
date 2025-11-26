@@ -24,8 +24,8 @@
    xdg.configFile."lazygit/config.yml".source = ./dotfiles/lazygit/.config/lazygit/config.yml;
    # xdg.configFile."nvim".source = ./dotfiles/nvim/.config/nvim;
    # xdg.configFile."wezterm".source = ./dotfiles/wezterm/.config/wezterm;
-   xdg.configFile."fish/config.fish".source = ./dotfiles/fish/.config/fish/config.fish;
-   xdg.configFile."aerospace/aerospace.toml".source = ./dotfiles/aerospace/.config/aerospace/aerospace.toml;
+    # xdg.configFile."fish/config.fish".source = ./dotfiles/fish/.config/fish/config.fish;
+    # xdg.configFile."aerospace/aerospace.toml".source = ./dotfiles/aerospace/.config/aerospace/aerospace.toml;
    home.file.".tmux.conf".source = ./dotfiles/tmux/.tmux.conf;
 
    # 1. Neovim (Dùng mkOutOfStoreSymlink để sửa là ăn ngay)
@@ -34,6 +34,8 @@
   # 2. WezTerm (Tương tự)
   xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/wezterm/.config/wezterm";
 
+   xdg.configFile."fish/config.fish".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/fish/.config/fish/config.fish";
+   xdg.configFile."aerospace/aerospace.toml".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/aerospace/.config/aerospace/aerospace.toml";
   # 3. Kích hoạt Home Manager
   programs.home-manager.enable = true;
 
