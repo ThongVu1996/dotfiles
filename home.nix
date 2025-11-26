@@ -36,6 +36,7 @@
   xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/wezterm/.config/wezterm";
 
    xdg.configFile."fish/config.fish".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/fish/.config/fish/config.fish";
+   xdg.configFile."fish/functions".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/fish/.config/fish/functions";
    xdg.configFile."aerospace/aerospace.toml".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/aerospace/.config/aerospace/aerospace.toml";
   # 3. Kích hoạt Home Manager
   programs.home-manager.enable = true;
