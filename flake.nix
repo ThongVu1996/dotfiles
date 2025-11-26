@@ -23,22 +23,28 @@
       modules = [
         ({ pkgs, config, ... }: {
           
+          # User Setup
           users.users."${username}" = {
             home = "/Users/${username}";
             description = username;
-	    shell = pkgs.fish;
+            shell = pkgs.fish;
           };
+	  nix.enable = false;
           programs.fish.enable = true;
-	  environment.shells = [ pkgs.fish ];
+          environment.shells = [ pkgs.fish ];
+          
           nixpkgs.config.allowUnfree = true;
-          system.primaryUser = username;
+	  system.primaryUser = username;
+          # system.primaryUser = username; # Dòng này gây lỗi nếu không có module custom, đã comment lại.
           nix.settings.trusted-users = [ "root" username ];
-	  
-	  fonts.packages = [
+          
+          # Fonts
+          fonts.packages = [
             pkgs.jetbrains-mono
             pkgs.nerd-fonts.jetbrains-mono
           ];
-	
+
+          # System Packages
           environment.systemPackages = with pkgs; [
             vim
             git
@@ -51,16 +57,17 @@
             wezterm
             vscode
             aerospace
-	    fish
+            fish
           ];
 
+          # MacOS Defaults
           system.defaults = {
             dock.autohide = true;
             finder.AppleShowAllExtensions = true;
             NSGlobalDomain.AppleInterfaceStyle = "Dark";
           };
 
-          # --- SCRIPT FIX SPOTLIGHT (ĐÃ SỬA LỖI read -r) ---
+          # Activation Script (Fix Spotlight)
           system.activationScripts.applications.text = let
             env = pkgs.buildEnv {
               name = "system-applications";
@@ -85,13 +92,14 @@
           system.stateVersion = 5;
         })
 
+        # Home Manager Module
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-	  home-manager.extraSpecialArgs = { inherit username; };
+          home-manager.extraSpecialArgs = { inherit username; };
           home-manager.users."${username}" = import ./home.nix;
-	  home-manager.backupFileExtension = "backup";
+          home-manager.backupFileExtension = "backup";
         }
       ];
     };
