@@ -35,6 +35,16 @@ Chạy lệnh switch để build hệ thống (Lưu ý thay \#MacBook-Pro bằng
 ```
 sudo nix run nix-darwin \-- switch \--flake .\#MacBook-Pro
 ```
+    
+### **Buớc 5: Cài đặt fish shell làm mặc định**
+
+```
+# Thêm fish vào danh sách allowed shells (nếu flake chưa làm xong)
+sudo sh -c 'echo /run/current-system/sw/bin/fish >> /etc/shells'
+
+# Đổi shell mặc định sang fish
+chsh -s /run/current-system/sw/bin/fish
+```
 
 ## **2\. Gỡ bỏ (Uninstallation)**
 

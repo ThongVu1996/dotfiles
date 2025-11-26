@@ -18,7 +18,7 @@
   {
     darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = { inherit username; };
+      specialArgs = { inherit self; };
 
       modules = [
         ({ pkgs, config, ... }: {
@@ -37,6 +37,8 @@
 	  system.primaryUser = username;
           # system.primaryUser = username; # Dòng này gây lỗi nếu không có module custom, đã comment lại.
           nix.settings.trusted-users = [ "root" username ];
+          
+          system.configurationRevision = self.rev or self.dirtyRev or null;
           
           # Fonts
           fonts.packages = [
