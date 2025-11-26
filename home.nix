@@ -14,6 +14,8 @@
     bat
     neovim
     tmux	
+    stats
+    hidden-bar
   ];
 
   # 2. LIÊN KẾT CẤU HÌNH TỪ THƯ MỤC 'dot' (QUAN TRỌNG NHẤT)

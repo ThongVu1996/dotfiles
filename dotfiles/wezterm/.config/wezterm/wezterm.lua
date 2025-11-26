@@ -8,7 +8,7 @@ local act = wezterm.action
 local user_home = os.getenv("HOME")
 
 -- Apperence
-config.window_background_opacity = 0.8
+config.window_background_opacity = 0.6
 config.macos_window_background_blur = 100
 config.window_padding = {
 	left = 0,
