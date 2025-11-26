@@ -109,6 +109,12 @@ Sau khi thực hiện xong, hãy **Khởi động lại máy (Restart)** để h
 
 ## Note
 
+**Tạo môi trường cho dự án**
+
+```
+setupflake
+```
+
 **Kiểm tra dung lượng đã chiếm**
 
 ```
