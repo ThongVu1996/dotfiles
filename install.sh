@@ -1,19 +1,18 @@
 #!/bin/bash
-set -e # Dừng ngay nếu lỗi
+set -e
 
-# --- CẤU HÌNH MÀU SẮC ---
+# --- MÀU SẮC ---
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-echo -e "${GREEN}=== BẮT ĐẦU CÀI ĐẶT (ZERO TO HERO - CONFLICT FIX) ===${NC}"
+echo -e "${GREEN}=== BẮT ĐẦU CÀI ĐẶT (SSL SYMLINK TRICK) ===${NC}"
 
 # 0. CHECK FILE FLAKE
 if [ ! -f "flake.nix" ]; then
-    echo -e "${RED}[Lỗi] Không tìm thấy 'flake.nix'!${NC}"
-    echo "Hãy chắc chắn bạn đang chạy script trong thư mục repo (nix-config)."
+    echo -e "${RED}[Lỗi] Không tìm thấy 'flake.nix'! Hãy cd vào thư mục repo.${NC}"
     exit 1
 fi
 
@@ -25,49 +24,50 @@ for file in bashrc zshrc bash.bashrc synthetic.conf; do
     fi
 done
 
-# 2. CÀI ĐẶT NIX
+# 2. CÀI ĐẶT NIX (DÙNG DETERMINATE SYSTEMS)
 if ! command -v nix &> /dev/null; then
     echo -e "\n${BLUE}[2] Đang cài đặt Nix...${NC}"
-    sh <(curl -L https://nixos.org/nix/install) --daemon --yes
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm
     if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
     fi
+else
+    echo -e "\n${BLUE}[2] Nix đã có sẵn.${NC}"
 fi
 
-# 3. CẤU HÌNH NIX DAEMON (Tạm thời để fix SSL/Permissions)
-echo -e "\n${BLUE}[3] Cấu hình Nix Daemon tạm thời...${NC}"
-if [ ! -d "/etc/nix" ]; then sudo mkdir -p /etc/nix; fi
+# 3. KỸ THUẬT "MAGIC SYMLINK" CHO SSL (QUAN TRỌNG NHẤT)
+# Tạo đường dẫn Linux (/etc/ssl/certs...) trỏ về chứng chỉ macOS (/etc/ssl/cert.pem)
+# Điều này giúp Nix có mạng ngay cả khi ta xóa file config của nó.
+echo -e "\n${BLUE}[3] Tạo đường dẫn SSL giả lập Linux...${NC}"
 
-# Ghi file config để daemon chạy được
-sudo bash -c "cat > /etc/nix/nix.conf <<EOF
-build-users-group = nixbld
-trusted-users = root $USER
-ssl-cert-file = /etc/ssl/cert.pem
-experimental-features = nix-command flakes
-EOF"
-
-# Restart daemon để nhận config
-if [ -f "/Library/LaunchDaemons/org.nixos.nix-daemon.plist" ]; then
-    sudo launchctl kickstart -k system/org.nixos.nix-daemon 2>/dev/null || true
-    sleep 3
+if [ ! -d "/etc/ssl/certs" ]; then
+    echo "Tạo thư mục /etc/ssl/certs..."
+    sudo mkdir -p /etc/ssl/certs
 fi
 
-# 4. BUILD HỆ THỐNG
-echo -e "\n${BLUE}[4] Build hệ thống...${NC}"
+echo "Link chứng chỉ macOS vào vị trí Nix mong muốn..."
+# Force link (-sf) để đảm bảo nó trỏ đúng
+sudo ln -sf /etc/ssl/cert.pem /etc/ssl/certs/ca-certificates.crt
+export NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-# === FIX LỖI "Unexpected files in /etc" TẠI ĐÂY ===
-# Trước khi nix-darwin chạy, ta phải dọn đường cho nó.
-# Ta đổi tên file config thủ công vừa tạo ở trên, để nix-darwin tự tạo symlink mới.
+# 4. GIẢI QUYẾT XUNG ĐỘT FILE CONFIG
+echo -e "\n${BLUE}[4] Dọn đường cho nix-darwin...${NC}"
+
+# Bây giờ ta có thể xóa file config mà không sợ mất mạng
 if [ -f "/etc/nix/nix.conf" ] && [ ! -L "/etc/nix/nix.conf" ]; then
-    echo "${YELLOW}Di chuyển /etc/nix/nix.conf sang .backup để tránh xung đột...${NC}"
+    echo "${YELLOW}Di chuyển /etc/nix/nix.conf sang backup...${NC}"
     sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
 fi
 
-export NIXPKGS_ALLOW_UNFREE=1
-echo "Đang kích hoạt..."
+# Đảm bảo thư mục tồn tại
+if [ ! -d "/etc/nix" ]; then sudo mkdir -p /etc/nix; fi
 
-# Chạy lệnh switch
-sudo -E nix run --extra-experimental-features 'nix-command flakes' nix-darwin -- switch --flake . --impure
+# 5. BUILD HỆ THỐNG
+echo -e "\n${BLUE}[5] Build & Activate...${NC}"
+echo "${YELLOW}Nhập mật khẩu sudo để kích hoạt hệ thống...${NC}"
+
+# Chạy lệnh (Đã có mạng nhờ bước 3, không bị lỗi config nhờ bước 4)
+nix run --extra-experimental-features 'nix-command flakes' nix-darwin -- switch --flake . --impure
 
 echo -e "\n${GREEN}=== CÀI ĐẶT HOÀN TẤT! ===${NC}"
-echo "Hãy tắt Terminal và mở lại."
+echo "Vui lòng tắt Terminal và mở lại."

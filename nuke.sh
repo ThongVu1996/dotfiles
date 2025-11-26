@@ -6,12 +6,12 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo -e "${RED}!!! CẢNH BÁO: CHẾ ĐỘ HỦY DIỆT (NUKE) !!!${NC}"
-echo "Script này sẽ đưa máy Mac về trạng thái nguyên thủy:"
-echo "1. Xóa ổ đĩa /nix và toàn bộ packages."
-echo "2. Xóa các user/group của Nix."
-echo "3. Xóa các file config (dotfiles)."
-echo "4. Khôi phục các file hệ thống (/etc/zshrc, /etc/bashrc...) về ban đầu."
+echo -e "${RED}!!! CẢNH BÁO: CHẾ ĐỘ HỦY DIỆT (FINAL NUKE) !!!${NC}"
+echo "Script này sẽ xóa sạch Nix, các cấu hình liên quan và khôi phục máy về trạng thái gốc."
+echo "1. Gỡ bỏ ổ đĩa /nix (APFS Volume)."
+echo "2. Xóa Users/Groups của Nix."
+echo "3. Xóa các file config (bao gồm cả thủ thuật SSL Fix)."
+echo "4. Khôi phục file hệ thống gốc."
 echo ""
 read -p "Bạn có chắc chắn muốn tiếp tục? (y/N) " confirm
 
@@ -21,7 +21,7 @@ if [[ $confirm != [yY] ]]; then
 fi
 
 # --- BƯỚC 1: DỪNG DỊCH VỤ ---
-echo -e "\n${YELLOW}[1/6] Dừng dịch vụ Nix Daemon...${NC}"
+echo -e "\n${YELLOW}[1/7] Dừng dịch vụ Nix Daemon...${NC}"
 if [ -f "/Library/LaunchDaemons/org.nixos.nix-daemon.plist" ]; then
     sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist 2>/dev/null
     sudo rm /Library/LaunchDaemons/org.nixos.nix-daemon.plist
@@ -29,20 +29,20 @@ fi
 sudo pkill nix-daemon
 
 # --- BƯỚC 2: XÓA USER & GROUP ---
-echo -e "\n${YELLOW}[2/6] Xóa User và Group Nix...${NC}"
+echo -e "\n${YELLOW}[2/7] Xóa User và Group Nix...${NC}"
 sudo dscl . -delete /Groups/nixbld 2>/dev/null
 for i in $(seq 1 32); do
     sudo dscl . -delete /Users/_nixbld$i 2>/dev/null
 done
 
-# --- BƯỚC 3: XÓA Ổ ĐĨA /nix (QUAN TRỌNG) ---
-echo -e "\n${YELLOW}[3/6] Gỡ bỏ ổ đĩa APFS /nix...${NC}"
+# --- BƯỚC 3: XÓA Ổ ĐĨA /nix (FIX LỖI RESOURCE BUSY) ---
+echo -e "\n${YELLOW}[3/7] Gỡ bỏ ổ đĩa APFS /nix...${NC}"
 if mount | grep -q "on /nix"; then
-    echo "Phát hiện /nix là ổ đĩa. Đang Unmount..."
+    echo "Phát hiện /nix là ổ đĩa. Đang Force Unmount..."
     sudo diskutil unmount force /nix
-    echo "Đang xóa Volume..."
-    # Thử xóa bằng tên Volume thường gặp
-    sudo diskutil apfs deleteVolume "Nix Store" 2>/dev/null || sudo diskutil apfs deleteVolume /nix 2>/dev/null || echo "⚠️ Không xóa được Volume tự động. Hãy kiểm tra lại Disk Utility."
+    echo "Đang xóa Volume 'Nix Store'..."
+    # Thử xóa bằng tên, nếu không được thì xóa bằng đường dẫn mount point
+    sudo diskutil apfs deleteVolume "Nix Store" 2>/dev/null || sudo diskutil apfs deleteVolume /nix 2>/dev/null || echo "⚠️ Cảnh báo: Không xóa được tự động. Hãy kiểm tra Disk Utility."
 else
     if [ -d "/nix" ]; then
         echo "/nix là thư mục thường. Đang xóa..."
@@ -50,39 +50,47 @@ else
     fi
 fi
 
-# Xóa các tham chiếu mount
+# Xóa tham chiếu mount trong synthetic.conf và fstab
 sudo sed -i '' '/^nix/d' /etc/synthetic.conf 2>/dev/null
 sudo sed -i '' '/nix/d' /etc/fstab 2>/dev/null
-if [ -f "/etc/nix/nix.conf" ]; then
-    sudo rm -rf /etc/nix
+# Xóa file synthetic.conf nếu nó rỗng
+if [ ! -s "/etc/synthetic.conf" ]; then sudo rm -f "/etc/synthetic.conf"; fi
+
+# --- BƯỚC 4: DỌN DẸP "THỦ THUẬT SSL" ---
+echo -e "\n${YELLOW}[4/7] Dọn dẹp cấu hình SSL Hack (Linux Simulation)...${NC}"
+# Xóa symlink ta đã tạo trong install.sh để fix lỗi SSL
+if [ -L "/etc/ssl/certs/ca-certificates.crt" ]; then
+    sudo rm "/etc/ssl/certs/ca-certificates.crt"
+    # Xóa thư mục nếu rỗng
+    sudo rmdir "/etc/ssl/certs" 2>/dev/null || true
 fi
 
-# --- BƯỚC 4: XÓA FILE RÁC & CONFIG ---
-echo -e "\n${YELLOW}[4/6] Dọn dẹp file config cá nhân...${NC}"
+# --- BƯỚC 5: DỌN DẸP FILE RÁC & CONFIG ---
+echo -e "\n${YELLOW}[5/7] Dọn dẹp file config cá nhân...${NC}"
+sudo rm -rf /etc/nix
 rm -rf ~/.nix-profile ~/.nix-defexpr ~/.config/nix
 rm -rf ~/.config/nvim ~/.config/wezterm ~/.config/fish ~/.config/starship.toml ~/.tmux.conf ~/.config/lazygit
 sudo rm -rf /Applications/Nix\ Apps
 sudo rm -rf /run/current-system
 sudo rm -rf /etc/profiles/per-user
 
-# --- BƯỚC 5: KHÔI PHỤC FILE HỆ THỐNG (FIX LỖI BASHRC) ---
-echo -e "\n${YELLOW}[5/6] Khôi phục file hệ thống gốc (Restore Backups)...${NC}"
-# Danh sách các file mà trình cài đặt Nix thường backup
-FILES_TO_RESTORE=("bashrc" "zshrc" "bash.bashrc" "synthetic.conf" "profile")
+# --- BƯỚC 6: KHÔI PHỤC FILE HỆ THỐNG ---
+echo -e "\n${YELLOW}[6/7] Khôi phục file hệ thống gốc...${NC}"
+# Danh sách đầy đủ các file cần restore
+FILES=("bashrc" "zshrc" "bash.bashrc" "synthetic.conf" "profile")
 
-for file in "${FILES_TO_RESTORE[@]}"; do
-    BACKUP_FILE="/etc/${file}.backup-before-nix"
-    ORIGINAL_FILE="/etc/${file}"
+for file in "${FILES[@]}"; do
+    BACKUP="/etc/${file}.backup-before-nix"
+    TARGET="/etc/${file}"
     
-    if [ -f "$BACKUP_FILE" ]; then
-        echo "✅ Khôi phục: $BACKUP_FILE -> $ORIGINAL_FILE"
-        sudo mv "$BACKUP_FILE" "$ORIGINAL_FILE"
+    if [ -f "$BACKUP" ]; then
+        echo "✅ Khôi phục: $BACKUP -> $TARGET"
+        sudo mv "$BACKUP" "$TARGET"
     fi
 done
 
-# --- BƯỚC 6: TỰ XÓA REPO ---
-echo -e "\n${YELLOW}[6/6] Dọn dẹp thư mục cài đặt...${NC}"
-# Lưu ý: Lệnh này sẽ xóa chính thư mục chứa script này
+# --- BƯỚC 7: TỰ XÓA REPO ---
+echo -e "\n${YELLOW}[7/7] Dọn dẹp thư mục cài đặt...${NC}"
 rm -rf ~/nix-config
 
 echo -e "\n${GREEN}===========================================${NC}"
