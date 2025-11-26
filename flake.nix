@@ -55,6 +55,7 @@
             docker
             lazydocker
             lazygit
+            btop
             # Apps GUI
             wezterm
             vscode
