@@ -14,6 +14,9 @@ set -Ux STARSHIP_CONFIG ~/.config/starship.toml
 alias vi='nvim'
 alias ls='eza'
 
+# System Rebuild Alias
+alias nixss="sudo nix run nix-darwin -- switch --flake ~/nix-config#MacBook-Pro"
+
 # fzf
 fzf --fish | source
 alias f=fzf

@@ -23,6 +23,7 @@
    xdg.configFile."nvim".source = ./dotfiles/nvim/.config/nvim;
    xdg.configFile."fish/config.fish".source = ./dotfiles/fish/.config/fish/config.fish;
    xdg.configFile."wezterm".source = ./dotfiles/wezterm/.config/wezterm;
+   xdg.configFile."aerospace/aerospace.toml".source = ./dotfiles/aerospace/.config/aerospace/aerospace.toml;
    home.file.".tmux.conf".source = ./dotfiles/tmux/.tmux.conf;
 
 
