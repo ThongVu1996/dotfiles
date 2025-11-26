@@ -59,10 +59,12 @@ return {
 		})
 
 		-- Ensure MasonToolsInstall runs only when Mason is opened
-		vim.api.nvim_create_autocmd("User", {
-			pattern = "MasonToolsUpdateCompleted",
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "mason",
 			callback = function()
-				vim.cmd("MasonToolsInstall") -- Runs only when Mason is opened
+				vim.schedule(function()
+					vim.cmd("MasonToolsInstall")
+				end)
 			end,
 		})
 	end,

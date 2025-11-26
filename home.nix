@@ -16,6 +16,7 @@
     tmux	
     stats
     hidden-bar
+    nodejs_22
   ];
 
   # 2. LIÊN KẾT CẤU HÌNH TỪ THƯ MỤC 'dot' (QUAN TRỌNG NHẤT)
