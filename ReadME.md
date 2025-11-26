@@ -35,7 +35,7 @@ Chạy lệnh switch để build hệ thống (Lưu ý thay \#MacBook-Pro bằng
 ```
 sudo nix run nix-darwin \-- switch \--flake .\#MacBook-Pro
 ```
-    
+
 ### **Buớc 5: Cài đặt fish shell làm mặc định**
 
 ```
@@ -55,7 +55,7 @@ Nếu bạn muốn gỡ sạch toàn bộ để cài lại từ đầu, hãy là
 Tạo file giả synthetic.conf (để tránh lỗi) và chạy uninstaller:
 
 ```
-sudo touch /etc/synthetic.conf  
+sudo touch /etc/synthetic.conf
 sudo nix \--extra-experimental-features "nix-command flakes" run nix-darwin\#darwin-uninstaller
 ```
 
@@ -73,7 +73,7 @@ sudo launchctl remove org.nixos.darwin-store
 **2\. Xóa các user và group của Nix:**
 
 ```
-sudo dscl . \-delete /Groups/nixbld  
+sudo dscl . \-delete /Groups/nixbld
 for i in $(dscl . \-list /Users | grep \_nixbld); do sudo dscl . \-delete /Users/$i; done
 ```
 
@@ -93,7 +93,7 @@ scutil --get LocalHostName # kiểm tra hostname
 ```
 
 ```
-sudo rm \-rf /etc/nix  
+sudo rm \-rf /etc/nix
 sudo rm \-f /etc/synthetic.conf
 ```
 
@@ -105,4 +105,27 @@ Sau khi thực hiện xong, hãy **Khởi động lại máy (Restart)** để h
 
 Để biết thêm chi tiết, bạn có thể xem tài liệu gốc tại:
 
-* [Nix-Darwin Uninstallation Guide](https://www.google.com/search?q=https://github.com/nix-darwin/nix-darwin%23uninstalling-for-instructions-how-to-uninstall-nix-darwin)
+- [Nix-Darwin Uninstallation Guide](https://www.google.com/search?q=https://github.com/nix-darwin/nix-darwin%23uninstalling-for-instructions-how-to-uninstall-nix-darwin)
+
+## Note
+
+**Kiểm tra dung lượng đã chiếm**
+
+```
+sudo rm \-rf /etc/nix
+sudo rm \-f /etc/synthetic.conf
+```
+
+**Dọn rác**
+
+```bash
+nix-collect-garbage -d
+# Hoặc xóa rác hệ thống (cần sudo)
+sudo nix-collect-garbage -d
+```
+
+**Optimize**
+
+```bash
+nix-store --optimise
+```
