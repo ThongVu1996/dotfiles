@@ -5,11 +5,11 @@ return {
 	opts = {
 		bigfile = { enabled = true },
 		dashboard = {
-  sections = {
-    { section = "header" },
-    { section = "keys", gap = 1, padding = 1 },
-    { section = "startup" },
-  },
+			sections = {
+				{ section = "header" },
+				{ section = "keys", gap = 1, padding = 1 },
+				{ section = "startup" },
+			},
 		},
 		indent = { enabled = true },
 		input = { enabled = true },
@@ -37,6 +37,10 @@ return {
 					filename_first = true, -- Display fileName before the file path
 				},
 			},
+		},
+		lazygit = {
+			enabled = true,
+			configure = true,
 		},
 		gitbrowse = {
 			what = "branch",

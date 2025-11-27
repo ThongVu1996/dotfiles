@@ -69,6 +69,8 @@ function toggle_side_by_side
         git config --global delta.side-by-side true
         echo "✅ Side-by-side mode enabled"
     end
+    echo -e "\n$message"
+    commandline -f repaint
 end
 
 # Bind Ctrl + G to toggle

@@ -36,7 +36,7 @@ return {
 			map("n", "<leader>hb", function()
 				gs.blame_line({ full = true })
 				map("n", "<leader>hs", gs.stage_hunk, "Stage hunk")
-				map("n", "<leader>hr", gs.reset_hunk, "Rehset hunk")
+				map("n", "<leader>hr", gs.reset_hunk, "Reset hunk")
 				map("n", "<leader>hs", gs.stage_hunk, "Stage hunk")
 				map("n", "<leader>hr", gs.reset_hunk, "Reset hunk")
 			end, "Blame line") -- Show user's name edit code

@@ -1,10 +1,29 @@
 gui:
-  sidePanelWidth: 0.2
+  nerdFontsVersion: "3"
+  sidePanelWidth: 0.25
+  showRandomTip: false
+  theme:
+    activeBorderColor:
+      - "#7aa2f7"
+      - bold
+    inactiveBorderColor:
+      - "#565f89"
+    optionsTextColor:
+      - "#7aa2f7"
+    selectedLineBgColor:
+      - "#2e3c64"
+    cherryPickedCommitBgColor:
+      - "#4fd6be"
+    cherryPickedCommitFgColor:
+      - "#15161e"
+    unstagedChangesColor:
+      - "#c53b53"
 
 git:
+  # CẤU TRÚC MỚI: Dùng 'pagers' dạng danh sách (có dấu gạch đầu dòng)
   pagers:
     - colorArg: always
-      pager: delta --dark --paging=never
+      pager: "delta --dark --paging=never --line-numbers --syntax-theme='Dracula' --minus-style='syntax #3f2d3d' --plus-style='syntax #1c3629'"
 
 os:
   editPreset: "nvim"
