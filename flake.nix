@@ -55,6 +55,7 @@
             docker
             lazydocker
             lazygit
+            delta
             btop
             # Apps GUI
             wezterm

@@ -2,6 +2,9 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
+# Setting config default for MacOS
+set -gx XDG_CONFIG_HOME "$HOME/.config"
+
 # Config starship
 set -U fish_greeting ""
 starship init fish | source
@@ -49,6 +52,7 @@ alias tcf="cd ~/nix-config/dotfiles/tmux && echo 'You can configure Tmux'"
 alias scf="cd ~/nix-config/dotfiles/starship/ && echo 'You can configure Starship'"
 alias wcf="cd ~/nix-config/dotfiles/wezterm/.config/wezterm"
 alias acf="cd ~/nix-config/dotfiles/aerospace/.config/aerospace"
+alias lgcf="cd ~/nix-config/dotfiles/lazygit/.config/lazygit"
 alias ncf="cd ~/nix-config"
 alias pcf="cd ~/Project/"
 
