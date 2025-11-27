@@ -16,7 +16,7 @@ set -Ux STARSHIP_CONFIG ~/.config/starship.toml
 # open nvim
 alias vi='nvim'
 alias ls='eza'
-
+alias lz='lazygit'
 # System Rebuild Alias
 alias nixss="sudo nix run nix-darwin -- switch --flake ~/nix-config#(scutil --get LocalHostName)"
 
@@ -52,7 +52,7 @@ alias tcf="cd ~/nix-config/dotfiles/tmux && echo 'You can configure Tmux'"
 alias scf="cd ~/nix-config/dotfiles/starship/ && echo 'You can configure Starship'"
 alias wcf="cd ~/nix-config/dotfiles/wezterm/.config/wezterm"
 alias acf="cd ~/nix-config/dotfiles/aerospace/.config/aerospace"
-alias lgcf="cd ~/nix-config/dotfiles/lazygit/.config/lazygit"
+alias lzcf="cd ~/nix-config/dotfiles/lazygit/.config/lazygit"
 alias ncf="cd ~/nix-config"
 alias pcf="cd ~/Project/"
 
