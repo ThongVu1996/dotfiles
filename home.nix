@@ -1,52 +1,42 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, lib, username, ... }:
 
 {
+  programs.home-manager.enable = true;
+  home.stateVersion = "24.05";
   home.username = username;
   home.homeDirectory = "/Users/${username}";
-  home.stateVersion = "24.05";
+  home.enableNixpkgsReleaseCheck = false;
+  xdg.enable = true;
 
-  # 1. Cài đặt các phần mềm cần thiết
-  home.packages = with pkgs; [
-    starship
-    ripgrep
-    fzf
-    eza
-    bat
-    neovim
-    tmux	
-    stats
-    hidden-bar
-    nodejs_22
+  # Import module aerospace tách riêng
+  imports = [
+    ./aerospace.nix
   ];
 
-  # 2. LIÊN KẾT CẤU HÌNH TỪ THƯ MỤC 'dot' (QUAN TRỌNG NHẤT)
-  # Cú pháp: xdg.configFile."TÊN_TRONG_CONFIG".source = ĐƯỜNG_DẪN_THỰC_TẾ;
-   xdg.configFile."starship.toml".source = ./dotfiles/starship/.config/starship.toml;
-   xdg.configFile."lazygit/config.yml".source = ./dotfiles/lazygit/.config/lazygit/config.yml;
-   # xdg.configFile."nvim".source = ./dotfiles/nvim/.config/nvim;
-   # xdg.configFile."wezterm".source = ./dotfiles/wezterm/.config/wezterm;
-    # xdg.configFile."fish/config.fish".source = ./dotfiles/fish/.config/fish/config.fish;
-    # xdg.configFile."aerospace/aerospace.toml".source = ./dotfiles/aerospace/.config/aerospace/aerospace.toml;
-   home.file.".tmux.conf".source = ./dotfiles/tmux/.tmux.conf;
+  # Home Packages
+  home.packages = with pkgs; [
+    starship ripgrep fzf eza bat neovim tmux stats hidden-bar
+    nodejs_22 tailscale awscli2 eksctl kubectl fd 
+    # aerospace # Không cần cài ở đây nữa vì programs.aerospace.enable = true sẽ tự cài
+  ];
 
-   # 1. Neovim (Dùng mkOutOfStoreSymlink để sửa là ăn ngay)
-  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/nvim/.config/nvim";
+  # Symlinks configs
+  home.file.".tmux.conf".source = ./dotfiles/tmux/.tmux.conf;
+  xdg.configFile."starship.toml".source = ./dotfiles/starship/.config/starship.toml;
+  
+  # Out of store symlinks (Editable configs)
+  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/nvim/.config/nvim";
+  xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/wezterm/.config/wezterm";
+  xdg.configFile."fish/config.fish".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/fish/.config/fish/config.fish";
+  xdg.configFile."fish/functions".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/fish/.config/fish/functions";
 
-  # 2. WezTerm (Tương tự)
-  xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/wezterm/.config/wezterm";
-
-   xdg.configFile."fish/config.fish".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/fish/.config/fish/config.fish";
-   xdg.configFile."fish/functions".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/fish/.config/fish/functions";
-   xdg.configFile."aerospace/aerospace.toml".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/aerospace/.config/aerospace/aerospace.toml";
-  # 3. Kích hoạt Home Manager
-  programs.home-manager.enable = true;
-  # 4 Cài đặt direnv cho môi trường từng dự án
-  programs.direnv = {
-  enable = true;
-  nix-direnv.enable = true; # Quan trọng: giúp cache nhanh hơn, ko bị garbage collect
-};
-  # 4. Cấu hình biến môi trường (Optional)
+  # Environment Variables
   home.sessionVariables = {
     EDITOR = "nvim";
+  };
+  
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 }
