@@ -117,3 +117,22 @@ sudo chsh \-s $(which fish)
 
 Khởi động lại máy (Restart) để toàn bộ thay đổi có hiệu lực.
 
+## Note
+
+**Tìm đến tận cùng path được quản lý bởi nix**
+
+```
+readlink -f $(which node) #Thay node bằng tên phần mềm
+```
+
+**Setup môi trường dev cho project**
+
+```
+setupflake
+```
+
+**Xóa các file không còn dùng đến nữa - an toàn**
+
+```
+nix-collect-garbage
+```
