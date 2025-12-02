@@ -1,137 +1,119 @@
-# **Hướng dẫn Cài đặt và Gỡ bỏ Nix & Nix-Darwin**
+# **Hướng dẫn Cài đặt và Quản lý Nix (Nix-Darwin)**
 
-Tài liệu này hướng dẫn cách thiết lập môi trường Nix trên macOS sử dụng bộ cài đặt của Determinate Systems và cấu hình nix-darwin. Đồng thời cung cấp quy trình gỡ bỏ sạch sẽ (clean uninstall) khi cần thiết.
+Tài liệu này hướng dẫn chi tiết cách gỡ bỏ sạch Nix cũ, cài đặt lại Nix mới thông qua _Determinate Systems Installer_, và áp dụng cấu hình từ repository dotfiles.
 
-## **1\. Cài đặt (Installation)**
+## **1\. Chuẩn bị (Clone Config)**
 
-Thực hiện lần lượt các lệnh sau trong Terminal:
+Trước tiên, hãy clone repository chứa cấu hình về máy:
 
-### **Bước 1: Cài đặt Nix (Determinate Systems)**
+```
+git clone \-b feature/2025\_12\_01/Nix git@github.com:ThongVu1996/dotfiles.git \~/nix-config
+```
+
+## **2\. Quy trình Gỡ bỏ Nix (Uninstall)**
+
+Nếu máy đã từng cài Nix, hãy thực hiện các bước sau để gỡ bỏ sạch sẽ.
+
+### **Bước 1: Xóa Users và Groups của Nix**
+
+Chạy các lệnh sau trong Terminal để xóa nhóm và người dùng build của Nix:
+
+```
+sudo dscl . \-delete /Groups/nixbld 2\>/dev/null
+for i in $(dscl . \-list /Users | grep \_nixbld); do sudo dscl . \-delete /Users/$i; done
+
+```
+
+### **Bước 2: Dọn dẹp file cấu hình Shell**
+
+Bạn cần xóa các dòng code liên quan đến nix-daemon trong các file cấu hình shell.
+
+- Mở và chỉnh sửa file .zshrc:
+
+  ```
+  nano \~/.zshrc
+  \# Tìm và xóa các đoạn code liên quan đến nix-daemon, sau đó lưu lại (Ctrl+O \-\> Enter \-\> Ctrl+X)
+  ```
+
+- Mở và chỉnh sửa file /etc/bashrc:
+  ```
+  sudo nano /etc/bashrc
+  \# Tìm và xóa các đoạn code liên quan đến nix-daemon
+  ```
+
+### **Bước 3: Xóa các file hệ thống Nix**
+
+```
+sudo rm \-rf /etc/nix /var/root/.nix-profile /var/root/.nix-defexpr /var/root/.nix-channels
+sudo rm /etc/synthetic.conf 2\>/dev/null
+
+```
+
+### **Bước 4: Xóa APFS Volume (Nix Store)**
+
+1. Mở ứng dụng **Disk Utility**.
+2. Tìm volume có tên **Nix Store** (thường nằm cùng nhóm container với Macintosh HD).
+3. Nhấn chuột phải vào "Nix Store" \-\> Chọn **Delete APFS Volume**.
+
+### **Bước 5: Khởi động lại máy**
+
+**Lưu ý:** Bắt buộc khởi động lại máy (Restart) trước khi chuyển sang phần cài đặt.
+
+## **3\. Quy trình Cài đặt (Install)**
+
+### **Bước 1: Chuẩn bị môi trường**
+
+Mở Terminal, đảm bảo bạn đang sử dụng zsh (nhấn Command \+ Shift \+ N hoặc gõ /bin/zsh).
+
+Chạy lệnh sau để xóa mật khẩu mã hóa volume cũ (nếu có) trong Keychain:
+
+```
+sudo security delete-generic-password \-a "Nix Store" \-s "Nix Store" \-D "Encrypted volume password"
+
+```
+
+_Kiểm tra lại:_ Mở nano \~/.zshrc một lần nữa để chắc chắn không còn tàn dư của nix-daemon cũ.
+
+### **Bước 2: Cài đặt Nix (Determinate Systems Installer)**
+
+Chạy lệnh cài đặt sau:
 
 ```
 curl \--proto '=https' \--tlsv1.2 \-sSf \-L \[https://install.determinate.systems/nix\](https://install.determinate.systems/nix) | sh \-s \-- install
 ```
 
-### **Bước 2: Xử lý xung đột chứng chỉ SSL**
+Sau khi cài xong, hãy **tắt Terminal và mở lại** để nạp cấu hình mới.
 
-Đổi tên file chứng chỉ cũ để tránh lỗi khi kích hoạt nix-darwin:
+### **Bước 3: Kích hoạt và Apply cấu hình**
 
-```
-sudo mv /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt.backup
-```
-
-### **Bước 3: Nạp môi trường Nix**
-
-Kích hoạt Nix trong phiên làm việc hiện tại (hoặc tắt Terminal bật lại):
+Kích hoạt daemon và thêm vào file khởi động shell:
 
 ```
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+
+echo "if \[ \-e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' \]; then . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'; fi" \>\> \~/.zshrc
 ```
 
-### **Bước 4: Kích hoạt Nix-Darwin**
-
-Chạy lệnh switch để build hệ thống (Lưu ý thay \#MacBook-Pro bằng hostname của bạn nếu khác):
+Di chuyển vào thư mục config và build hệ thống (thay thế \#MacBook-Pro bằng tên flake của bạn nếu khác):
 
 ```
+cd \~/nix-config
 sudo nix run nix-darwin \-- switch \--flake .\#MacBook-Pro
 ```
 
-### **Buớc 5: Cài đặt fish shell làm mặc định**
+## **4\. Thiết lập Shell mặc định (Fish Shell)**
+
+Sau khi cài đặt xong nix-darwin, nếu bạn muốn dùng Fish shell làm mặc định:
 
 ```
-# Thêm fish vào danh sách allowed shells (nếu flake chưa làm xong)
-sudo sh -c 'echo /run/current-system/sw/bin/fish >> /etc/shells'
+\# Thêm đường dẫn fish vào danh sách shells hợp lệ
+sudo sh \-c 'echo $(which fish) \>\> /etc/shells'
 
-# Đổi shell mặc định sang fish
-chsh -s /run/current-system/sw/bin/fish
+\# Đổi shell mặc định sang fish
+sudo chsh \-s $(which fish)
 ```
 
-## **2\. Gỡ bỏ (Uninstallation)**
+### **Bước cuối cùng**
 
-Nếu bạn muốn gỡ sạch toàn bộ để cài lại từ đầu, hãy làm theo các bước dưới đây.
+Khởi động lại máy (Restart) để toàn bộ thay đổi có hiệu lực.
 
-### **Bước 1: Chạy trình gỡ cài đặt của Nix-Darwin**
-
-Tạo file giả synthetic.conf (để tránh lỗi) và chạy uninstaller:
-
-```
-sudo touch /etc/synthetic.conf
-sudo nix \--extra-experimental-features "nix-command flakes" run nix-darwin\#darwin-uninstaller
-```
-
-### **Bước 2: Xóa thủ công (Nuclear Option)**
-
-Nếu trình gỡ cài đặt chưa sạch hoặc báo lỗi, hãy chạy các lệnh sau để xóa tận gốc:
-
-**1\. Dừng các services:**
-
-```
-sudo launchctl remove org.nixos.nix-daemon
-sudo launchctl remove org.nixos.darwin-store
-```
-
-**2\. Xóa các user và group của Nix:**
-
-```
-sudo dscl . \-delete /Groups/nixbld
-for i in $(dscl . \-list /Users | grep \_nixbld); do sudo dscl . \-delete /Users/$i; done
-```
-
-**3\. Xóa thư mục Nix (Quan trọng nhất):**
-
-```
-sudo rm \-rf /nix
-```
-
-**4\. Xóa các file cấu hình còn sót lại trong /etc:**
-
-Trước tiên hãy check để thay thế vào các file flake.nix và home.nix cho hợp lý
-
-```
-whoami # kiểm trả username
-scutil --get LocalHostName # kiểm tra hostname
-```
-
-```
-sudo rm \-rf /etc/nix
-sudo rm \-f /etc/synthetic.conf
-```
-
-### **Bước 3: Hoàn tất**
-
-Sau khi thực hiện xong, hãy **Khởi động lại máy (Restart)** để hệ thống sạch hoàn toàn.
-
-## **Tham khảo**
-
-Để biết thêm chi tiết, bạn có thể xem tài liệu gốc tại:
-
-- [Nix-Darwin Uninstallation Guide](https://www.google.com/search?q=https://github.com/nix-darwin/nix-darwin%23uninstalling-for-instructions-how-to-uninstall-nix-darwin)
-
-## Note
-
-**Tạo môi trường cho dự án**
-
-```
-setupflake
-```
-
-**Kiểm tra dung lượng đã chiếm**
-
-```
-sudo rm \-rf /etc/nix
-sudo rm \-f /etc/synthetic.conf
-```
-
-**Dọn rác**
-
-```bash
-nix-collect-garbage -d
-# Hoặc xóa rác hệ thống (cần sudo)
-sudo nix-collect-garbage -d
-```
-
-**Optimize**
-
-```bash
-nix-store --optimise
-```
