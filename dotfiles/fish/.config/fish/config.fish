@@ -5,6 +5,23 @@ end
 # Setting config default for MacOS
 set -gx XDG_CONFIG_HOME "$HOME/.config"
 
+# 1. Load môi trường của Nix-Darwin (System Packages)
+if test -e /run/current-system/sw/bin
+    fish_add_path /run/current-system/sw/bin
+end
+
+# 2. Load môi trường của Home Manager (Home Packages)
+if test -e /etc/profiles/per-user/$USER/bin
+    fish_add_path /etc/profiles/per-user/$USER/bin
+else if test -e ~/.nix-profile/bin
+    fish_add_path ~/.nix-profile/bin
+end
+
+# 3. Load Nix Daemon (để đảm bảo các biến môi trường khác)
+if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+end
+
 # Config starship
 set -U fish_greeting ""
 starship init fish | source
