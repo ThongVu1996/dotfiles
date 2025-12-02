@@ -15,7 +15,7 @@
   # System Packages
   environment.systemPackages = with pkgs; [
     vim git neofetch mkalias docker lazydocker lazygit delta btop
-    wezterm vscode fish
+    wezterm fish
   ];
 
   # Fonts
