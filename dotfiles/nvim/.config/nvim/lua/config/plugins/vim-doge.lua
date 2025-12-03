@@ -1,7 +1,12 @@
 return {
 	"kkoomen/vim-doge",
 	-- lazy = false,
-	event = "FileType php",
+	-- event = "FileType php",
+	event = {
+		"FileType",
+	},
+
+	build = ":call doge#install()",
 	-- :call doge#install() - run add the first time
 	config = function()
 		vim.g.doge_doc_standard_php = "phpdoc" -- Set the PHPDoc style
