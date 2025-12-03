@@ -14,6 +14,23 @@ return {
 	init_options = {
 		-- licenceKey = get_intelephense_license(),
 	},
+	settings = {
+		intelephense = {
+			files = {
+				exclude = {
+					"**/.git/**",
+					"**/.svn/**",
+					"**/.hg/**",
+					"**/CVS/**",
+					"**/.DS_Store/**",
+					"**/node_modules/**",
+					"**/bower_components/**",
+					"**/vendor/**/{Test,test,Tests,tests}/**",
+					"**/.direnv/**", -- <== THIS FIXES YOUR ISSUE
+				},
+			},
+		},
+	},
 	capabilities = vim.tbl_deep_extend(
 		"force",
 		{},
