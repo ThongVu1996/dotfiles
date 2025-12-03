@@ -37,6 +37,18 @@ return {
 					filename_first = true, -- Display fileName before the file path
 				},
 			},
+			hidden = true, -- True: Hiện file ẩn (bắt đầu bằng dấu chấm)
+			ignored = false, -- False: Ẩn các file nằm trong .gitignore
+
+			-- 2. DANH SÁCH CHẶN TUYỆT ĐỐI (Thêm cái này để fix lỗi của bạn)
+			exclude = {
+				"node_modules",
+				".direnv",
+				".git",
+				"dist",
+				"build",
+				"vendor", -- Nếu dùng PHP/Laravel thì chặn thêm folder này
+			},
 		},
 		lazygit = {
 			enabled = true,
