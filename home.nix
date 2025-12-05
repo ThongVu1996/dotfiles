@@ -1,5 +1,8 @@
 { config, pkgs, lib, username, ... }:
 
+let 
+  macismPkg = import ./macism.nix { inherit pkgs; };
+in
 {
   programs.home-manager.enable = true;
   home.stateVersion = "24.05";
@@ -13,6 +16,9 @@
     starship ripgrep fzf eza bat neovim tmux hidden-bar
     nodejs_22 tailscale awscli2 eksctl kubectl fd 
     aerospace 
+  ]
+  ++ lib.optionals pkgs.stdenv.isDarwin [
+    macismPkg
   ];
 
   # Symlinks configs
