@@ -50,10 +50,6 @@ return {
 				width = "block",
 				right_pad = 1,
 			},
-			heading = {
-				sign = false,
-				icons = { "1 ", "2 ", "3 ", "4 ", "5 ", "6 " },
-			},
 		},
 	},
 }

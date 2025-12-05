@@ -1,0 +1,77 @@
+{
+  "Callout: Note": {
+    "prefix": ["note"],
+    "body": ["> [!NOTE]", "> $1"],
+    "description": "Insert Note callout"
+  },
+  "Callout: Tip": {
+    "prefix": ["tip"],
+    "body": ["> [!TIP]", "> $1"],
+    "description": "Insert Tip callout"
+  },
+  "Callout: Important": {
+    "prefix": ["important"],
+    "body": ["> [!IMPORTANT]", "> $1"],
+    "description": "Insert Important callout"
+  },
+  "Callout: Warning": {
+    "prefix": ["warning"],
+    "body": ["> [!WARNING]", "> $1"],
+    "description": "Insert Warning callout"
+  },
+  "Callout: Caution": {
+    "prefix": ["caution"],
+    "body": ["> [!CAUTION]", "> $1"],
+    "description": "Insert Caution callout"
+  },
+  "Callout: Abstract": {
+    "prefix": ["abstract"],
+    "body": ["> [!ABSTRACT]", "> $1"],
+    "description": "Insert Abstract callout"
+  },
+  "Callout: Info": {
+    "prefix": ["!info"],
+    "body": ["> [!INFO]", "> $1"],
+    "description": "Insert Info callout"
+  },
+  "Callout: Todo": {
+    "prefix": ["todo"],
+    "body": ["> [!TODO]", "> $1"],
+    "description": "Insert Todo callout"
+  },
+  "Callout: Success": {
+    "prefix": ["success"],
+    "body": ["> [!SUCCESS]", "> $1"],
+    "description": "Insert Success callout"
+  },
+  "Callout: Question": {
+    "prefix": ["question"],
+    "body": ["> [!QUESTION]", "> $1"],
+    "description": "Insert Question callout"
+  },
+  "Callout: Failure": {
+    "prefix": ["failure"],
+    "body": ["> [!FAILURE]", "> $1"],
+    "description": "Insert Failure callout"
+  },
+  "Callout: Danger": {
+    "prefix": ["danger"],
+    "body": ["> [!DANGER]", "> $1"],
+    "description": "Insert Danger callout"
+  },
+  "Callout: Bug": {
+    "prefix": ["bug"],
+    "body": ["> [!BUG]", "> $1"],
+    "description": "Insert Bug callout"
+  },
+  "Callout: Example": {
+    "prefix": ["example"],
+    "body": ["> [!EXAMPLE]", "> $1"],
+    "description": "Insert Example callout"
+  },
+  "Callout: Quote": {
+    "prefix": ["quote"],
+    "body": ["> [!QUOTE]", "> $1"],
+    "description": "Insert Quote callout"
+  }
+}
