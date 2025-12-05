@@ -47,7 +47,7 @@ return {
 				".git",
 				"dist",
 				"build",
-				"vendor", -- Nếu dùng PHP/Laravel thì chặn thêm folder này
+				-- "vendor", -- Nếu dùng PHP/Laravel thì chặn thêm folder này
 			},
 		},
 		lazygit = {
