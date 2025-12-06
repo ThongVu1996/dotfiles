@@ -49,6 +49,42 @@ return {
 				"build",
 				-- "vendor", -- Nếu dùng PHP/Laravel thì chặn thêm folder này
 			},
+			-- 1. KHAI BÁO HÀM XỬ LÝ Ở ĐÂY (Để nhận đúng biến Picker)
+			actions = {
+				copy_to_clipboard = function(picker, item)
+					-- Lúc này 'picker' là chuẩn, có hàm :current()
+					-- Và 'item' cũng được truyền sẵn vào luôn
+
+					-- Nếu item chưa có (trường hợp hiếm), thử lấy thủ công
+					if not item then
+						item = picker:current()
+					end
+
+					if item then
+						-- Ưu tiên lấy text hiển thị hoặc đường dẫn file
+						local content = item.text or item.file or item.name or vim.inspect(item)
+
+						-- Copy vào Clipboard hệ thống
+						vim.fn.setreg("+", content)
+
+						vim.notify("✅ Đã copy: " .. content, vim.log.levels.INFO)
+
+						-- (Tuỳ chọn) Đóng picker sau khi copy?
+						-- picker:close()
+					else
+						vim.notify("⚠️ Không có item nào để copy", vim.log.levels.WARN)
+					end
+				end,
+			},
+
+			win = {
+				input = {
+					keys = {
+						-- 2. GỌI TÊN ACTION ĐÃ KHAI BÁO Ở TRÊN
+						["<c-y>"] = { "copy_to_clipboard", mode = { "n", "i" }, desc = "Copy Item to Clipboard" },
+					},
+				},
+			},
 		},
 		lazygit = {
 			enabled = true,
