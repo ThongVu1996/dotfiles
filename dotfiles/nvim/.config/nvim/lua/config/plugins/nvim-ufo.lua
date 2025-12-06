@@ -1,16 +1,54 @@
 return {
 	"kevinhwang91/nvim-ufo",
 	dependencies = { "kevinhwang91/promise-async" },
-	event = "VeryLazy",
+	event = { "BufReadPost", "BufNewFile" }, -- Load khi mở file thực tế (tối ưu hơn VeryLazy)
+	init = function()
+		-- Cài đặt thông số vim cơ bản cho fold (Theo docs khuyến nghị)
+		vim.o.foldcolumn = "1" -- Hiển thị cột fold bên trái
+		vim.o.foldlevel = 99
+		vim.o.foldlevelstart = 99
+		vim.o.foldenable = true
+		vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+	end,
 	opts = {
-		open_fold_hl_timeout = 400,
-		close_fold_kinds_for_ft = { "imports", "comment" },
+		-- 1. FIX LỖI CRASH: Chọn provider (nguồn) để tạo fold
+		provider_selector = function(bufnr, filetype, buftype)
+			-- Danh sách các file/cửa sổ không bao giờ kích hoạt ufo
+			local excluded_ft = {
+				"snacks_dashboard",
+				"snacks_notif",
+				"snacks_terminal",
+				"snacks_input",
+				"log",
+				"neo-tree",
+				"lazy",
+				"mason",
+				"notify",
+				"qf", -- quickfix list
+			}
+
+			-- Nếu là file rác hoặc nằm trong danh sách chặn -> return "" (Tắt ufo)
+			if vim.tbl_contains(excluded_ft, filetype) or buftype == "nofile" then
+				return ""
+			end
+
+			-- Với các file code: Ưu tiên Treesitter, sau đó đến Indent
+			-- (Bạn có thể thêm "lsp" vào đầu nếu muốn dùng LSP fold)
+			return { "treesitter", "indent" }
+		end,
+
+		-- 2. Tùy chỉnh hiệu ứng mở/đóng
+		open_fold_hl_timeout = 150,
+		close_fold_kinds_for_ft = {
+			default = { "imports", "comment" },
+		},
+
+		-- 3. Cửa sổ xem trước (Preview)
 		preview = {
 			win_config = {
-				border = "rounded",
+				border = { "", "─", "", "", "", "─", "", "" },
+				winhighlight = "Normal:Folded",
 				winblend = 0,
-				winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
-				maxheight = math.floor(vim.o.lines * 0.5),
 			},
 			mappings = {
 				scrollU = "<C-u>",
@@ -20,14 +58,8 @@ return {
 			},
 		},
 	},
-	init = function()
-		vim.o.foldcolumn = "1" -- Always show fold column
-		vim.o.foldlevel = 99
-		vim.o.foldlevelstart = 99
-		vim.o.foldenable = true
-		vim.o.fillchars = "fold: ,foldopen:,foldsep: ,foldclose:"
-	end,
 	config = function(_, opts)
+		-- Custom Text hiển thị số dòng bị ẩn (Giao diện đẹp)
 		local handler = function(virtText, lnum, endLnum, width, truncate)
 			local newVirtText = {}
 			local suffix = (" 󰁂 %d "):format(endLnum - lnum)
@@ -54,18 +86,20 @@ return {
 			table.insert(newVirtText, { suffix, "MoreMsg" })
 			return newVirtText
 		end
-		opts["fold_virt_text_handler"] = handler
+
+		-- Gán handler vào opts
+		opts.fold_virt_text_handler = handler
+
+		-- Setup plugin
 		require("ufo").setup(opts)
 
-		-- Keymaps
+		-- Keymaps (Phím tắt)
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
 		vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
+		vim.keymap.set("n", "zm", require("ufo").closeFoldsWith)
 		vim.keymap.set("n", "zp", function()
 			require("ufo").peekFoldedLinesUnderCursor()
-			vim.defer_fn(function()
-				vim.api.nvim_input("<C-w>w")
-			end, 50)
-		end, { noremap = true, silent = true, desc = "preview fold" })
+		end, { desc = "Preview Fold" })
 	end,
 }
