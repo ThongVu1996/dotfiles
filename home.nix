@@ -10,12 +10,11 @@ in
   home.homeDirectory = "/Users/${username}";
   home.enableNixpkgsReleaseCheck = false;
   xdg.enable = true;
-
   # Home Packages
   home.packages = with pkgs; [
     starship ripgrep fzf eza bat neovim tmux hidden-bar
     nodejs_22 tailscale awscli2 eksctl kubectl fd 
-    aerospace 
+    aerospace kubernetes-helm
   ]
   ++ lib.optionals pkgs.stdenv.isDarwin [
     macismPkg
