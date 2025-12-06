@@ -1,0 +1,175 @@
+{
+  "Console Log Labeled": {
+    "prefix": ["clo", "log"],
+    "body": ["console.log('🚀 ${1:variable}:', ${1:variable});"],
+    "description": "Log biến kèm nhãn (Best for debugging)"
+  },
+  "Console Error": {
+    "prefix": "cle",
+    "body": ["console.error('❌ Error:', ${1:error});"],
+    "description": "Log error"
+  },
+  "Import Module": {
+    "prefix": "imp",
+    "body": ["import { ${2:module} } from '${1:path}';"],
+    "description": "Import named module"
+  },
+  "Import Default": {
+    "prefix": "impd",
+    "body": ["import ${2:Name} from '${1:path}';"],
+    "description": "Import default module"
+  },
+  "Arrow Function": {
+    "prefix": "arfn",
+    "body": ["const ${1:name} = (${2:params}) => {", "  $0", "};"],
+    "description": "Create Arrow Function (React Components / Vue Methods)"
+  },
+  "Async Function Try/Catch": {
+    "prefix": "asfn",
+    "body": [
+      "const ${1:name} = async (${2:params}) => {",
+      "  try {",
+      "    const res = await ${3:apiCall()};",
+      "    $0",
+      "  } catch (error) {",
+      "    console.error(error);",
+      "  }",
+      "};"
+    ],
+    "description": "Async function with Error Handling (API Calls)"
+  },
+  "Destructure Object": {
+    "prefix": "dob",
+    "body": ["const { ${2:prop} } = ${1:object};"],
+    "description": "Destructuring Object (Props/State)"
+  },
+  "Destructure Array": {
+    "prefix": "dar",
+    "body": ["const [ ${2:first}, ${3:second} ] = ${1:array};"],
+    "description": "Destructuring Array (Hooks)"
+  },
+  "Map Array": {
+    "prefix": "map",
+    "body": ["${1:array}.map((${2:item}) => (", "  $0", "))"],
+    "description": "Array Map (Render Lists in JSX/Vue)"
+  },
+  "Filter Array": {
+    "prefix": "filter",
+    "body": ["${1:array}.filter((${2:item}) => ${3:condition})"],
+    "description": "Array Filter"
+  },
+  "JSON Stringify Pretty": {
+    "prefix": "jsonp",
+    "body": ["JSON.stringify(${1:object}, null, 2)"],
+    "description": "Pretty print JSON for debugging"
+  },
+  "Export Default": {
+    "prefix": "exp",
+    "body": ["export default ${1:name};"],
+    "description": "Export Default"
+  },
+  "Export Named": {
+    "prefix": "ex",
+    "body": ["export const ${1:name} = ${2:value};"],
+    "description": "Export Named"
+  },
+  "Set Timeout": {
+    "prefix": "sto",
+    "body": ["setTimeout(() => {", "  $0", "}, ${1:1000});"],
+    "description": "setTimeout wrapper"
+  },
+  "React Arrow Function Component": {
+    "prefix": "rafn",
+    "body": [
+      "import React from 'react';",
+      "",
+      "interface ${1:${TM_FILENAME_BASE}}Props {",
+      "  $2",
+      "}",
+      "",
+      "export const ${1:${TM_FILENAME_BASE}} = ({ $3 }: ${1:${TM_FILENAME_BASE}}Props) => {",
+      "  return (",
+      "    <div className=\"$4\">",
+      "      $0",
+      "    </div>",
+      "  );",
+      "};"
+    ],
+    "description": "Create React Component (Auto name based on Filename)"
+  },
+  "React FC Default Export": {
+    "prefix": "rdfn",
+    "body": [
+      "import React from 'react';",
+      "",
+      "interface ${1:${TM_FILENAME_BASE}}Props {",
+      "  ${2:id}: ${3:string};",
+      "}",
+      "",
+      "const ${1:${TM_FILENAME_BASE}}: React.FC<${1:${TM_FILENAME_BASE}}Props> = ({ ${2:id} }) => {",
+      "  return (",
+      "    $0",
+      "  );",
+      "};",
+      "",
+      "export default ${1:${TM_FILENAME_BASE}};"
+    ],
+    "description": "React Functional Component with Default Export"
+  },
+  "useState Hook": {
+    "prefix": "us",
+    "body": [
+      "const [${1:state}, set${1/(.)/${1:/capitalize}/}] = useState(${2:initialState});"
+    ],
+    "description": "useState with auto setter naming"
+  },
+  "useEffect Hook": {
+    "prefix": "ue",
+    "body": ["useEffect(() => {", "  $0", "}, [${1:deps}]);"],
+    "description": "useEffect Hook"
+  },
+  "useCallback Hook": {
+    "prefix": "uc",
+    "body": [
+      "const ${1:memoizedCallback} = useCallback(",
+      "  () => {",
+      "    $0",
+      "  },",
+      "  [${2:deps}],",
+      ");"
+    ],
+    "description": "useCallback Hook"
+  },
+  "useMemo Hook": {
+    "prefix": "um",
+    "body": [
+      "const ${1:memoizedValue} = useMemo(() => ${2:computeExpensiveValue}(${3:a}, ${4:b}), [${5:deps}]);"
+    ],
+    "description": "useMemo Hook"
+  },
+  "useRef Hook": {
+    "prefix": "ur",
+    "body": ["const ${1:ref} = useRef(${2:null});"],
+    "description": "useRef Hook"
+  },
+  "Console Log Props": {
+    "prefix": "clp",
+    "body": ["console.log('🚀 Props in ${TM_FILENAME_BASE}:', props);"],
+    "description": "Log props efficiently"
+  },
+  "React Interface": {
+    "prefix": "int",
+    "body": ["interface ${1:Props} {", "  ${2:key}: ${3:string};", "}"],
+    "description": "TypeScript Interface"
+  },
+  "Translation Hook (i18n)": {
+    "prefix": "tr",
+    "body": ["const { t } = useTranslation();"],
+    "description": "Quick i18n hook"
+  },
+  "ClassName": {
+    "prefix": "cn",
+    "body": ["className=\"$1\""],
+    "description": "className attribute"
+  }
+}

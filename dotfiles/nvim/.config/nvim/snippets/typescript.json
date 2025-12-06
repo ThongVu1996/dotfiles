@@ -1,0 +1,81 @@
+{
+  "Console Log Labeled": {
+    "prefix": ["clo", "log"],
+    "body": ["console.log('🚀 ${1:variable}:', ${1:variable});"],
+    "description": "Log biến kèm nhãn (Best for debugging)"
+  },
+  "Console Error": {
+    "prefix": "cle",
+    "body": ["console.error('❌ Error:', ${1:error});"],
+    "description": "Log error"
+  },
+  "Import Module": {
+    "prefix": "imp",
+    "body": ["import { ${2:module} } from '${1:path}';"],
+    "description": "Import named module"
+  },
+  "Import Default": {
+    "prefix": "impd",
+    "body": ["import ${2:Name} from '${1:path}';"],
+    "description": "Import default module"
+  },
+  "Arrow Function": {
+    "prefix": "arfn",
+    "body": ["const ${1:name} = (${2:params}) => {", "  $0", "};"],
+    "description": "Create Arrow Function (React Components / Vue Methods)"
+  },
+  "Async Function Try/Catch": {
+    "prefix": "asfn",
+    "body": [
+      "const ${1:name} = async (${2:params}) => {",
+      "  try {",
+      "    const res = await ${3:apiCall()};",
+      "    $0",
+      "  } catch (error) {",
+      "    console.error(error);",
+      "  }",
+      "};"
+    ],
+    "description": "Async function with Error Handling (API Calls)"
+  },
+  "Destructure Object": {
+    "prefix": "dob",
+    "body": ["const { ${2:prop} } = ${1:object};"],
+    "description": "Destructuring Object (Props/State)"
+  },
+  "Destructure Array": {
+    "prefix": "dar",
+    "body": ["const [ ${2:first}, ${3:second} ] = ${1:array};"],
+    "description": "Destructuring Array (Hooks)"
+  },
+  "Map Array": {
+    "prefix": "map",
+    "body": ["${1:array}.map((${2:item}) => (", "  $0", "))"],
+    "description": "Array Map (Render Lists in JSX/Vue)"
+  },
+  "Filter Array": {
+    "prefix": "filter",
+    "body": ["${1:array}.filter((${2:item}) => ${3:condition})"],
+    "description": "Array Filter"
+  },
+  "JSON Stringify Pretty": {
+    "prefix": "jsonp",
+    "body": ["JSON.stringify(${1:object}, null, 2)"],
+    "description": "Pretty print JSON for debugging"
+  },
+  "Export Default": {
+    "prefix": "exp",
+    "body": ["export default ${1:name};"],
+    "description": "Export Default"
+  },
+  "Export Named": {
+    "prefix": "ex",
+    "body": ["export const ${1:name} = ${2:value};"],
+    "description": "Export Named"
+  },
+  "Set Timeout": {
+    "prefix": "sto",
+    "body": ["setTimeout(() => {", "  $0", "}, ${1:1000});"],
+    "description": "setTimeout wrapper"
+  }
+}
