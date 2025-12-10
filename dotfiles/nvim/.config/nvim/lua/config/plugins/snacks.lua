@@ -271,6 +271,7 @@ return {
 			"gD",
 			function()
 				Snacks.picker.lsp_declarations()
+				vim.cmd("normal! zz")
 			end,
 			desc = "Goto Declaration",
 		},
@@ -286,6 +287,7 @@ return {
 			"gI",
 			function()
 				Snacks.picker.lsp_implementations()
+				vim.cmd("normal! zz")
 			end,
 			desc = "Goto Implementation",
 		},

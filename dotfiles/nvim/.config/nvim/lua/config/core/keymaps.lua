@@ -39,3 +39,24 @@ keymap.set("n", "<A-j>", "<cmd>m .+1<CR>==", { noremap = true, silent = true, de
 keymap.set("n", "<A-k>", "<cmd>m .-2<CR>==", { noremap = true, silent = true, desc = "Move current line up" })
 keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected block down" })
 keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = "Move selected block up" })
+
+-- Center view
+
+keymap.set("n", "n", "nzzzv")
+keymap.set("n", "N", "Nzzzv")
+keymap.set("n", "*", "*zzzv", { desc = "Search word under cursor + center" })
+keymap.set("n", "#", "#zzzv", { desc = "Search word backward + center" })
+
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+	group = vim.api.nvim_create_augroup("AutoCenterSearch", { clear = true }),
+	callback = function()
+		local cmdtype = vim.fn.getcmdtype()
+		-- Chỉ chạy khi loại lệnh là tìm kiếm "/" hoặc "?"
+		if cmdtype == "/" or cmdtype == "?" then
+			-- vim.schedule đảm bảo lệnh chạy SAU KHI Vim đã nhảy đến kết quả
+			vim.schedule(function()
+				vim.cmd("normal! zzzv")
+			end)
+		end
+	end,
+})
