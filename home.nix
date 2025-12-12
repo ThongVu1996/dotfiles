@@ -14,7 +14,7 @@ in
   home.packages = with pkgs; [
     starship ripgrep fzf eza bat neovim tmux hidden-bar
     nodejs_22 tailscale awscli2 eksctl kubectl fd 
-    aerospace kubernetes-helm
+    aerospace kubernetes-helm wireshark imagemagick
   ]
   ++ lib.optionals pkgs.stdenv.isDarwin [
     macismPkg
