@@ -73,5 +73,77 @@
     "prefix": ["quote"],
     "body": ["> [!QUOTE]", "> $1"],
     "description": "Insert Quote callout"
+  },
+  "Non-breaking Space (1)": {
+    "prefix": "tab",
+    "body": ["&nbsp;&nbsp;"],
+    "description": "Insert 2 non-breaking space"
+  },
+  "Non-breaking Space (2)": {
+    "prefix": "2tab",
+    "body": ["&nbsp;&nbsp;&nbsp;&nbsp;"],
+    "description": "Insert 4 non-breaking spaces"
+  },
+  "Non-breaking Space (3)": {
+    "prefix": "3tab",
+    "body": ["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"],
+    "description": "Insert 6 non-breaking spaces"
+  },
+  "Non-breaking Space (4)": {
+    "prefix": "4tab",
+    "body": ["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"],
+    "description": "Insert 8 non-breaking spaces"
+  },
+  "Center Text": {
+    "prefix": "center",
+    "body": ["<center>${1:text}</center>$0"],
+    "description": "Center align text html tag"
+  },
+  "Details Toggle": {
+    "prefix": "toggle",
+    "body": [
+      "<details>",
+      "\t<summary>${1:Title}</summary>",
+      "\t${2:Content}",
+      "</details>$0"
+    ],
+    "description": "Collapsible details tag"
+  },
+  "Image with Caption": {
+    "prefix": "image-caption",
+    "body": [
+      "<figure>",
+      "\t<img src=\"${1:/path/to/image.jpg}\"",
+      "\t     alt=\"${2:Alt Text}\">",
+      "\t<figcaption>${3:Caption}</figcaption>",
+      "</figure>$0"
+    ],
+    "description": "HTML Figure with caption"
+  },
+  "Image with Size": {
+    "prefix": "image-size",
+    "body": [
+      "<img src=\"${1:image.png}\" width=\"${2:200}\" height=\"${3:100}\">$0"
+    ],
+    "description": "Image with specific width and height"
+  },
+  "Text Color": {
+    "prefix": "text-color",
+    "body": ["<font color=\"${1:red}\">${2:Text}</font>$0"],
+    "description": "Colored text using font tag"
+  },
+  "Link Blank Target": {
+    "prefix": "a",
+    "body": [
+      "<a href=\"${1:https://example.com}\" target=\"_blank\">${2:Link Text}</a>$0"
+    ],
+    "description": "Anchor tag with target blank"
+  },
+  "YouTube Video Embed": {
+    "prefix": "video",
+    "body": [
+      "[![${1:Alt Text}](https://img.youtube.com/vi/${2:YOUTUBE_ID}/0.jpg)](https://www.youtube.com/watch?v=$2)$0"
+    ],
+    "description": "YouTube video thumbnail link (ID is synced)"
   }
 }
