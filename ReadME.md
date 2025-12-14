@@ -136,3 +136,10 @@ setupflake
 ```
 nix-collect-garbage
 ```
+
+## **5\. Loại bỏ rate limit cho git** 
+    - Phải thêm github token vào file git_token (không có ext)
+    - Sau đó chạy lệnh 
+    ```bash
+        ./bootstrap.sh
+    ```
