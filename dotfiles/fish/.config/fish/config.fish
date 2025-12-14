@@ -23,9 +23,9 @@ if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
 end
 
 #Config paste image to markdown in nvim
-set -g allow-passthrough on
-set -ga update-environment TERM
-set -ga update-environment TERM_PROGRAM
+set -g allow_passthrough on
+set -ga update_environment TERM
+set -ga update_environment TERM_PROGRAM
 # Config starship
 set -U fish_greeting ""
 starship init fish | source
