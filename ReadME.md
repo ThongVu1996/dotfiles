@@ -143,3 +143,8 @@ nix-collect-garbage
     ```bash
         ./bootstrap.sh
     ```
+## **6\. Kiểm tra chính tả **
+    - Chỉ dùng cspell cho máy đủ mạnh
+    - Nếu dùng cspell thì bắt buộc cài `cspell-lsp` qua Mason hoặc npm vì nix-search không có do bản cspell không ổn
+    định nên không có 
+    - Nếu dùng typos-lsp thì có thể cài đặt thẳng (dùng cho máy yếu), tuy nhiên nó sẽ không tối ưu được như cspell

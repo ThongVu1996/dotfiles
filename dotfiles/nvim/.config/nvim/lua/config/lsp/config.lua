@@ -10,6 +10,8 @@ vim.lsp.enable({
 	"html-ls",
 	"css-ls",
 	"vue-ls",
+	"cspell",
+	-- "typos-lsp",
 })
 
 -- LSP servers are automatically managed by Mason
