@@ -12,6 +12,7 @@ vim.lsp.enable({
 	"vue-ls",
 	"cspell",
 	-- "typos-lsp",
+	"marksman",
 })
 
 -- LSP servers are automatically managed by Mason
