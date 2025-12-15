@@ -14,7 +14,15 @@ in
   home.packages = with pkgs; [
     starship ripgrep fzf eza bat neovim tmux hidden-bar
     nodejs_22 tailscale awscli2 eksctl kubectl fd 
-    aerospace kubernetes-helm wireshark imagemagick
+    aerospace kubernetes-helm wireshark imagemagick pngpaste
+    intelephense phpactor
+    lua-language-server 
+    vue-language-server tailwindcss-language-server typescript-language-server
+    emmet-language-server vscode-langservers-extracted 
+    prettierd stylua eslint_d php82Packages.php-codesniffer 
+    typos-lsp
+    marksman
+    markdown-toc
   ]
   ++ lib.optionals pkgs.stdenv.isDarwin [
     macismPkg
