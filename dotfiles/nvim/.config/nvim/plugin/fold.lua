@@ -41,7 +41,7 @@ function _G.SimpleFoldText()
 		local last_hl_group = text_parts[#text_parts - 1] and text_parts[#text_parts - 1][2] or "Normal"
 		table.insert(text_parts, { closing_part, last_hl_group })
 	end
-	local lines_count = end_pos - pos
+	local lines_count = end_pos - pos - 1
 	table.insert(text_parts, { " ⚡ " .. lines_count .. " lines ", "Special" })
 	return text_parts
 end
