@@ -81,7 +81,11 @@ return {
 				input = {
 					keys = {
 						-- 2. GỌI TÊN ACTION ĐÃ KHAI BÁO Ở TRÊN
-						["<c-y>"] = { "copy_to_clipboard", mode = { "n", "i" }, desc = "Copy Item to Clipboard" },
+						["<c-y>"] = {
+							"copy_to_clipboard",
+							mode = { "n", "i" },
+							desc = "Copy notification history to Clipboard",
+						},
 					},
 				},
 			},
