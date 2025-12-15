@@ -33,8 +33,8 @@ alt-backslash = 'layout tiles horizontal vertical'
 alt-equal = 'layout accordion horizontal vertical'
 
 alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
+# alt-j = 'focus down'
+# alt-k = 'focus up'
 alt-l = 'focus right'
 alt-f = 'fullscreen'
 
