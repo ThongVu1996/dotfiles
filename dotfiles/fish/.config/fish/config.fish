@@ -62,11 +62,6 @@ function ss
     source ~/nix-config/dotfiles/fish/.config/fish/config.fish
     echo "Reloaded Fish Shell!"
 end
-#Reload tmux
-function tmux-ss
-    tmux source-file ~/nix-config/dotfiles/tmux/.tmux.conf
-    echo "Reloaded Tmux"
-end
 
 set -x PATH ~/.local/bin $PATH
 set -U fish_user_paths /home/linuxbrew/.linuxbrew/bin $fish_user_paths
@@ -111,3 +106,119 @@ set -x LANG en_US.UTF-8
 set -x LC_ALL en_US.UTF-8
 set -U fish_user_paths /usr/sbin $fish_user_paths
 
+# TMUX shortcut
+
+#Reload tmux
+function tmux-ss
+    tmux source-file ~/nix-config/dotfiles/tmux/.tmux.conf
+    echo "Reloaded Tmux"
+end
+
+# Create new session with name
+function ts
+    # Kiểm tra xem người dùng có cung cấp tên session hay không
+    if test (count $argv) -eq 0
+        echo "Lỗi: Bạn cần cung cấp tên cho session mới."
+        echo "Cú pháp: ts <ten_session>"
+        return 1 # Trả về lỗi
+    end
+
+    # Thực thi lệnh Tmux new-session với tham số đầu tiên ($argv[1]) là tên session
+    tmux new-session -s $argv[1]
+end
+
+# Rename for current session
+function trs
+    # Kiểm tra xem người dùng có cung cấp tên session hay không
+    if test (count $argv) -eq 0
+        echo "Lỗi: Bạn cần cung cấp tên mới cho session hiện tại"
+        echo "Cú pháp: trs <ten_session_moi>"
+        return 1 # Trả về lỗi
+    end
+
+    # Thực thi lệnh Tmux new-session với tham số đầu tiên ($argv[1]) là tên session
+    tmux rename-session $argv[1]
+end
+
+# Create new windown
+function tw --description 'Tạo một Tmux Window mới với tên chỉ định.'
+    # 1. KIỂM TRA THAM SỐ: Đảm bảo người dùng nhập tên Window
+    if test (count $argv) -eq 0
+        echo (set_color red) "Lỗi:" (set_color normal) "Bạn cần cung cấp tên cho Window mới."
+        echo "Cú pháp: tw <ten_window>"
+        return 1
+    end
+
+    set window_name $argv[1]
+
+    # 2. KIỂM TRA MÔI TRƯỜNG: Xác định trạng thái của Tmux
+
+    # Kiểm tra biến môi trường $TMUX: Nếu đang ở TRONG session
+    if set -q TMUX
+        echo (set_color green) "Đang trong Session:" (set_color normal) "Tạo Window '$window_name' trong Session hiện tại."
+        tmux new-window -n $window_name
+
+    # Kiểm tra nếu KHÔNG ở trong Session, nhưng có Tmux Server đang chạy ngầm
+    else if tmux has-session >/dev/null 2>&1
+        echo (set_color yellow) "Cảnh báo:" (set_color normal) "Tmux Server đang chạy ngầm, nhưng bạn chưa đính kèm."
+        echo "Tạo Window '$window_name' trong Session MẶC ĐỊNH (hoặc Session gần nhất) và đính kèm vào đó."
+        # Lệnh này tạo window và chuyển đến nó, hoặc bạn có thể dùng 'tmux new-window -d' để tạo ngầm.
+        tmux attach -c (tmux new-window -d -n $window_name -P -F "#{session_name}")
+
+    # Không có Session nào đang chạy
+    else
+        echo (set_color red) "Lỗi:" (set_color normal) "Không có Tmux Session nào đang hoạt động."
+        echo "Vui lòng tạo Session mới trước bằng lệnh 'ts <ten_session>'."
+        return 1
+    end
+end
+
+# Rename window
+function trw --description 'Đổi tên Window hiện tại của Tmux.'
+    # 1. KIỂM TRA THAM SỐ: Đảm bảo người dùng nhập tên mới
+    if test (count $argv) -eq 0
+        echo (set_color red) "Lỗi:" (set_color normal) "Bạn cần cung cấp tên mới cho Window."
+        echo "Cú pháp: trw <ten_moi>"
+        return 1
+    end
+
+    set new_window_name $argv[1]
+
+    # 2. KIỂM TRA MÔI TRƯỜNG: Xác định trạng thái của Tmux
+
+    # Kiểm tra biến môi trường $TMUX: PHẢI đang ở TRONG session mới rename được
+    if set -q TMUX
+        echo (set_color green) "Đang trong Session:" (set_color normal) "Đổi tên Window hiện tại thành '$new_window_name'."
+        tmux rename-window $new_window_name
+    else
+        # Nếu KHÔNG ở trong Session, lệnh rename-window sẽ không hoạt động
+        echo (set_color red) "Lỗi:" (set_color normal) "Lệnh đổi tên Window (trw) chỉ có thể chạy từ BÊN TRONG Tmux Session."
+        echo "Vui lòng đính kèm vào Session trước (tmux attach) hoặc đổi tên thủ công (tmux rename-window) nếu bạn biết id."
+        return 1
+    end
+end
+
+# Attach session with name
+function ta --description 'Đính kèm (Attach) vào một Tmux Session đã có.'
+    # 1. KIỂM TRA THAM SỐ: Đảm bảo có tên Session được cung cấp
+    if test (count $argv) -eq 0
+        echo (set_color yellow) "Cảnh báo:" (set_color normal) "Không có tên Session được cung cấp."
+        echo "Thử đính kèm vào Session cuối cùng hoặc duy nhất (tmux attach)."
+        tmux attach
+        return 0
+    end
+
+    set session_name $argv[1]
+
+    # 2. KIỂM TRA SESSION CÓ TỒN TẠI KHÔNG (Sử dụng lệnh has-session)
+    if tmux has-session -t $session_name 2>/dev/null
+        # Session tồn tại, tiến hành đính kèm
+        echo (set_color green) "Đang đính kèm vào Session:" (set_color normal) "$session_name"
+        tmux attach -t $session_name
+    else
+        # Session không tồn tại
+        echo (set_color red) "Lỗi:" (set_color normal) "Không tìm thấy Tmux Session có tên '$session_name'."
+        echo "Kiểm tra danh sách các Session đang chạy bằng lệnh: tmux ls"
+        return 1
+    end
+end
