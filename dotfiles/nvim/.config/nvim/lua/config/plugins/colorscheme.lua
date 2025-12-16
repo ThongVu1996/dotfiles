@@ -24,6 +24,7 @@ return {
 			},
 		})
 		vim.cmd.colorscheme("catppuccin")
-		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FAB387", bold = true })
+		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FAB387", bold = true }) -- color current number column
+		vim.api.nvim_set_hl(0, "LineNr", { fg = "#A0A0A0", bg = "none" }) -- color default number column
 	end,
 }
