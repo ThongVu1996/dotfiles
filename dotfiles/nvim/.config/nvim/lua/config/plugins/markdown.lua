@@ -76,7 +76,7 @@ return {
 		-- Cấu hình hybrid_modes (giữ hiển thị text gốc khi gõ ở dòng hiện tại)
 		opts = {
 			preview = {
-				icon_provider = "mini",
+				icon_provider = "internal",
 				modes = { "n", "no", "c", "i" }, -- Giữ bật trong Insert mode
 				hybrid_modes = { "i" }, -- Insert mode là hybrid
 				callbacks = {
