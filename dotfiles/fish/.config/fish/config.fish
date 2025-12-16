@@ -115,20 +115,43 @@ function tmux-ss
 end
 
 # Create new session with name
-function ts
-    # Kiểm tra xem người dùng có cung cấp tên session hay không
+function tsn --description 'Tạo hoặc Switch sang một tmux session'
+    # 1. Kiểm tra argument
     if test (count $argv) -eq 0
-        echo "Lỗi: Bạn cần cung cấp tên cho session mới."
+        echo "Lỗi: Bạn cần cung cấp tên cho session."
         echo "Cú pháp: ts <ten_session>"
-        return 1 # Trả về lỗi
+        return 1
     end
 
-    # Thực thi lệnh Tmux new-session với tham số đầu tiên ($argv[1]) là tên session
-    tmux new-session -s $argv[1]
+    set -l session_name $argv[1]
+
+    # Kiểm tra session đã tồn tại hay chưa
+    set -l session_exists (tmux has-session -t "$session_name" 2>/dev/null; echo $status)
+    
+    # 2. Kiểm tra xem có đang ở trong Tmux không (dùng $TMUX)
+    if set -q TMUX
+        # Đang ở trong Tmux: Chỉ được dùng switch-client (hoặc new-session khi cần tạo mới)
+        
+        if test $session_exists -eq 0
+            # Session đã tồn tại, chuyển đổi session
+            tmux switch-client -t "$session_name"
+        else
+            # Session chưa tồn tại, tạo session mới nhưng phải detach khỏi client hiện tại
+            # và sau đó switch-client vào session mới.
+            # (Cách an toàn hơn là dùng new-session -d sau đó switch-client)
+            tmux new-session -d -s "$session_name"
+            tmux switch-client -t "$session_name"
+        end
+
+    else
+        # Đang ở ngoài Tmux: Dùng new-session -A để tạo hoặc attach
+        # Cách này an toàn và gọn gàng khi ở ngoài
+        tmux new-session -A -s "$session_name"
+    end
 end
 
 # Rename for current session
-function trs
+function tsr
     # Kiểm tra xem người dùng có cung cấp tên session hay không
     if test (count $argv) -eq 0
         echo "Lỗi: Bạn cần cung cấp tên mới cho session hiện tại"
@@ -140,8 +163,54 @@ function trs
     tmux rename-session $argv[1]
 end
 
+# kill session by name 
+function tsk --description 'Kill a specific tmux session'
+    # Kiểm tra xem người dùng có cung cấp tên session không (argument đầu tiên là $argv[1])
+    if test (count $argv) -eq 0
+        echo "Lỗi: Vui lòng cung cấp tên tmux session để kill."
+        echo "Cú pháp: tks <tên_session>"
+        return 1
+    end
+
+    set -l session_name $argv[1]
+
+    # Thực thi lệnh tmux kill-session
+    tmux kill-session -t "$session_name"
+
+    # Kiểm tra mã thoát ($status)
+    if test $status -eq 0
+        echo "Đã kill session tmux: $session_name"
+    else
+        echo "Không thể kill session tmux: $session_name (có thể session không tồn tại)"
+    end
+end
+
+function tsa --description 'Attach hoặc Switch sang một tmux session (Cách 2)'
+    if test (count $argv) -eq 0
+        echo "Lỗi: Vui lòng cung cấp tên tmux session để attach/switch."
+        echo "Cú pháp: ta <tên_session>"
+        return 1
+    end
+
+    set -l session_name $argv[1]
+
+    if not tmux has-session -t "$session_name" 2>/dev/null
+        echo "Lỗi: Session tmux '$session_name' không tồn tại."
+        return 1
+    end
+
+    # Kiểm tra xem có đang ở trong Tmux không
+    if set -q TMUX
+        # Đang ở trong Tmux: Dùng switch-client.
+        env -u TMUX tmux switch-client -t "$session_name"
+    else
+        # Đang ở ngoài Tmux: Dùng attach-session.
+        tmux attach-session -t "$session_name"
+    end
+end
+
 # Create new windown
-function tw --description 'Tạo một Tmux Window mới với tên chỉ định.'
+function twn --description 'Tạo một Tmux Window mới với tên chỉ định.'
     # 1. KIỂM TRA THAM SỐ: Đảm bảo người dùng nhập tên Window
     if test (count $argv) -eq 0
         echo (set_color red) "Lỗi:" (set_color normal) "Bạn cần cung cấp tên cho Window mới."
@@ -174,7 +243,7 @@ function tw --description 'Tạo một Tmux Window mới với tên chỉ địn
 end
 
 # Rename window
-function trw --description 'Đổi tên Window hiện tại của Tmux.'
+function twr --description 'Đổi tên Window hiện tại của Tmux.'
     # 1. KIỂM TRA THAM SỐ: Đảm bảo người dùng nhập tên mới
     if test (count $argv) -eq 0
         echo (set_color red) "Lỗi:" (set_color normal) "Bạn cần cung cấp tên mới cho Window."
@@ -194,31 +263,6 @@ function trw --description 'Đổi tên Window hiện tại của Tmux.'
         # Nếu KHÔNG ở trong Session, lệnh rename-window sẽ không hoạt động
         echo (set_color red) "Lỗi:" (set_color normal) "Lệnh đổi tên Window (trw) chỉ có thể chạy từ BÊN TRONG Tmux Session."
         echo "Vui lòng đính kèm vào Session trước (tmux attach) hoặc đổi tên thủ công (tmux rename-window) nếu bạn biết id."
-        return 1
-    end
-end
-
-# Attach session with name
-function ta --description 'Đính kèm (Attach) vào một Tmux Session đã có.'
-    # 1. KIỂM TRA THAM SỐ: Đảm bảo có tên Session được cung cấp
-    if test (count $argv) -eq 0
-        echo (set_color yellow) "Cảnh báo:" (set_color normal) "Không có tên Session được cung cấp."
-        echo "Thử đính kèm vào Session cuối cùng hoặc duy nhất (tmux attach)."
-        tmux attach
-        return 0
-    end
-
-    set session_name $argv[1]
-
-    # 2. KIỂM TRA SESSION CÓ TỒN TẠI KHÔNG (Sử dụng lệnh has-session)
-    if tmux has-session -t $session_name 2>/dev/null
-        # Session tồn tại, tiến hành đính kèm
-        echo (set_color green) "Đang đính kèm vào Session:" (set_color normal) "$session_name"
-        tmux attach -t $session_name
-    else
-        # Session không tồn tại
-        echo (set_color red) "Lỗi:" (set_color normal) "Không tìm thấy Tmux Session có tên '$session_name'."
-        echo "Kiểm tra danh sách các Session đang chạy bằng lệnh: tmux ls"
         return 1
     end
 end
