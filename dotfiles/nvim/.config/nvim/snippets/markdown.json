@@ -145,5 +145,12 @@
       "[![${1:Alt Text}](https://img.youtube.com/vi/${2:YOUTUBE_ID}/0.jpg)](https://www.youtube.com/watch?v=$2)$0"
     ],
     "description": "YouTube video thumbnail link (ID is synced)"
+  },
+  "HTML KBD Tag": {
+    "prefix": "kbd",
+    "body": [
+      "<kbd>$1</kbd>$0"
+    ],
+    "description": "Chèn thẻ HTML KBD (Keyboard Input)"
   }
 }
