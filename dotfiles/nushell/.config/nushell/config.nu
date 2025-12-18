@@ -20,4 +20,22 @@ $env.config.keybindings = ($env.config.keybindings | append [
         event: { send: executehostcommand, cmd: "exec $nu.current-exe" }
     }
 ])
+
+$env.config.color_config = {
+    # Màu cho lệnh bên ngoài như: git, eza, brew... (Làm tối lại)
+    shape_external: "#565f89" 
+    shape_external_arg: "#414868"
+    
+    # Màu cho lệnh nội bộ như: ls, cd, let...
+    shape_internal: "#7aa2f7" 
+    
+    # Màu cho các Flag như: -la, --help (Màu tím trầm)
+    shape_flag: "#9d7cd8" 
+    
+    # Màu cho văn bản trong ngoặc kép "..."
+    shape_string: "#73daca" 
+    
+    # Màu của các dấu phân cách |
+    separator: "#24283b" 
+}
 source ~/.cache/starship/init.nu
