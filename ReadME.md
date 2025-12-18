@@ -152,3 +152,20 @@ nix-collect-garbage
 - Vào tmux lần đầu tiền bằng lệnh `tmux`
 - Sau đó ấn <kbd>Ctrl</kbd> + <kbd>a</kbd> rồi ấn tiếp <kbd>I</kbd> để tiến hành tải plugin
 - Để có thể lưu lại các session cho các lần mở máy tiếp theo ta ấn <kbd>Crtl</kbd> + <kbd>a</kbd> rồi ấn tiếp <kbd>Ctrl</kbd> + <kbd>s</kbd> để lưu lại.
+## 8. Kích hoạt shell
+- Cấp quyền cho file script
+  ```bash
+  chmod +x ~/nix-config/setup-mac.sh
+  ```
+- Chạy rebuild lại nix
+    ```bash
+    sudo /run/current-system/sw/bin/darwin-rebuild switch --flake ~/nix-config
+    ```
+- Chạy file script
+    ```bash
+    ~/nix-config/setup-mac.sh
+    ```
+- Thêm shell vào hệ thống 
+   ```bash
+        echo "/etc/profiles/per-user/$USER/bin/nu" | sudo tee -a /etc/shells
+    ```

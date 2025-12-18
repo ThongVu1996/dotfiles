@@ -1,0 +1,807 @@
+clear
+ls -l $nu.config-path
+clear
+ls -l $nu.config-path
+ls -l /Users/thongvu/.config/nushell
+exit
+clear
+ls -l ~/.config/nushell/config.nu
+ls -l /Users/thongvu/.config/nushell
+exiut
+exit
+clear
+tsr nu
+exit
+tsr test)1
+tsr test_1
+cd dotfiles/nushell/.config/nushell
+ls -la
+vi config.nu
+clear
+tsn test_1
+vi config.nu
+clear
+tsn test_1
+vi config.nu
+exit
+clear
+tsn test_1
+clear
+"a,b,c" | split row ","
+"a,b,c" | split row "," | descibe
+"a,b,c" | split row "," | desciber
+"a,b,c" | split row "," | descipbe
+"a,b,c" | split row "," | describe
+["a" "b" "c"] | str join ","
+"a,b,c" | split row ","<\n>
+"a,b,c" | str join "," | describe<\n>
+clear
+pwd
+clear
+cd dotfiles/nushell/.config/nushell
+vi config.nu
+exit
+cd dotfiles/nushell/.config/nushell
+vi config.nu
+clear
+exit
+cd dotfiles/nushell/.config/nushell
+vi config.nu
+ls -la
+mkdir modules
+cd modules/
+vi vmrun.nu
+cd ../
+vi config.nu
+source ~/.config/nushell/config.nu<\n>
+cd modules/
+vi vmrun.nu
+cd ../
+source ~/.config/nushell/config.nu<\n>
+clear
+vmrun start k8s
+ping 192.168.1.61
+cd modules/
+vi vmrun.nu
+source ~/.config/nushell/config.nu<\n>
+clear
+vmrun start k8s
+ping 192.168.1.61
+clear
+vi vmrun.nu
+source ~/.config/nushell/config.nu<\n>
+clear
+vmrun start k8s
+vmrun status k8s
+exit
+clear
+source ~/.config/nushell/config.nu<\n>
+cd dotfiles/nushell/.config/nushell
+clear
+cd modules/
+vi vmrun.nu
+exit
+vi /Users/thongvu/nix-config/dotfiles/nushell/.config/nushell/modules/vmrun.nu
+source ~/.config/nushell/config.nu<\n>
+clear
+exit
+vmrun status k8s
+vmrun status all-in-one
+vmrun start all-in-one
+ping 192.168.1.111
+vmrun stop k8s
+clear
+cd modules/
+cd dotfiles/nushell/.config/nushell
+cd modules/
+clear
+ls -la
+vi vmrun.nu
+source ~/.config/nushell/config.nu<\n>
+cd ../
+vmrun start all-in-one
+vi vmrun.nu
+cd modules/
+vi vmrun.nu
+source ~/.config/nushell/config.nu<\n>
+clear
+vmrun start all-in-one
+vi vmrun.nu
+exit
+vmrun start all-in-one
+ping 192.168.1.111
+ping 192.168.1.61
+clear
+cd dotfiles/nushell/.config/nushell
+vi config.nu
+nvim config.nu
+exit
+cd dotfiles/nushell/.config/nushell
+vi config.nu
+config nu
+clear
+exit
+cd dotfiles/nushell/.config/nushell
+vi config.nu
+source ~/.config/nushell/config.nu<\n>
+vi config.nu
+clear
+vi config.nu
+nuss 
+clear
+nuss
+nuss --full
+vi config.nu
+source ~/.config/nushell/config.nu<\n>
+clear
+cd modules/
+vi tmuxx.nu
+cd ../
+vi co
+vi config.nu
+tsn dev
+clear
+muss
+clear
+nuss
+cd modules/
+vi tmuxx.nu
+clear
+nuss
+vi tmuxx.nu
+clear
+nuss
+clear
+tsn dev
+clear
+vi tmuxx.nu
+help tsn
+clear
+help ls
+clear
+cd ../
+vi cheetsheet.md
+vi config.nu
+tsa config
+clear
+vi config.nu
+vi env.nu
+vi aliases.nu 
+mkdir functions
+clear
+vi functions/utils.nu
+vi functions/git.nu
+vi functions/fzf.nu
+vi integrations/starship.nu
+ls -la
+clear
+ls -la
+mkdir integrations
+vi integrations/starship.nu
+vi integrations/direnv.nu
+vi integrations/nix.nu
+vi functions/utils.nu
+clear
+vi env.nu
+exit
+cd dotfiles/nushell/.config/nushell
+vi aliases.nu 
+nvim aliases.nu
+exit
+clear
+exit
+clear
+exit
+vi /Users/thongvu/nix-config/dotfiles/nushell/.config/nushell/integrations/starship.nu
+clear
+nvim /Users/thongvu/nix-config/dotfiles/nushell/.config/nushell/integrations/starship.nu
+exit
+nvim /Users/thongvu/nix-config/dotfiles/nushell/.config/nushell/integrations/starship.nu
+exit
+nvim /Users/thongvu/nix-config/dotfiles/nushell/.config/nushell/integrations/starship.nu
+exit
+clear
+nvim /Users/thongvu/nix-config/dotfiles/nushell/.config/nushell/integrations/starship.nu
+exit
+clear
+cd dotfiles/nushell/.config/nushell
+ls -la
+vi env.nu
+nvim env.nu
+vi integrations/starship.nu
+exit
+cd dotfiles/nushell/.config/nushell
+cd integrations
+vi direnv.nu
+clear
+cd ../
+vi env.nu
+nvim env.nu
+vi config.nu
+nvim config.nu
+exit
+nu
+exit
+nu
+exit
+which nu
+echo $env.SHELL
+clear
+$nu.version-info
+$nu.os-info
+clear
+which nu
+echo "/etc/profiles/per-user/thongvu/bin/nu" | sudo tee -a /etc/shells
+chsh -s /etc/profiles/per-user/thongvu/bin/nu
+clear
+# 1. Xóa thư mục cứng đầu đi (lần nữa)<\n>rm -rf "/Users/thongvu/Library/Application Support/nushell"<\n><\n># 2. Ngay lập tức tạo liên kết từ Library trỏ về .config<\n>ln -s ~/.config/nushell "/Users/thongvu/Library/Application Support/nushell"
+$nu.env-path
+ls -ld "/Users/thongvu/Library/Application Support/nushell"
+clear
+ls -ld "/Users/thongvu/Library/Application Support/nushell"
+exit
+clear
+rm -rf "$HOME/Library/Application Support/nushell"
+bash
+clear
+which nix
+clear
+which nix
+zsh
+clear
+which nix
+bash
+cd ~/nix-config/dotfiles/nushell/.config/nushell/
+vi env.nu
+clear
+ls 
+cd ../
+ls -la
+cd nushell/
+ls -la
+chsh -s /bin/zsh
+clear
+chsh -s /bin/zsh
+clear
+echo $SHELL
+chsh -s /bin/zsh
+chsh -s /bin/fish
+which fish
+chsh -s /run/current-system/sw/bin/fish
+clear
+which nix
+clear
+tsa config
+nixss
+clear
+vi aliases.nu
+sudo nix run nix-darwin -- switch --flake $"($env.HOME)/nix-config#((scutil --get LocalHostName | str trim))"
+clear
+nixss
+source ~/.config/nushell/aliases.nu
+nixss
+clear
+which nix
+sadas
+clear
+echo $SHELL
+clear
+which nix
+clear
+cd ~/nix-config
+vi ReadME.md
+clear
+tsa config
+pcf
+vi ~/nix-config/dotfiles/nushell/.config/nushell/
+vi aliases.nu
+cd ~/nix-config/dotfiles/nushell/.config/nushell/
+clear
+ls -la
+ls
+/etc/profiles/per-user/$USER/bin/nu
+clear
+ls 
+ls -la
+ls
+ls -ll
+vi aliases.nu
+zsh
+$env.SHELL
+sudo sh -c 'echo /etc/profiles/per-user/thongvu/bin/nu >> /etc/shells'
+chsh -s /etc/profiles/per-user/thongvu/bin/nu
+tsn dev
+clear
+ls
+version
+echo $0
+clear
+$nu.current-exe
+clear
+ls
+ls -la
+ls 2
+clear
+echo $SHELL
+$env.SHELL
+vmrun start all-in-one
+cd ~/nix-config/dotfiles/nushell/.config/nushell/
+clear
+ls 
+ls -la
+ls  2
+clear
+ls 2
+tree 2
+tee 2
+clear
+ls -la
+vi config.nu
+clear
+vmrun start all-in-one
+tsn dev_1
+clear
+tmux ls
+clear
+cd ~/nix-config/dotfiles/nushell/.config/nushell/
+vi config.nu
+vi env.nu
+clear
+vmrun start all-in-one
+ping 192.168.1.61
+clear
+vmrun stop all-in-one
+ping 192.168.1.61
+vmrun status all-in-one
+vmrun start all-in-one
+vmrun status all-in-one
+vmrun stop all-in-one
+clear
+eza
+ls -la
+cd functions/
+ls -la
+vi utils.nu
+l
+l 2
+claear
+vi utils.nu
+clear
+exit
+clear
+ss
+scf
+clear
+version
+clear
+dscl . -read /Users/$USER UserShell
+clear
+sudo chsh -s /etc/profiles/per-user/$USER/bin/nu $USER
+clear
+/etc/profiles/per-user/$USER/bin/nu
+clear
+cd ~/nix-config/dotfiles/nushell/.config/nushell/functions/
+vi utils.nu
+ss
+exit
+clear
+nucf
+clear
+cd functions/
+vi utils.nu
+ss
+vi utils.nu
+ss
+cd ../modules/
+vi tmuxx.nu
+clear
+cd ../
+cd functions/
+vi utils.nu
+ls 
+ls -la
+ls -a
+ls -l
+ls 2
+eza
+eza 2
+clear
+eza --tree --level=2
+vi utils.nu
+reload
+clear
+vi utils.nu
+exit
+clear
+ls 2
+ls
+ls -la
+ls -a
+eza -la
+clear
+nucf
+cd functions/
+vi utils.nu
+clear
+ls 2
+vi utils.nu
+ss
+clear
+ls 2
+exit
+clear
+nucf
+ls 2
+ls -2
+eza 2
+2 | describe
+vi utils.nu
+cd functions/
+vi utils.nu
+("1" | describe) =~ "int"
+("1" | describe) =~ int
+(1 | describe) =~ int
+vi utils.nu
+reload
+exit
+(1 | describe =~ int)
+cd ~/nix-config/dotfiles/nushell/.config/nushell/functions/
+vi utils.nu
+exit
+clear
+ls 2
+nucf
+cd ~/nix-config/dotfiles/nushell/.config/nushell/functions/
+vi utils.nu
+ls 2
+vi utils.nu
+ls 2
+vi utils.nu
+ls 2
+clear
+ls 2
+help ls
+help is-int
+vi utils.nu
+"l2" | into int
+32 | is-int
+help is-int
+clear
+"hello" | is-int 
+($my_arg | describe) == 'int'
+(1 | describe) == 'int'
+('1' | describe) == 'int'
+vi utils.nu
+exit
+clear
+cd ~/nix-config/dotfiles/nushell/.config/nushell/functions/
+vi utils.nu
+ss
+exit
+clear
+ls 2
+cd ~/nix-config/dotfiles/nushell/.config/nushell/functions/
+vi utils.nu
+ls 2
+vi utils.nu
+wrap-cli disconnect
+clear
+vi utils.nu
+ls 2
+vi utils.nu
+l 2
+vi utils.nu
+l 2
+clear
+l 2
+vi utils.nu
+ls 
+ls -la
+ls la
+eza la
+eza -la
+vi utils.nu
+ls -la
+clear
+ls 2
+clear
+ls -la 
+ls
+ll
+ls -ll
+vi utils.nu
+l 2
+clear
+l -la
+ls 
+ll
+ls 
+clear
+$env.SHELL
+clear
+cd 
+ls -la
+open text.txt
+open test.txt
+open test.txt | from json
+open test.txt | to json
+open test.txt | where 1
+clear
+pcf
+cd documents/yorisoi-api/
+php artisan serve
+claear
+clear
+tmux ls
+nucf
+ls -la
+cd functions/
+ls -la
+vi fzf.nu
+vi utils.nu
+cd ../
+vi config.nu
+cd functions/
+vi devops.nu
+pcf
+cd documents/yorisoi-api/
+clear
+php -v
+clear
+clear
+check-ports | where port == 8000
+cd ../
+vi config.nu
+clear
+check-ports | where port == 8000
+cd functions/
+vi devops.nu
+clear
+check-ports | where port == 8000
+check-ports
+^lsof -i :8000
+^lsof -i 
+clear
+vi devops.nu
+clear
+check-ports
+clear
+check-ports | where port == 8000
+clear
+cd ../
+ls -la
+cd integrations/
+cd ../
+vi config.nu
+cd integrations/
+vi direnv.nu
+cd ../
+vi config.nu
+ss
+clear
+php artisan serve
+cd ../
+cd yorisoi-api/
+tsn be
+pcf 
+cd documents/yorisoi-api/
+nucf
+vi config.nu
+vi aliases.nu
+clear
+vi config.nu
+clear
+lz
+nixss
+ls -la
+vi env.nu
+cd modules/
+ls -la
+cd ../
+cd functions/
+ls -la
+vi fzf.nu
+cd ../
+mv functions/* modules/
+cd modules/
+ls -la
+cd ../
+ls -la
+clear
+ls -la
+cd integrations/
+ls -la
+cd ../modules/
+ls -la
+cd ../
+mkdir systems
+cd modules/
+ls -la
+mv fzf.nu git.nu tmuxx.nu ../systems/
+ls -la
+vi utils.nu
+mv utils.nu ../systems/
+cd ../
+ls -la
+cd functions/
+ls -la
+cd ../
+rm -rf functions/
+clear
+ls -la
+cd integrations/
+ls -la
+cd ../
+mv integrations/* systems/
+ls -la integrations/
+rm -rf integrations/
+clear
+ls -la
+mv modules/ utils
+ls -la
+mv aliases.nu systems/
+clear
+ls -la
+vi config.nu
+cd systems/
+ls -l
+vi mod.nu
+cd ../utils/
+clear
+ls -la
+vi mod.nu
+cd ../
+vi config.nu
+cd systems/
+vi nix.nu
+cat nix.nu
+vi nix.nu
+clear
+exit
+clear
+exit
+nucf
+cd ~/nix-config/dotfiles/nushell/.config/nushell
+ls -la
+clear
+ls -la
+cd systems/
+vi nix.nu
+exit
+nixss
+clear
+eza --tree --level=2
+clear
+cd ~/nix-config/dotfiles/nushell/.config/nushell
+eza --tree --level=2
+vi config.nu
+nixss
+help nixss
+help aliases nixss
+clear
+cd systems/
+vi mod.nu
+cd ../modules/
+cd ../utils/
+vi mod.nu
+exit
+nixss
+clear
+nucf
+cd ~/nix-config/dotfiles/nushell/.config/nushell
+ls -la
+vi config.nu
+cd utils/
+ls -la
+vi mod.nu
+vi devops.nu
+vi vmrun.nu
+cd ../systems/
+ls -la
+clear
+ls -la
+vi utils.nu
+vi aliases.nu
+lz
+vi mod.nu
+exit
+nucf
+cd systems/
+vi mod.nu
+clear
+exit
+nucf
+clear
+cd systems/
+ls -la
+clear
+vi mod.nu
+vi starship.nu
+rm -f starship.nu
+vi mod.nu
+clear
+exit
+nucf
+cd systems/
+vi mod.nu
+ncf
+vi home.nix
+nixss
+exit
+clear
+ncf
+vi home.nix
+nixss
+vi home.nix
+nixss
+clera
+clear
+nucf
+cd systems/
+vi mod.nu
+ncf
+vi home.nix
+nixss
+exit
+clear
+$nu.data-dir | path join "vendor/autoload"
+ncf
+vi home.nix
+tcf
+ncf
+vi home.nix
+nucf
+vi config.nu
+nixss
+view-source nixss
+exit
+zsh
+nix run nix-darwin -- switch --flake ("~/nix-config" | path expand)
+sudo nix run nix-darwin -- switch --flake ("~/nix-config" | path expand)
+git add .
+ncf
+nix run nix-darwin -- switch --flake ("~/nix-config" | path expand)
+sudo --preserve-env=HOME nix run nix-darwin -- switch --flake ("~/nix-config" | path expand)
+clear
+cd ~/nix-config/
+vi home.nix
+nixss
+sudo --preserve-env=HOME nix run nix-darwin -- switch --flake ("~/nix-config" | path expand)
+vi home.nix
+cd ~/nix-config/dotfiles/nushell/.config/nushell
+cd systems/
+clear
+vi mod.nu
+cd ../
+vi config.nu
+cd systems/
+vi nix.nu
+vi starship.nu
+vi mod.nu
+nixss
+vi nix.nu
+nixss
+ncf
+git add .
+clear
+nixss
+cd -
+vi mod.nu
+clear
+ncf
+vi home.nix
+vi flake.nix
+vi home.nix
+vi flake.nix
+vi home.nix
+nix build .#darwinConfigurations.MacBook-Pro.system
+sudo ./result/sw/bin/darwin-rebuild switch --flake .#MacBook-Pro
+nix build .#darwinConfigurations.MacBook-Pro.system --impure
+vi home.nix
+clear
+vi home.nix
+nixss
+nucf
+cd systems/
+vi nix.nu
+clear

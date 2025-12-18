@@ -10,6 +10,7 @@ in
   home.homeDirectory = "/Users/${username}";
   home.enableNixpkgsReleaseCheck = false;
   xdg.enable = true;
+
   # Home Packages
   home.packages = with pkgs; [
     starship ripgrep fzf eza bat neovim tmux hidden-bar
@@ -23,15 +24,21 @@ in
     typos-lsp
     marksman
     markdown-toc
+    nushell
   ]
   ++ lib.optionals pkgs.stdenv.isDarwin [
     macismPkg
   ];
 
-  # Symlinks configs
+  # Symlinks configs (Tạo 1 symlinks từ thư mục ~/.config/ten-phan-mem tới 1 folder chứa config trong nixstore)
+  # Nội dung trong nix store sẽ được lấy từ dotfiles và readonly
+  # Chỉ có thể thay đổi khi thay đổi dotfiles và rebuild lại 
   home.file.".tmux.conf".source = ./dotfiles/tmux/.tmux.conf;
   xdg.configFile."starship.toml".source = ./dotfiles/starship/.config/starship.toml;
-  
+  xdg.configFile."nushell/config.nu".source = ./dotfiles/nushell/.config/nushell/config.nu;
+  xdg.configFile."nushell/env.nu".source = ./dotfiles/nushell/.config/nushell/env.nu;
+  xdg.configFile."nushell/systems".source = ./dotfiles/nushell/.config/nushell/systems;
+  xdg.configFile."nushell/utils".source = ./dotfiles/nushell/.config/nushell/utils;
   # Out of store symlinks (Editable configs)
   xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/nvim/.config/nvim";
   xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/wezterm/.config/wezterm";
