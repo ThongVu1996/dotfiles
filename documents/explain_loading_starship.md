@@ -6,6 +6,7 @@ Tài liệu này giải thích cách Starship khởi tạo và vận hành bên 
 
 Quá trình này chia làm 4 giai đoạn chính: Quản lý nguồn (Nix), Khởi tạo (Initialization), Nạp cấu hình (Loading), và Thực thi (Runtime).
 
+```bash
 graph TD  
     subgraph "Giai đoạn 0: Quản lý nguồn (Nix/Home Manager)"  
         S\[File nguồn: \~/nix-config/dotfiles/starship.toml\] \--\>|nix build| NS\[Nix Store: /nix/store/...\]  
@@ -15,7 +16,7 @@ graph TD
     subgraph "Giai đoạn 1: env.nu (Môi trường)"  
         A\[Bắt đầu Nushell\] \--\> B\[Đọc file env.nu\]  
         B \--\> C{Lệnh: starship init nu}  
-        C \--\> D\[Sinh mã Script Nushell\]  
+        C \--\> D\[Sinh mã Script Nushell \- Hook\]  
         D \--\> E\[Lưu vào \~/.cache/starship/init.nu\]  
     end
 
@@ -28,12 +29,13 @@ graph TD
     subgraph "Giai đoạn 3: Runtime (Thực thi)"  
         H \--\> I\[Người dùng gõ lệnh/Enter\]  
         I \--\> J\[Nushell gọi Hook: PROMPT\_COMMAND\]  
-        J \--\> K\[Thực thi binary: starship prompt\]  
-        K \--\> L{Đọc file: \~/.config/starship.toml}  
-        L \--\>|Truy vấn qua Symlink| S  
-        L \--\> M\[Hiển thị giao diện màu sắc\]  
+        J \--\> K\[Chạy lệnh: starship prompt\]  
+        K \--\> L{Binary Starship đọc: \~/.config/starship.toml}  
+        L \--\> M\[Quét thư mục: Git, Python, Node...\]  
+        M \--\> N\[Hiển thị giao diện màu sắc\]  
     end
 
+```
 ## **2\. Giải thích chi tiết về nguồn gốc cấu hình (Dotfiles)**
 
 Đây là phần then chốt để hiểu làm thế nào Starship "nhìn thấy" những gì bạn sửa trong thư mục dotfiles:
@@ -67,6 +69,17 @@ Thay vì dùng eval, Nushell sử dụng quy trình an toàn hơn:
 2. **Lưu file vật lý:** save \-f init.nu ghi đoạn mã đó thành một file thực trên đĩa.  
 3. **Nạp tĩnh:** source init.nu yêu cầu Nushell đọc và kiểm tra cú pháp file đó một cách minh bạch trước khi áp dụng.
 
+### **3.3. Lệnh starship init nu (Cái "Cầu nối" kỹ thuật)**
+
+* **Nhiệm vụ:** Không phải là chuyển đổi nội dung .toml. Nhiệm vụ của nó là sinh ra các **hàm hệ thống** (Hooks) để "dạy" Nushell cách giao tiếp với chương trình Starship.  
+* **Nội dung:** Nó tạo ra hàm PROMPT\_COMMAND. Hàm này ra lệnh cho Nushell: *"Mỗi khi người dùng nhấn Enter, hãy chạy chương trình starship prompt và lấy kết quả đó hiển thị lên màn hình"*.  
+* **Bản chất:** Đây là mã nguồn shell tĩnh. Nó chỉ đăng ký "hợp đồng thuê họa sĩ" (Starship binary) cho Nushell.
+
+### 3.4 File starship.toml (Cái "Bản thiết kế" giao diện)**
+
+* **Nhiệm vụ:** Chứa các chỉ dẫn về thẩm mỹ (màu sắc, biểu tượng).  
+* **Nội dung:** Ví dụ \[directory\] style \= "bold blue".  
+* **Cơ chế:** File này **không bao giờ** được biến thành code Nushell. Thay vào đó, nó được chương trình Starship (binary) đọc trực tiếp mỗi khi bạn gõ lệnh.
 ## **4\. Giải thích chi tiết các bước khởi động**
 
 ### **Bước 1: Khởi tạo tại env.nu**
