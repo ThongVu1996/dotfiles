@@ -210,7 +210,7 @@ palette = 'tokyonight'
 
 [os]
 disabled = false
-style = 'bold #7dcfff' # Tokyo Night Cyan
+style = 'bold #c0caf5' # Tokyo Night Cyan
 format = '[$symbol ]($style)'
 
 [os.symbols]
@@ -219,7 +219,7 @@ Ubuntu = " "
 SUSE = ""
 Raspbian = "󰐿"
 Mint = "󰣭"
-Macos = "󰀵"
+Macos = ""
 Manjaro = ""
 Linux = "󰌽"
 Gentoo = "󰣨"
@@ -340,3 +340,4 @@ yellow = '#e0af68'
 comment = '#565f89'
 foreground = '#a9b1d6'
 background = '#1a1b26'
+

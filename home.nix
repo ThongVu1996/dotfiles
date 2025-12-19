@@ -1,6 +1,7 @@
 { config, pkgs, lib, username, ... }:
 
 let 
+  nushellConfigPath = "${config.home.homeDirectory}/nix-config/dotfiles/nushell/.config/nushell";
   macismPkg = import ./macism.nix { inherit pkgs; };
 in
 {
@@ -25,6 +26,7 @@ in
     marksman
     markdown-toc
     nushell
+    direnv
   ]
   ++ lib.optionals pkgs.stdenv.isDarwin [
     macismPkg
@@ -35,16 +37,24 @@ in
   # Chỉ có thể thay đổi khi thay đổi dotfiles và rebuild lại 
   home.file.".tmux.conf".source = ./dotfiles/tmux/.tmux.conf;
   xdg.configFile."starship.toml".source = ./dotfiles/starship/.config/starship.toml;
-  xdg.configFile."nushell/config.nu".source = ./dotfiles/nushell/.config/nushell/config.nu;
-  xdg.configFile."nushell/env.nu".source = ./dotfiles/nushell/.config/nushell/env.nu;
-  xdg.configFile."nushell/systems".source = ./dotfiles/nushell/.config/nushell/systems;
-  xdg.configFile."nushell/utils".source = ./dotfiles/nushell/.config/nushell/utils;
+  # xdg.configFile."nushell/config.nu".source = ./dotfiles/nushell/.config/nushell/config.nu;
+  # xdg.configFile."nushell/env.nu".source = ./dotfiles/nushell/.config/nushell/env.nu;
+  # xdg.configFile."nushell/systems".source = ./dotfiles/nushell/.config/nushell/systems;
+  # xdg.configFile."nushell/utils".source = ./dotfiles/nushell/.config/nushell/utils;
   # Out of store symlinks (Editable configs)
   xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/nvim/.config/nvim";
   xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/wezterm/.config/wezterm";
   xdg.configFile."fish/config.fish".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/fish/.config/fish/config.fish";
   xdg.configFile."fish/functions".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/fish/.config/fish/functions";
   xdg.configFile."aerospace/aerospace.toml".source = config.lib.file.mkOutOfStoreSymlink "/Users/${username}/nix-config/dotfiles/aerospace/.config/aerospace/aerospace.toml";
+  xdg.configFile = {
+    "nushell/config.nu".source = config.lib.file.mkOutOfStoreSymlink "${nushellConfigPath}/config.nu";
+    "nushell/env.nu".source    = config.lib.file.mkOutOfStoreSymlink "${nushellConfigPath}/env.nu";
+    
+    # Nếu 'systems' và 'utils' là thư mục, nó sẽ symlink cả thư mục (rất tiện)
+    "nushell/systems".source   = config.lib.file.mkOutOfStoreSymlink "${nushellConfigPath}/systems";
+    "nushell/utils".source     = config.lib.file.mkOutOfStoreSymlink "${nushellConfigPath}/utils";
+  };
 
   # Environment Variables
   home.sessionVariables = {

@@ -5,4 +5,3 @@ export use git.nu *
 export use nix.nu *
 export use tmuxx.nu *
 export use utils.nu *
-#export use starship.nu *

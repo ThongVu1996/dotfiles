@@ -27,7 +27,7 @@ export def --env ss [] {
 export def --env fcf [] { cd ~/nix-config/dotfiles/fish/.config/fish; print "🐟 You can configure Fish" }
 export def --env vcf [] { cd ~/nix-config/dotfiles/nvim/.config/nvim; print "📝 You can configure Neovim" }
 export def --env tcf [] { cd ~/nix-config/dotfiles/tmux; print "🪟 You can configure Tmux" }
-export def --env scf [] { cd ~/nix-config/dotfiles/starship/; print "🚀 You can configure Starship" }
+export def --env scf [] { cd ~/nix-config/dotfiles/starship/.config; print "🚀 You can configure Starship" }
 export def --env wcf [] { cd ~/nix-config/dotfiles/wezterm/.config/wezterm; print "Wezterm config" }
 export def --env acf [] { cd ~/nix-config/dotfiles/aerospace/.config/aerospace; print "Aerospace config" }
 export def --env lzcf [] { cd ~/nix-config/dotfiles/lazygit/.config/lazygit; print "Lazygit config" }

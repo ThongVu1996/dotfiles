@@ -48,7 +48,36 @@ function ls --wraps eza
 end
 alias lz='lazygit'
 # System Rebuild Alias
-alias nixss="sudo nix run nix-darwin -- switch --flake ~/nix-config#(scutil --get LocalHostName)"
+# alias nixss="sudo nix run nix-darwin -- switch --flake ~/nix-config#(scutil --get LocalHostName)"
+function nixss --description "Build and Switch Nix-Darwin"
+    # 1. Tự động lấy Hostname của máy (bỏ phần .local nếu có)
+    # Nếu bạn muốn fix cứng tên máy, thay dòng dưới thành: set host "ten_may_cua_ban"
+    set -l host (hostname | cut -f1 -d.)
+
+    echo "🔨 Đang Build cho cấu hình: darwinConfigurations.$host..."
+
+    # 2. Thực hiện lệnh Build
+    # Dùng 'command' để đảm bảo không bị alias ghi đè
+    nix build .#darwinConfigurations."$host".system
+
+    # Kiểm tra: Chỉ chạy tiếp nếu Build thành công ($status = 0)
+    if test $status -eq 0
+        echo "✅ Build thành công! Nhập mật khẩu để Switch..."
+        
+        # 3. Thực hiện lệnh Switch với sudo
+        sudo ./result/sw/bin/darwin-rebuild switch --flake .
+        
+        # 4. Dọn dẹp symlink 'result' cho sạch sẽ
+        if test -L result
+            rm result
+            echo "🧹 Đã dọn dẹp file 'result'."
+        end
+        
+        echo "🎉 Xong! Hệ thống đã được cập nhật."
+    else
+        echo "❌ Build thất bại. Vui lòng kiểm tra lỗi phía trên."
+    end
+end
 
 # fzf
 fzf --fish | source

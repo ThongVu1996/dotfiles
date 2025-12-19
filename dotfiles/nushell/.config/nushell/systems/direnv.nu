@@ -1,17 +1,3 @@
-# # integrations/direnv.nu
-# $env.config = ($env.config | upsert hooks.pre_prompt {
-#     |old_config|
-#     $old_config.hooks.pre_prompt ++ [
-#         { ||
-#             let direnv = (direnv export json | from json)
-#             if ($direnv | is-empty) {
-#                 return
-#             }
-#             $direnv | load-env
-#         }
-#     ]
-# })
-
 export-env {
     $env.config = ($env.config | upsert hooks.pre_prompt { |old_config|
         # Lấy danh sách hook cũ, nếu chưa có thì mặc định là list rỗng []
