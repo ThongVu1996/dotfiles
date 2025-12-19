@@ -19,6 +19,7 @@ let nix_paths = [
 let other_paths = [
     "/opt/homebrew/bin"                           # Homebrew (Apple Silicon)
     "/usr/local/bin"                              # Homebrew (Intel)
+    "/Applications/VMware Fusion.app/Contents/Library"
     ($env.HOME | path join ".local/bin")
     ($env.HOME | path join ".cargo/bin")          # Rust/Cargo
 ]
