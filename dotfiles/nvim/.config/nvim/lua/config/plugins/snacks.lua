@@ -93,6 +93,14 @@ return {
 		lazygit = {
 			enabled = true,
 			configure = true,
+			config = {
+				-- Aplly for Nushell
+				os = {
+					editPreset = "",
+					edit = [[nu -c 'nvim --server $env.NVIM --remote-send "<C-\\><C-n>:e {{filename}}<CR>:lua Snacks.lazygit()<CR>"']],
+					open = [[nu -c 'nvim --server $env.NVIM --remote-send "<C-\\><C-n>:e {{filename}}<CR>:lua Snacks.lazygit()<CR>"']],
+				},
+			},
 		},
 		gitbrowse = {
 			what = "branch",
