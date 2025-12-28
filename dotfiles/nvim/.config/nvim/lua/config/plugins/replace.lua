@@ -1,13 +1,21 @@
 return {
 	"MagicDuck/grug-far.nvim",
-	--- Ensure existing keymaps and opts remain unaffected
-	config = function(_, opts)
-		require("grug-far").setup(opts)
+	config = function()
+		require("grug-far").setup({
+			-- 1. Định nghĩa rõ phím tắt bên trong Grug-far
+			keymaps = {
+				replace = { n = ",r" },
+				syncAll = { n = ",s" },
+				q = { n = "q" }, -- Dùng phím q để thoát cho tiện
+			},
+		})
+
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "grug-far",
 			callback = function()
-				-- Map <Esc> to quit after ensuring we're in normal mode
-				vim.keymap.set({ "i", "n" }, "<Esc>", "<Cmd>stopinsert | bd!<CR>", { buffer = true })
+				-- XÓA dòng Esc cũ của bạn đi.
+				-- Sử dụng phím 'q' ở chế độ Normal để đóng cửa sổ.
+				vim.keymap.set("n", "q", "<Cmd>bd!<CR>", { buffer = true })
 			end,
 		})
 	end,
