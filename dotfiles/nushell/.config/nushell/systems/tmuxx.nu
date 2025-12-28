@@ -104,6 +104,44 @@ export def tsa [
 }
 
 ########################################
+# tsda — delete all session and memory ressurrect
+########################################
+
+def tmux-running [] {
+    (do -i { ^tmux ls } | complete | get exit_code) == 0
+}
+
+# Function dọn dẹp sạch sẽ tmux
+export def tsda [] {
+    let resurrect_path = $"($env.HOME)/.local/share/tmux/resurrect/"
+
+    # --- BƯỚC 1: DỌN DẸP FILE TRƯỚC ---
+    # Chúng ta phải làm việc này trước vì nếu ở trong tmux, lệnh kill-server sẽ ngắt script ngay lập tức
+    if ($resurrect_path | path exists) {
+        let files = (do -i { glob $"($resurrect_path)*" })
+        if ($files | is-not-empty) {
+            print "🗑️ Đang xóa bộ nhớ resurrect vật lý..."
+            $files | each { |it| do -i { rm -rf $it } }
+        }
+    }
+
+    # --- BƯỚC 2: XỬ LÝ ĐÓNG SERVER ---
+    if (in-tmux) {
+        print "⚠️ Đang ở trong tmux. Server sẽ đóng và thoát ngay bây giờ..."
+        # Cho người dùng 1 chút thời gian để đọc thông báo trước khi pane bị đóng
+        sleep 500ms 
+        ^tmux kill-server
+        # Dòng "✨ Xong" sẽ không hiện ở đây vì session đã bị kill
+    } else {
+        if (tmux-running) {
+            print "🛑 Đang đóng tmux server từ bên ngoài..."
+            ^tmux kill-server
+        }
+        print "✨ Xong! Tmux đã hoàn toàn sạch sẽ."
+    }
+}
+
+########################################
 # twn — new window
 ########################################
 export def twn [
