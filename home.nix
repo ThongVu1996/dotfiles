@@ -27,6 +27,8 @@ in
     markdown-toc
     nushell
     direnv
+    argocd
+    terraform-ls
   ]
   ++ lib.optionals pkgs.stdenv.isDarwin [
     macismPkg
