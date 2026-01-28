@@ -20,6 +20,9 @@ return {
 				liquid = { "prettier" },
 				lua = { "stylua" },
 				php = { "pint", "phpcbf" },
+				terraform = { "terraform_fmt" }, -- Format file .tf
+				tf = { "terraform_fmt" }, -- Alias cho .tf
+				hcl = { "packer_fmt" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

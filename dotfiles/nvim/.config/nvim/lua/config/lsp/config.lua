@@ -13,6 +13,7 @@ vim.lsp.enable({
 	"cspell",
 	-- "typos-lsp",
 	"marksman",
+	"terraformls",
 })
 
 -- LSP servers are automatically managed by Mason
