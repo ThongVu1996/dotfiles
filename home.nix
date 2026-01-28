@@ -28,7 +28,40 @@ in
     nushell
     direnv
     argocd
+    php82
+    php82Packages.composer
+    cloud-nuke
+    terraform
+    keepassxc
+    claude-code
+    python315
+    neovim
+    pkg-config
     terraform-ls
+    tflint
+    rio
+    chafa
+    luajit
+    luajitPackages.luarocks
+    luajitPackages.magick
+    opencode
+    # (writeShellScriptBin "opencode" ''
+    # #!/bin/sh
+    # # Use Nix-interpolated path for Zsh to ensure it exists
+    # export SHELL="${pkgs.zsh}/bin/zsh"
+    #
+    # # Ensure opencode uses zsh for its own shell operations
+    # export TERMINAL="zsh"
+    #
+    # # Use the absolute path to the real opencode binary from nixpkgs
+    # exec "${pkgs.opencode}/bin/opencode" "$@"
+  # '')
+  (writeShellScriptBin "opencode-zsh" ''
+    #!/bin/sh
+    export SHELL="/run/current-system/sw/bin/zsh"
+    export TERMINAL="zsh"
+    exec opencode "$@"
+  '')
   ]
   ++ lib.optionals pkgs.stdenv.isDarwin [
     macismPkg
@@ -57,10 +90,89 @@ in
     "nushell/systems".source   = config.lib.file.mkOutOfStoreSymlink "${nushellConfigPath}/systems";
     "nushell/utils".source     = config.lib.file.mkOutOfStoreSymlink "${nushellConfigPath}/utils";
   };
+  xdg.configFile."rio/config.toml".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/rio/.config/rio/config.toml";
 
+xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
+  "$schema" = "https://opencode.ai/config.json";
+  plugin = [ "opencode-antigravity-auth@latest" ];
+  # shell = {
+  #   path = "${pkgs.zsh}/bin/zsh";
+  #   args = [ "-l" ];
+  # };
+  provider = {
+    google = {
+      models = {
+        "antigravity-gemini-3-pro" = {
+          name = "Gemini 3 Pro (Antigravity)";
+          limit = { context = 1048576; output = 65535; };
+          modalities = { input = [ "text" "image" "pdf" ]; output = [ "text" ]; };
+          variants = {
+            low = { thinkingLevel = "low"; };
+            high = { thinkingLevel = "high"; };
+          };
+        };
+        "antigravity-gemini-3-flash" = {
+          name = "Gemini 3 Flash (Antigravity)";
+          limit = { context = 1048576; output = 65536; };
+          modalities = { input = [ "text" "image" "pdf" ]; output = [ "text" ]; };
+          variants = {
+            minimal = { thinkingLevel = "minimal"; };
+            low = { thinkingLevel = "low"; };
+            medium = { thinkingLevel = "medium"; };
+            high = { thinkingLevel = "high"; };
+          };
+        };
+        "antigravity-claude-sonnet-4-5" = {
+          name = "Claude Sonnet 4.5 (Antigravity)";
+          limit = { context = 200000; output = 64000; };
+          modalities = { input = [ "text" "image" "pdf" ]; output = [ "text" ]; };
+        };
+        "antigravity-claude-sonnet-4-5-thinking" = {
+          name = "Claude Sonnet 4.5 Thinking (Antigravity)";
+          limit = { context = 200000; output = 64000; };
+          modalities = { input = [ "text" "image" "pdf" ]; output = [ "text" ]; };
+          variants = {
+            low = { thinkingConfig = { thinkingBudget = 8192; }; };
+            max = { thinkingConfig = { thinkingBudget = 32768; }; };
+          };
+        };
+        "antigravity-claude-opus-4-5-thinking" = {
+          name = "Claude Opus 4.5 Thinking (Antigravity)";
+          limit = { context = 200000; output = 64000; };
+          modalities = { input = [ "text" "image" "pdf" ]; output = [ "text" ]; };
+          variants = {
+            low = { thinkingConfig = { thinkingBudget = 8192; }; };
+            max = { thinkingConfig = { thinkingBudget = 32768; }; };
+          };
+        };
+        "gemini-2.5-flash" = {
+          name = "Gemini 2.5 Flash (Gemini CLI)";
+          limit = { context = 1048576; output = 65536; };
+          modalities = { input = [ "text" "image" "pdf" ]; output = [ "text" ]; };
+        };
+        "gemini-2.5-pro" = {
+          name = "Gemini 2.5 Pro (Gemini CLI)";
+          limit = { context = 1048576; output = 65536; };
+          modalities = { input = [ "text" "image" "pdf" ]; output = [ "text" ]; };
+        };
+        "gemini-3-flash-preview" = {
+          name = "Gemini 3 Flash Preview (Gemini CLI)";
+          limit = { context = 1048576; output = 65536; };
+          modalities = { input = [ "text" "image" "pdf" ]; output = [ "text" ]; };
+        };
+        "gemini-3-pro-preview" = {
+          name = "Gemini 3 Pro Preview (Gemini CLI)";
+          limit = { context = 1048576; output = 65535; };
+          modalities = { input = [ "text" "image" "pdf" ]; output = [ "text" ]; };
+        };
+      };
+    };
+  };
+};
   # Environment Variables
   home.sessionVariables = {
     EDITOR = "nvim";
+    PKG_CONFIG_PATH = "${pkgs.imagemagick.dev}/lib/pkgconfig";
   };
   
   programs.direnv = {
