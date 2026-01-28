@@ -8,8 +8,8 @@ local act = wezterm.action
 local user_home = os.getenv("HOME")
 
 -- Apperence
-config.window_background_opacity = 0.65
-config.macos_window_background_blur = 100
+-- config.window_background_opacity = 1
+-- config.macos_window_background_blur = 0
 config.window_padding = {
 	left = 0,
 	right = 0,
@@ -26,7 +26,7 @@ config.window_background_image_hsb = {
 -- end image setting
 
 config.color_scheme = "Tokyo Night"
--- config.window_background_image = user_home .. "/.config/wezterm/bg/bg.jpg"
+config.window_background_image = user_home .. "/.config/wezterm/bg/bg.jpg"
 
 config.font = wezterm.font("JetBrains Mono", { weight = "Medium", stretch = "Expanded" })
 config.font_size = 15
