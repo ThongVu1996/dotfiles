@@ -32,15 +32,18 @@ return {
 					layout = { layout = { position = "right" } },
 				},
 			},
+
+			-- 2. Định dạng hiển thị tên file
 			formatters = {
 				file = {
-					filename_first = true, -- Display fileName before the file path
+					filename_first = true, -- Hiện tên file trước, đường dẫn sau
 				},
 			},
-			hidden = true, -- True: Hiện file ẩn (bắt đầu bằng dấu chấm)
-			ignored = false, -- False: Ẩn các file nằm trong .gitignore
 
-			-- 2. DANH SÁCH CHẶN TUYỆT ĐỐI (Thêm cái này để fix lỗi của bạn)
+			-- 3. Cấu hình ẩn/hiện file
+			hidden = true, -- Hiện file ẩn (.config, .env...)
+			ignored = false, -- Ẩn file trong .gitignore
+
 			exclude = {
 				"node_modules",
 				".direnv",
@@ -68,9 +71,6 @@ return {
 						vim.fn.setreg("+", content)
 
 						vim.notify("✅ Đã copy: " .. content, vim.log.levels.INFO)
-
-						-- (Tuỳ chọn) Đóng picker sau khi copy?
-						-- picker:close()
 					else
 						vim.notify("⚠️ Không có item nào để copy", vim.log.levels.WARN)
 					end
@@ -97,13 +97,43 @@ return {
 				-- Aplly for Nushell
 				os = {
 					editPreset = "",
-					edit = [[nu -c 'nvim --server $env.NVIM --remote-send "<C-\\><C-n>:e {{filename}}<CR>:lua Snacks.lazygit()<CR>"']],
-					open = [[nu -c 'nvim --server $env.NVIM --remote-send "<C-\\><C-n>:e {{filename}}<CR>:lua Snacks.lazygit()<CR>"']],
+					edit = [[nu -c 'nvim --server $env.NVIM --remote-send "<C-\\\><C-n>:e {{filename}}<CR>:lua Snacks.lazygit()<CR>" out+err> /dev/null']],
+					open = [[nu -c 'nvim --server $env.NVIM --remote-send "<C-\\\><C-n>:e {{filename}}<CR>:lua Snacks.lazygit()<CR>"']],
 				},
 			},
 		},
 		gitbrowse = {
 			what = "branch",
+		},
+		styles = {
+			-- INFO: show top right of screen
+			snacks_image = {
+				relative = "editor",
+				col = -1,
+			},
+		},
+		image = {
+			enabled = true,
+			wo = {
+				winhighlight = "FloatBorder:WhichKeyBorder",
+			},
+			doc = {
+				inline = false,
+				max_width = 80,
+				max_height = 40,
+			},
+		},
+		win = {
+			input = {
+				keys = {
+					-- 2. GỌI TÊN ACTION ĐÃ KHAI BÁO Ở TRÊN
+					["<c-y>"] = {
+						"copy_to_clipboard",
+						mode = { "n", "i" },
+						desc = "Copy notification history to Clipboard",
+					},
+				},
+			},
 		},
 	},
 
@@ -209,10 +239,7 @@ return {
 		{
 			"<leader>ff",
 			function()
-				Snacks.picker.files({
-					hidden = true,
-					ignored = true,
-				})
+				Snacks.picker.files({ hidden = true, ignored = true })
 			end,
 			desc = "Find Files",
 		},
@@ -240,11 +267,7 @@ return {
 		{
 			"<leader>fs",
 			function()
-				Snacks.picker.grep({
-					regex = false, -- Force plain text mode
-					args = { "-F" }, -- Use fixed-string search
-					prompt = "🔍 Plain Text Search: ",
-				})
+				Snacks.picker.grep({ regex = false, args = { "-F" }, prompt = "🔍 Plain Text Search: " })
 			end,
 			desc = "Grep (Fixed-String Mode)",
 		},
@@ -252,10 +275,7 @@ return {
 		{
 			"<leader>fr",
 			function()
-				Snacks.picker.grep({
-					regex = true, -- Force regex mode
-					prompt = "🔍 Regex Search: ",
-				})
+				Snacks.picker.grep({ regex = true, prompt = "🔍 Regex Search: " })
 			end,
 			desc = "Grep (Regex Mode)",
 		},
@@ -324,49 +344,72 @@ return {
 			end,
 			desc = "LSP Workspace Symbols",
 		},
-		vim.keymap.set("n", "<leader>lr", function()
-			Snacks.picker.lsp_references({ layout = { position = "center", width = 0.8, height = 0.6 } })
-		end, { desc = "LSP References in Floating Picker" }),
+		{
+			"<leader>lr",
+			function()
+				Snacks.picker.lsp_references({ layout = { position = "center", width = 0.8, height = 0.6 } })
+			end,
+			desc = "LSP References in Floating Picker",
+		},
 		-- git browser
-		vim.keymap.set("n", "<leader>go", function()
-			require("snacks").gitbrowse()
-		end, { desc = "Open current branch in browser" }),
+		{
+			"<leader>go",
+			function()
+				require("snacks").gitbrowse()
+			end,
+			desc = "Open current branch in browser",
+		},
 
 		-- Copy permalink of the current line or selected range to clipboard
-		vim.keymap.set({ "n", "v" }, "<leader>gp", function()
-			local start_line, end_line = nil, nil
+		{
+			"<leader>gp",
+			function()
+				local start_line, end_line = nil, nil
 
-			-- Get the start and end line if in Visual mode
-			if vim.fn.mode() == "v" or vim.fn.mode() == "V" then
-				start_line = vim.fn.line("'<") -- Start line of the selected range
-				end_line = vim.fn.line("'>") -- End line of the selected range
-			else
-				start_line = vim.fn.line(".") -- If not in Visual mode, use the current line
-				end_line = start_line
-			end
+				-- Get the start and end line if in Visual mode
+				if vim.fn.mode() == "v" or vim.fn.mode() == "V" then
+					start_line = vim.fn.line("'<") -- Start line of the selected range
+					end_line = vim.fn.line("'>") -- End line of the selected range
+				else
+					start_line = vim.fn.line(".") -- If not in Visual mode, use the current line
+					end_line = start_line
+				end
 
-			-- Call gitbrowse with line range information
-			require("snacks").gitbrowse.open({
-				what = "permalink",
-				line_start = start_line,
-				line_end = end_line,
-				open = function(url)
-					vim.fn.setreg("+", url) -- Copy URL to clipboard
-					vim.notify("Permalink copied to clipboard: Lines " .. start_line .. "-" .. end_line)
-				end,
-			})
-		end, { desc = "Copy permalink of current line or selected range to clipboard" }),
+				-- Call gitbrowse with line range information
+				require("snacks").gitbrowse.open({
+					what = "permalink",
+					line_start = start_line,
+					line_end = end_line,
+					open = function(url)
+						vim.fn.setreg("+", url) -- Copy URL to clipboard
+						vim.notify("Permalink copied to clipboard: Lines " .. start_line .. "-" .. end_line)
+					end,
+				})
+			end,
+			desc = "Copy permalink of current line or selected range to clipboard",
+			mode = { "n", "v" },
+		},
 
-		vim.keymap.set("n", "<leader>gF", function()
-			require("snacks").gitbrowse({ what = "branch" })
-		end, { desc = "Open current file in browser" }),
+		{
+			"<leader>gF",
+			function()
+				require("snacks").gitbrowse({ what = "branch" })
+			end,
+			desc = "Open current file in browser",
+		},
+		{
+			"<leader>gc",
+			function()
+				require("snacks").gitbrowse({ what = "commit" })
+			end,
+			desc = "Open current commit in browser",
+		},
+		{
+			"<leader>gr",
+			function()
+				require("snacks").gitbrowse({ what = "repo" })
+			end,
+			desc = "Open entire repository in browser",
+		},
 	},
-
-	vim.keymap.set("n", "<leader>gc", function()
-		require("snacks").gitbrowse({ what = "commit" })
-	end, { desc = "Open current commit in browser" }),
-
-	vim.keymap.set("n", "<leader>gr", function()
-		require("snacks").gitbrowse({ what = "repo" })
-	end, { desc = "Open entire repository in browser" }),
 }

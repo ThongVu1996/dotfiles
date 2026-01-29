@@ -11,7 +11,10 @@ in
   home.homeDirectory = "/Users/${username}";
   home.enableNixpkgsReleaseCheck = false;
   xdg.enable = true;
+  imports = [
 
+  ];
+  
   # Home Packages
   home.packages = with pkgs; [
     starship ripgrep fzf eza bat neovim tmux hidden-bar
@@ -39,6 +42,7 @@ in
     pkg-config
     terraform-ls
     tflint
+
     rio
     chafa
     luajit

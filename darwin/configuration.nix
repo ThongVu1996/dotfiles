@@ -15,14 +15,32 @@
   # System Packages
   environment.systemPackages = with pkgs; [
     vim git neofetch mkalias docker lazydocker lazygit delta btop
-    wezterm fish
+    wezterm fish jq
+    lua5_4
+    luarocks
+    lua54Packages.luaposix
+    lua54Packages.lua-cjson
+
   ];
 
   # Fonts
   fonts.packages = [
     pkgs.jetbrains-mono
     pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.hack
   ];
+
+  homebrew = {
+    enable = true; # Bắt buộc phải có dòng này để nix-darwin quản lý Homebrew
+    casks = [
+      "sf-symbols"
+      "font-sf-pro"
+    ];
+    # Tùy chọn: Tự động cập nhật Homebrew khi rebuild
+    onActivation.autoUpdate = true;
+    # Tùy chọn: Tự động dọn dẹp các app không có trong list (cẩn thận khi dùng)
+    # onActivation.cleanup = "zap"; 
+  };
 
   # macOS System Defaults
   system.defaults = {
@@ -30,6 +48,8 @@
     finder.AppleShowAllExtensions = true;
     NSGlobalDomain.AppleInterfaceStyle = "Dark";
   };
+
+
 
   # Activation Script: Fix Spotlight cho Nix Apps
   system.activationScripts.applications.text =
