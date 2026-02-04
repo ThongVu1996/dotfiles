@@ -49,17 +49,10 @@ in
     luajitPackages.luarocks
     luajitPackages.magick
     opencode
-    # (writeShellScriptBin "opencode" ''
-    # #!/bin/sh
-    # # Use Nix-interpolated path for Zsh to ensure it exists
-    # export SHELL="${pkgs.zsh}/bin/zsh"
-    #
-    # # Ensure opencode uses zsh for its own shell operations
-    # export TERMINAL="zsh"
-    #
-    # # Use the absolute path to the real opencode binary from nixpkgs
-    # exec "${pkgs.opencode}/bin/opencode" "$@"
-  # '')
+    sketchybar-app-font
+    sketchybar
+    gh
+    switchaudio-osx
   (writeShellScriptBin "opencode-zsh" ''
     #!/bin/sh
     export SHELL="/run/current-system/sw/bin/zsh"
@@ -182,5 +175,10 @@ xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+  
+  xdg.configFile."sketchybar" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/sketchybar/.config/sketchybar";
+    recursive = true;
   };
 }

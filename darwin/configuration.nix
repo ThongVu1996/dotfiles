@@ -4,6 +4,7 @@
   # Tắt nix-daemon vì nix-darwin sẽ quản lý (tùy chọn, thường là enable = false nếu cài Lix hoặc DeterminateSystems)
   nix.enable = false; 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowBroken = true;
 
   users.users.${username} = {
     name = username;
@@ -18,7 +19,7 @@
     wezterm fish jq
     lua5_4
     luarocks
-    lua54Packages.luaposix
+
     lua54Packages.lua-cjson
 
   ];
