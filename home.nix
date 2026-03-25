@@ -30,7 +30,8 @@ in
     myDuf
   ] 
   ++ lib.optionals isDarwin [
-    # macOS Specific Packages
+    # Chỉ cài đặt nếu đó là máy macOS
+    aerospace
     rio chafa luajit luajitPackages.luarocks 
     luajitPackages.magick opencode switchaudio-osx
   ];

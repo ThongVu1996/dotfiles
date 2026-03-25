@@ -3,9 +3,6 @@ after-startup-command = []
 
 start-at-login = true
 
-# Sketchybar integration
-exec-on-workspace-change = ['/Users/thongvu/.config/sketchybar/plugins/aerospace_notify.sh']
-
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 

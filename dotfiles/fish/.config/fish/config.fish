@@ -276,7 +276,7 @@ function twr --description 'Đổi tên Window hiện tại của Tmux.'
     # 1. KIỂM TRA THAM SỐ: Đảm bảo người dùng nhập tên mới
     if test (count $argv) -eq 0
         echo (set_color red) "Lỗi:" (set_color normal) "Bạn cần cung cấp tên mới cho Window."
-        echo "Cú pháp: trw <ten_moi>"
+        echo "Cú pháp: twr <ten_moi>"
         return 1
     end
 
