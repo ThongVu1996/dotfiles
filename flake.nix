@@ -1,46 +1,46 @@
 {
-  description = "Nix-darwin + Home Manager + Aerospace fully in Nix";
+  description = "Cross-platform Nix Config (Nix-darwin + Home Manager)";
 
   inputs = {
-    # Nixpkgs Unstable (để có software mới nhất)
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
-    # Nix Darwin
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    # Home Manager (Unstable/Master để hỗ trợ module Aerospace)
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, ... }:
+  outputs = { self, nixpkgs, nix-darwin, home-manager, ... }@inputs:
   let
-    system = "aarch64-darwin"; # Apple Silicon
     username = "thongvu";
     hostname = "MacBook-Pro";
   in
   {
+    # 1. Cấu hình cho macOS
     darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
-      inherit system;
+      system = "aarch64-darwin";
       
-      # Truyền inputs vào để dùng ở các module con nếu cần
-      specialArgs = {
-        inherit self;
-        inherit username;
-      };
+      specialArgs = { inherit self inputs username; };
 
       modules = [
-        ./darwin/configuration.nix
+        ./modules/common/packages.nix   # Nạp các app dùng chung
+        ./modules/darwin/system.nix     # Nạp cấu hình macOS
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.${username} = import ./home.nix;
-          
-          # Truyền thêm tham số cho Home Manager nếu cần
-          home-manager.extraSpecialArgs = { inherit username; };
+          home-manager.extraSpecialArgs = { inherit inputs username; };
         }
+      ];
+    };
+
+    # 2. Cấu hình dự phòng cho Linux (Standalone Home Manager)
+    homeConfigurations."linux" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      extraSpecialArgs = { inherit inputs username; };
+      modules = [ 
+        ./home.nix 
+        # Nếu muốn dùng các app chung trên Linux, bạn có thể thiết lập thêm ở đây sau
       ];
     };
   };

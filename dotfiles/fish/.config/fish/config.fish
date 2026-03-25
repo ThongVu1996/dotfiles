@@ -47,8 +47,8 @@ function ls --wraps eza
     end
 end
 alias lz='lazygit'
+
 # System Rebuild Alias
-# alias nixss="sudo nix run nix-darwin -- switch --flake ~/nix-config#(scutil --get LocalHostName)"
 function nixss --description "Build and Switch Nix-Darwin"
     # 1. Tự động lấy Hostname của máy (bỏ phần .local nếu có)
     # Nếu bạn muốn fix cứng tên máy, thay dòng dưới thành: set host "ten_may_cua_ban"
