@@ -3,12 +3,15 @@
 let 
   nushellConfigPath = "${config.home.homeDirectory}/nix-config/dotfiles/nushell/.config/nushell";
   isDarwin = pkgs.stdenv.isDarwin;
+  myDuf = pkgs.callPackage ./modules/custom/duf.nix {};
 in
 {
   programs.home-manager.enable = true;
   home.stateVersion = "24.11";
   home.username = username;
-  home.homeDirectory = "/Users/${username}";
+  home.homeDirectory = if pkgs.stdenv.isDarwin 
+                      then "/Users/${username}" 
+                      else "/home/${username}";
   home.enableNixpkgsReleaseCheck = false;
   xdg.enable = true;
 
@@ -22,7 +25,9 @@ in
     tailscale awscli2 eksctl kubectl 
     kubernetes-helm argocd cloud-nuke 
     terraform python315 pkg-config 
-    terraform-ls tflint gh 
+    terraform-ls tflint gh
+    # Custom packages
+    myDuf
   ] 
   ++ lib.optionals isDarwin [
     # macOS Specific Packages

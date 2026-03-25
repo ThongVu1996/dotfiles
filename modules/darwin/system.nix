@@ -1,8 +1,8 @@
 { config, pkgs, username, ... }:
 
 {
-  # Quản lý nix-daemon bằng nix-darwin
-  nix.enable = true; 
+  # Tắt quản lý nix-daemon của nix-darwin để nhường quyền cho Determinate Systems
+  nix.enable = false; 
   nix.settings.experimental-features = "nix-command flakes";
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
@@ -12,12 +12,7 @@
     home = "/Users/${username}";
   };
 
-  # Homebrew (Chỉ có trên macOS)
-  homebrew = {
-    enable = true;
-    casks = [ "sf-symbols" "font-sf-pro" ];
-    onActivation.autoUpdate = true;
-  };
+  system.primaryUser = username;
 
   # macOS System Defaults
   system.defaults = {
@@ -35,7 +30,7 @@
         name = "system-applications";
         # Kết hợp app từ systemPackages và app từ home-manager
         paths = config.environment.systemPackages ++ [ config.home-manager.users.${username}.home.path ];
-        pathsToLink = "/Applications";
+        pathsToLink = ["/Applications"];
       };
     in pkgs.lib.mkForce ''
       echo "Setting up /Applications/Nix Apps..." >&2
