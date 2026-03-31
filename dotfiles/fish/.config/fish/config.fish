@@ -49,33 +49,43 @@ end
 alias lz='lazygit'
 
 # System Rebuild Alias
-function nixss --description "Build and Switch Nix-Darwin"
-    # 1. Tự động lấy Hostname của máy (bỏ phần .local nếu có)
-    # Nếu bạn muốn fix cứng tên máy, thay dòng dưới thành: set host "ten_may_cua_ban"
-    set -l host (hostname | cut -f1 -d.)
-
-    echo "🔨 Đang Build cho cấu hình: darwinConfigurations.$host..."
-
-    # 2. Thực hiện lệnh Build
-    # Dùng 'command' để đảm bảo không bị alias ghi đè
-    nix build .#darwinConfigurations."$host".system
-
-    # Kiểm tra: Chỉ chạy tiếp nếu Build thành công ($status = 0)
-    if test $status -eq 0
-        echo "✅ Build thành công! Nhập mật khẩu để Switch..."
-        
-        # 3. Thực hiện lệnh Switch với sudo
-        sudo ./result/sw/bin/darwin-rebuild switch --flake .
-        
-        # 4. Dọn dẹp symlink 'result' cho sạch sẽ
-        if test -L result
+function nixss --description "Build and Switch đa nền tảng (Nix-Darwin / Home Manager)"
+    # Lấy hệ điều hành hiện tại
+    set -l os_name (uname)
+    # ============================
+    # 🍎 RẼ NHÁNH CHO MACOS (Darwin)
+    # ============================
+    if test "$os_name" = "Darwin"
+        set -l host (hostname | cut -f1 -d.)
+        echo "🍎 [macOS] Đang Build cho cấu hình: darwinConfigurations.$host..."
+        nix build .#darwinConfigurations."$host".system
+        if test $status -eq 0
+            echo "✅ Cấu trúc được tạo thành công! Yêu cầu Mật khẩu quản trị..."
+            sudo ./result/sw/bin/darwin-rebuild switch --flake .
             rm result
-            echo "🧹 Đã dọn dẹp file 'result'."
+            echo "🎉 Tích hợp Mac hoàn tất."
+        else
+            echo "❌ Build Flake MacOS thất bại. Xin kiểm tra log."
         end
-        
-        echo "🎉 Xong! Hệ thống đã được cập nhật."
+    # ============================
+    # 🐧 RẼ NHÁNH CHO LINUX (Home Manager Standalone)
+    # ============================
+    else if test "$os_name" = "Linux"
+        # Ở Linux mình gọi cứng vào block "linux" trong file flake
+        set -l target "linux"
+        echo "🐧 [Linux] Kích hoạt Home Manager cho cấu hình: $target..."
+        # Không dùng sudo ở đây để bảo vệ cấu trúc nhóm người dùng!
+        home-manager switch --flake .#$target
+        if test $status -eq 0
+            echo "🎉 Tích hợp Linux hoàn tất."
+        else
+            echo "❌ Home Manager Switch thất bại. Xin kiểm tra log."
+        end
+    # ============================
+    # ⚠️ HỆ ĐIỀU HÀNH LẠ
+    # ============================
     else
-        echo "❌ Build thất bại. Vui lòng kiểm tra lỗi phía trên."
+        echo "⚠️ Lỗi: Không nhận diện được nền tảng '$os_name'."
     end
 end
 

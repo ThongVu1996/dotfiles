@@ -1,5 +1,8 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, username, lib, ... }:
 
+let
+  isDarwin = pkgs.stdenv.isDarwin;
+in
 {
   # Tắt quản lý nix-daemon của nix-darwin để nhường quyền cho Determinate Systems
   nix.enable = false; 
@@ -23,12 +26,18 @@
   
   services.tailscale.enable = true;
 
-  # Activation Script: Fix Spotlight cho cả Nix Apps và Home Manager Apps
+  # Cài một số font cần thiết ở cấp độ hệ thống macOS
+  fonts.packages = [
+    pkgs.jetbrains-mono
+    pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.hack
+  ];
+
+  # Activation Script: Fix Spotlight cho Nix Apps
   system.activationScripts.applications.text =
     let 
       env = pkgs.buildEnv {
         name = "system-applications";
-        # Kết hợp app từ systemPackages và app từ home-manager
         paths = config.environment.systemPackages ++ [ config.home-manager.users.${username}.home.path ];
         pathsToLink = ["/Applications"];
       };

@@ -1,5 +1,5 @@
 {
-  description = "Cross-platform Nix Config (Nix-darwin + Home Manager)";
+  description = "Cross-platform Nix Config with Dendritic Pattern";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -15,22 +15,19 @@
     hostname = "MacBook-Pro";
   in
   {
-    # 1. Cấu hình cho macOS
+    # 1. Cấu hình cho macOS (Dùng chung tính năng HM)
     darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
-      
       specialArgs = { inherit self inputs username; };
-
       modules = [
-        ./modules/common/packages.nix   # Nạp các app dùng chung
-        ./modules/darwin/system.nix     # Nạp cấu hình macOS
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.${username} = import ./home.nix;
           home-manager.extraSpecialArgs = { inherit inputs username; };
         }
+        # Gọi file thiết lập chính của máy mác vào
+        ./hosts/macos/default.nix
       ];
     };
 
@@ -39,8 +36,8 @@
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
       extraSpecialArgs = { inherit inputs username; };
       modules = [ 
-        ./home.nix 
-        # Nếu muốn dùng các app chung trên Linux, bạn có thể thiết lập thêm ở đây sau
+        # Gọi trực tiếp file linux vào (hoàn toàn tải các tính năng HM giống hệt mac)
+        ./hosts/linux/default.nix 
       ];
     };
   };
