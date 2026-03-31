@@ -273,7 +273,7 @@ return {
 		},
 		-- Use regex
 		{
-			"<leader>fr",
+			"<leader>sR",
 			function()
 				Snacks.picker.grep({ regex = true, prompt = "🔍 Regex Search: " })
 			end,
@@ -352,13 +352,6 @@ return {
 			desc = "LSP References in Floating Picker",
 		},
 		-- git browser
-		{
-			"<leader>go",
-			function()
-				require("snacks").gitbrowse()
-			end,
-			desc = "Open current branch in browser",
-		},
 
 		-- Copy permalink of the current line or selected range to clipboard
 		{

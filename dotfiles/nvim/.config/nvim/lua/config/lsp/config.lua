@@ -1,5 +1,13 @@
 -- Mason PATH is handled by core.mason-path
-vim.lsp.enable({
+
+-- Cập nhật capabilities của blink.cmp cho Native LSP
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local ok, blink = pcall(require, "blink.cmp")
+if ok then
+	capabilities = vim.tbl_deep_extend("force", capabilities, blink.get_lsp_capabilities())
+end
+
+local servers = {
 	"lua-ls",
 	"gopls",
 	"zls",
@@ -14,7 +22,17 @@ vim.lsp.enable({
 	-- "typos-lsp",
 	"marksman",
 	"terraformls",
-})
+}
+
+for _, server in ipairs(servers) do
+	-- Đảm bảo tên dùng gạch dưới cho vim.lsp.config (VD: lua-ls -> lua_ls)
+	local server_name = server:gsub("%-", "_")
+	vim.lsp.config[server_name] = vim.tbl_deep_extend("force", vim.lsp.config[server_name] or {}, {
+		capabilities = capabilities,
+	})
+end
+
+vim.lsp.enable(servers)
 
 -- LSP servers are automatically managed by Mason
 -- Use :MasonVerify to check which tools are Mason-managed
