@@ -6,11 +6,11 @@ let
 in
 {
   options.myConfig.desktop.aerospace = {
-    enable = lib.mkEnableOption "Bật AeroSpace Tiling WM";
+    enable = lib.mkEnableOption "Enable AeroSpace Tiling WM";
   };
 
   config = lib.mkIf cfg.enable {
-    # AeroSpace chỉ chạy trên macOS
+    # AeroSpace only runs on macOS
     home.packages = lib.optionals pkgs.stdenv.isDarwin [
       pkgs.aerospace
     ];

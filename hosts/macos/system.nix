@@ -1,7 +1,7 @@
 { config, pkgs, username, lib, ... }:
 
 {
-  # Tắt quản lý nix-daemon của nix-darwin để nhường quyền cho Determinate Systems
+  # Disable nix-darwin's nix-daemon management to let Determinate Systems handle it
   nix.enable = false; 
   nix.settings.experimental-features = "nix-command flakes";
   nixpkgs.config.allowUnfree = true;
@@ -23,15 +23,15 @@
   
   services.tailscale.enable = true;
 
-  # Cài một số font cần thiết ở cấp độ hệ thống macOS
+  # Install essential fonts at the macOS system level
   fonts.packages = [
     pkgs.jetbrains-mono
     pkgs.nerd-fonts.jetbrains-mono
     pkgs.nerd-fonts.hack
   ];
 
-  # Spotlight & Dock: Được xử lý tự động bởi mac-app-util (flake input)
-  # Không cần activationScripts thủ công nữa
+  # Spotlight & Dock: Handled automatically by mac-app-util (flake input)
+  # No need for manual activationScripts anymore
     
   system.stateVersion = 5; 
 }

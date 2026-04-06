@@ -16,34 +16,34 @@
     hostname = "MacBook-Pro";
   in
   {
-    # 1. Cấu hình cho macOS (Dùng chung tính năng HM)
+    # 1. macOS Configuration (Shared HM features)
     darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       specialArgs = { inherit self inputs username; };
       modules = [
-        # mac-app-util: Tự động tạo trampoline apps cho Spotlight & Dock
+        # mac-app-util: Auto-generate trampoline apps for Spotlight & Dock
         mac-app-util.darwinModules.default
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs username; };
-          # Cho phép tất cả HM users cũng được hưởng Spotlight integration
+          # Enable Spotlight integration for all HM users
           home-manager.sharedModules = [
             mac-app-util.homeManagerModules.default
           ];
         }
-        # Gọi file thiết lập chính của máy mác vào
+        # Import the main macOS host configuration
         ./hosts/macos/default.nix
       ];
     };
 
-    # 2. Cấu hình dự phòng cho Linux (Standalone Home Manager)
+    # 2. Linux Configuration (Standalone Home Manager)
     homeConfigurations."linux" = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
       extraSpecialArgs = { inherit inputs username; };
       modules = [ 
-        # Gọi trực tiếp file linux vào (hoàn toàn tải các tính năng HM giống hệt mac)
+        # Import the Linux host configuration (loads exactly the same HM features as macOS)
         ./hosts/linux/default.nix 
       ];
     };

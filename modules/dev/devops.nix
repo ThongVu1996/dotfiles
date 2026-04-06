@@ -5,7 +5,7 @@ let
 in
 {
   options.myConfig.dev.tools.devops = {
-    enable = lib.mkEnableOption "Bật các công cụ CI/CD, DevOps và Cloud";
+    enable = lib.mkEnableOption "Enable CI/CD, DevOps, and Cloud tools";
   };
 
   config = lib.mkIf cfg.enable {

@@ -9,7 +9,7 @@
   
   home-manager.users.${username} = { pkgs, config, lib, ... }: {
     imports = [
-      ../../modules   # Auto-import đệ quy tất cả HM modules
+      ../../modules   # Recursively auto-import all HM modules
     ];
 
     myConfig = {
@@ -20,7 +20,7 @@
       desktop.apps.enable = true;
       editor.neovim.enable = true;
       
-      # Môi trường Dev (Có thể bật/tắt từng cái linh hoạt)
+      # Dev Environment (can be toggled individually)
       dev.tools.devops.enable = true;
       dev.tools.cli.enable = true;
       dev.tools.web.enable = true;
@@ -31,7 +31,7 @@
     home.stateVersion = "24.11";
     home.enableNixpkgsReleaseCheck = false;
     
-    # Tắt tính năng build options.json của Home Manager để triệt tiêu warning rác từ các flake inputs
+    # Disable Home Manager's options.json build to silence spurious warnings from flake inputs
     manual.json.enable = false;
   };
 }

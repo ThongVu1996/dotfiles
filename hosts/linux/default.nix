@@ -2,18 +2,18 @@
 
 {
   imports = [
-    ../../modules   # Auto-import đệ quy tất cả HM modules
+    ../../modules   # Recursively auto-import all HM modules
   ];
 
   myConfig = {
     terminal.tmux.enable = true;
     terminal.shells.enable = true;
     terminal.emulators.enable = true;
-    desktop.aerospace.enable = false;  # Tắt trên linux
+    desktop.aerospace.enable = false;  # Disabled on linux
     desktop.apps.enable = true;
     editor.neovim.enable = true;
     
-    # Ở Linux ví dụ không muốn dev web, ta có thể tắt web.enable = false
+    # For example, if you don't want web dev on Linux, you can set web.enable = false
     dev.tools.devops.enable = true;
     dev.tools.cli.enable = true;
     dev.tools.web.enable = true;
@@ -24,7 +24,7 @@
   home.stateVersion = "24.11";
   home.enableNixpkgsReleaseCheck = false;
   
-  # Tắt tính năng build options.json của HM để xoá warning
+  # Disable Home Manager's options.json build to silence spurious warnings
   manual.json.enable = false;
   
   home.username = username;

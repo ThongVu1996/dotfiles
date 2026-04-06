@@ -6,7 +6,7 @@ let
 in
 {
   options.myConfig.editor.neovim = {
-    enable = lib.mkEnableOption "Bật cấu hình Neovim và các LSPs";
+    enable = lib.mkEnableOption "Enable Neovim configuration and LSPs";
   };
 
   config = lib.mkIf cfg.enable {

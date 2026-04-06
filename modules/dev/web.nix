@@ -5,7 +5,7 @@ let
 in
 {
   options.myConfig.dev.tools.web = {
-    enable = lib.mkEnableOption "Bật môi trường phát triển Web (PHP, NodeJS)";
+    enable = lib.mkEnableOption "Enable Web Development environment (PHP, NodeJS)";
   };
 
   config = lib.mkIf cfg.enable {

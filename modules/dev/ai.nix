@@ -5,7 +5,7 @@ let
 in
 {
   options.myConfig.dev.tools.ai = {
-    enable = lib.mkEnableOption "Bật các công cụ AI (Claude Code, OpenCode)";
+    enable = lib.mkEnableOption "Enable AI tools (Claude Code, OpenCode)";
   };
 
   config = lib.mkIf cfg.enable {

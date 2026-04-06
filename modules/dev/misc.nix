@@ -5,7 +5,7 @@ let
 in
 {
   options.myConfig.dev.tools.misc = {
-    enable = lib.mkEnableOption "Bật các công cụ phụ trợ (Git, ImageMagick, MacOS tools)";
+    enable = lib.mkEnableOption "Enable miscellaneous utilities (Git, ImageMagick, MacOS tools)";
   };
 
   config = lib.mkIf cfg.enable {

@@ -6,7 +6,7 @@ let
 in
 {
   options.myConfig.dev.tools.cli = {
-    enable = lib.mkEnableOption "Bật các tiện ích hiển thị CLI";
+    enable = lib.mkEnableOption "Enable CLI visualization utilities";
   };
 
   config = lib.mkIf cfg.enable {

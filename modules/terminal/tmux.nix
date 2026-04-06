@@ -6,7 +6,7 @@ let
 in
 {
   options.myConfig.terminal.tmux = {
-    enable = lib.mkEnableOption "Bật Tmux (đa nền tảng)";
+    enable = lib.mkEnableOption "Enable Tmux (cross-platform)";
   };
 
   config = lib.mkIf cfg.enable {

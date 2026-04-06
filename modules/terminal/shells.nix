@@ -7,7 +7,7 @@ let
 in
 {
   options.myConfig.terminal.shells = {
-    enable = lib.mkEnableOption "Bật Fish, Nushell, Starship";
+    enable = lib.mkEnableOption "Enable Fish, Nushell, and Starship shells";
   };
 
   config = lib.mkIf cfg.enable {

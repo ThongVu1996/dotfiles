@@ -6,7 +6,7 @@ let
 in
 {
   options.myConfig.terminal.emulators = {
-    enable = lib.mkEnableOption "Bật các Terminal Emulators (Wezterm, Rio)";
+    enable = lib.mkEnableOption "Enable Terminal Emulators (Wezterm, Rio)";
   };
 
   config = lib.mkIf cfg.enable {

@@ -5,7 +5,7 @@ let
 in
 {
   options.myConfig.desktop.apps = {
-    enable = lib.mkEnableOption "Bật các ứng dụng Desktop cơ bản (KeePassXC...)";
+    enable = lib.mkEnableOption "Enable basic Desktop applications (KeePassXC, etc.)";
   };
 
   config = lib.mkIf cfg.enable {
