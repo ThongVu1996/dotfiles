@@ -6,5 +6,6 @@
     ./cli.nix
     ./web.nix
     ./misc.nix
+    ./ai.nix
   ];
 }

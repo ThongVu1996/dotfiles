@@ -10,26 +10,14 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      git mkalias keepassxc claude-code
-      imagemagick pngpaste wezterm
+      git imagemagick pngpaste
     ] ++ lib.optionals pkgs.stdenv.isDarwin [
-      rio chafa luajit luajitPackages.luarocks 
-      luajitPackages.magick opencode switchaudio-osx
+      chafa luajit luajitPackages.luarocks 
+      luajitPackages.magick switchaudio-osx
     ];
 
     home.sessionVariables = {
       PKG_CONFIG_PATH = lib.mkIf pkgs.stdenv.isDarwin "${pkgs.imagemagick.dev}/lib/pkgconfig";
     };
-
-    xdg.configFile."rio/config.toml".source = lib.mkIf pkgs.stdenv.isDarwin (config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/rio/.config/rio/config.toml");
-    xdg.configFile."wezterm".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/dotfiles/wezterm/.config/wezterm";
-
-    xdg.configFile."opencode/opencode.json".text = lib.mkIf pkgs.stdenv.isDarwin (builtins.toJSON {
-      "$schema" = "https://opencode.ai/config.json";
-      plugin = [ "opencode-antigravity-auth@latest" ];
-      provider = {
-        google = { models = { "antigravity-gemini-3-pro" = { name = "Gemini 3 Pro"; }; }; };
-      };
-    });
   };
 }

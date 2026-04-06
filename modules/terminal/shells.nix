@@ -2,7 +2,7 @@
 
 let
   cfg = config.myConfig.terminal.shells;
-  dotfilesPath = "${config.home.homeDirectory}/nix-config/dotfiles";
+  dotfilesPath = config.myConfig.dotfilesPath;
   nushellConfigPath = "${dotfilesPath}/nushell/.config/nushell";
 in
 {

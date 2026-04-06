@@ -1,8 +1,5 @@
 { config, pkgs, username, lib, ... }:
 
-let
-  isDarwin = pkgs.stdenv.isDarwin;
-in
 {
   # Tắt quản lý nix-daemon của nix-darwin để nhường quyền cho Determinate Systems
   nix.enable = false; 
@@ -33,25 +30,9 @@ in
     pkgs.nerd-fonts.hack
   ];
 
-  # Activation Script: Fix Spotlight cho Nix Apps
-  system.activationScripts.applications.text =
-    let 
-      env = pkgs.buildEnv {
-        name = "system-applications";
-        paths = config.environment.systemPackages ++ [ config.home-manager.users.${username}.home.path ];
-        pathsToLink = ["/Applications"];
-      };
-    in pkgs.lib.mkForce ''
-      echo "Setting up /Applications/Nix Apps..." >&2
-      rm -rf /Applications/Nix\ Apps
-      mkdir -p /Applications/Nix\ Apps
-      find ${env}/Applications -maxdepth 1 -type l -exec readlink -f '{}' \; \
-        | while read -r src; do
-            app_name=$(basename "$src")
-            echo "Copying shortcut for $src" >&2
-            ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
-          done
-    '';
+  # Spotlight & Dock: Được xử lý tự động bởi mac-app-util (flake input)
+  # Không cần activationScripts thủ công nữa
     
   system.stateVersion = 5; 
 }
+

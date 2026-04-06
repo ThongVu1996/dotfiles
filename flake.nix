@@ -7,9 +7,10 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, home-manager, mac-app-util, ... }@inputs:
   let
     username = "thongvu";
     hostname = "MacBook-Pro";
@@ -20,11 +21,17 @@
       system = "aarch64-darwin";
       specialArgs = { inherit self inputs username; };
       modules = [
+        # mac-app-util: Tự động tạo trampoline apps cho Spotlight & Dock
+        mac-app-util.darwinModules.default
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs username; };
+          # Cho phép tất cả HM users cũng được hưởng Spotlight integration
+          home-manager.sharedModules = [
+            mac-app-util.homeManagerModules.default
+          ];
         }
         # Gọi file thiết lập chính của máy mác vào
         ./hosts/macos/default.nix

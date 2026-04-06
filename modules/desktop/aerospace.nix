@@ -2,7 +2,7 @@
 
 let
   cfg = config.myConfig.desktop.aerospace;
-  dotfilesPath = "${config.home.homeDirectory}/nix-config/dotfiles";
+  dotfilesPath = config.myConfig.dotfilesPath;
 in
 {
   options.myConfig.desktop.aerospace = {

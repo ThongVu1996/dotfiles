@@ -2,7 +2,7 @@
 
 let
   cfg = config.myConfig.terminal.tmux;
-  dotfilesPath = "${config.home.homeDirectory}/nix-config/dotfiles";
+  dotfilesPath = config.myConfig.dotfilesPath;
 in
 {
   options.myConfig.terminal.tmux = {

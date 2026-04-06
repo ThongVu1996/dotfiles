@@ -2,7 +2,7 @@
 
 let
   cfg = config.myConfig.editor.neovim;
-  dotfilesPath = "${config.home.homeDirectory}/nix-config/dotfiles";
+  dotfilesPath = config.myConfig.dotfilesPath;
 in
 {
   options.myConfig.editor.neovim = {
