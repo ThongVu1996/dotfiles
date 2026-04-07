@@ -33,6 +33,8 @@
     
     # Disable Home Manager's options.json build to silence spurious warnings from flake inputs
     manual.json.enable = false;
+    manual.html.enable = false;
+    manual.manpages.enable = false;
   };
 }
 

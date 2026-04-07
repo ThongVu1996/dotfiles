@@ -26,6 +26,8 @@
   
   # Disable Home Manager's options.json build to silence spurious warnings
   manual.json.enable = false;
+  manual.html.enable = false;
+  manual.manpages.enable = false;
   
   home.username = username;
   home.homeDirectory = "/home/${username}";
