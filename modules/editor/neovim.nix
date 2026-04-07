@@ -21,7 +21,8 @@ in
       emmet-language-server 
       vscode-langservers-extracted 
       prettierd eslint_d  
-      typos-lsp marksman markdown-toc
+      typos-lsp 
+      markdown-toc markdown-oxide
     ];
 
     home.sessionVariables = {
