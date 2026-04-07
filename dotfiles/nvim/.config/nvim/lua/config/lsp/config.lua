@@ -20,7 +20,7 @@ local servers = {
 	"vue-ls",
 	"cspell",
 	-- "typos-lsp",
-	"marksman",
+	"markdown-oxide",
 	"terraformls",
 }
 

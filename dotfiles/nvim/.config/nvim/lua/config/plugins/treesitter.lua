@@ -7,7 +7,7 @@ return {
 		"JoosepAlviste/nvim-ts-context-commentstring",
 	},
 	config = function()
-		local treesitter = require("nvim-treesitter.configs")
+		local treesitter = require("nvim-treesitter")
 
 		treesitter.setup({
 			-- Modules (required field, leave empty if not overriding)
@@ -85,21 +85,31 @@ return {
 		vim.opt.foldenable = false -- Disable folding by default
 		require("nvim-ts-autotag").setup()
 
-		-- Blade parser configuration
+		local parsers = require("nvim-treesitter.parsers")
+		local parser_config = nil
+		if pcall(require, "nvim-treesitter.parsers") then
+			if parsers.get_parser_configs then
+				parser_config = parsers.get_parser_configs()
+			else
+				parser_config = parsers.list
+			end
+		end
+
+		if parser_config then
+			parser_config.blade = {
+				install_info = {
+					url = "https://github.com/EmranMR/tree-sitter-blade",
+					files = { "src/parser.c" },
+					branch = "main",
+				},
+				filetype = "blade",
+			}
+		end
+
 		vim.filetype.add({
 			pattern = {
 				[".*%.blade%.php"] = "blade",
 			},
 		})
-
-		local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-		parser_config.blade = {
-			install_info = {
-				url = "https://github.com/EmranMR/tree-sitter-blade",
-				files = { "src/parser.c" },
-				branch = "main",
-			},
-			filetype = "blade",
-		}
 	end,
 }
