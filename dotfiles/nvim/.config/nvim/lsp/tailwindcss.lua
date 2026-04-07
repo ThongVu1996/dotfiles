@@ -1,70 +1,40 @@
 local blink = require("blink.cmp")
 
 return {
+	-- 1. Lệnh chạy server
 	cmd = { "tailwindcss-language-server", "--stdio" },
+
+	-- 2. Hỗ trợ tất cả file Frontend (Có thêm Blade cho PHP)
 	filetypes = {
-		"javascript",
-		"javascriptreact",
-		"typescript",
-		"typescriptreact",
-		"vue",
-		"svelte",
-		"html",
-		"blade",
-		"css",
-		"scss",
+		"javascript", "javascriptreact", "typescript", "typescriptreact",
+		"vue", "svelte", "html", "blade", "css", "scss", "less", "postcss"
 	},
-	root_markers = {
-		"tailwind.config.js",
-		"tailwind.config.cjs",
-		"tailwind.config.mjs",
-		"tailwind.config.ts",
-		"postcss.config.js",
-		"postcss.config.ts",
-		"package.json",
-		".git",
-	},
+
+	-- 3. Cấu hình chuyên sâu cho Tailwind
 	settings = {
 		tailwindCSS = {
-			emmetCompletions = true,
-			validate = true,
+			-- Hiện bảng màu sắc trực tiếp khi di chuột qua class
+			hovers = true,
+			-- Gợi ý class cực mạnh kèm ô vuông màu sắc
+			suggestions = true,
+			-- Tự động hoàn thành mã màu (ví dụ: text-sky-500)
+			colorDecorators = true,
+			-- Linting cho các class (Báo gạch chân nếu bạn gõ class sai cách)
 			lint = {
 				cssConflict = "warning",
 				invalidApply = "error",
-				invalidScreen = "error",
-				invalidVariant = "error",
 				invalidConfigPath = "error",
+				invalidScreen = "error",
 				invalidTailwindDirective = "error",
+				invalidVariant = "error",
 				recommendedVariantOrder = "warning",
 			},
-			-- Tailwind class attributes configuration
-			classAttributes = { "class", "className", "classList", "ngClass", ":class" },
-
-			-- Experimental regex patterns to detect Tailwind classes in various syntaxes
-			experimental = {
-				classRegex = {
-					-- tw`...` or tw("...")
-					"tw`([^`]*)`",
-					"tw\\(([^)]*)\\)",
-
-					-- @apply directive inside SCSS / CSS
-					"@apply\\s+([^;]*)",
-
-					-- class and className attributes (HTML, JSX, Vue, Blade with :class)
-					'class="([^"]*)"',
-					'className="([^"]*)"',
-					':class="([^"]*)"',
-
-					-- Laravel @class directive e.g. @class([ ... ])
-					"@class\\(([^)]*)\\)",
-				},
-			},
+			-- Tự động sắp xếp class (Ưu tiên dùng Prettier plugin, nhưng ở đây bật để gợi ý tốt hơn)
+			validate = true,
 		},
 	},
-	on_attach = function(client, bufnr)
-		-- Disable rename của tailwind
-		client.server_capabilities.renameProvider = false
-	end,
+
+	-- 4. Capabilities (Blink.cmp support)
 	capabilities = vim.tbl_deep_extend(
 		"force",
 		{},

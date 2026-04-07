@@ -11,9 +11,10 @@ local servers = {
 	"lua-ls",
 	"gopls",
 	"zls",
-	"ts-ls",
+	"vtsls",
 	"rust-analyzer",
 	"intelephense",
+	"phpactor",
 	"tailwindcss",
 	"html-ls",
 	"css-ls",
@@ -22,6 +23,7 @@ local servers = {
 	-- "typos-lsp",
 	"markdown-oxide",
 	"terraformls",
+	"yaml-ls",
 }
 
 for _, server in ipairs(servers) do

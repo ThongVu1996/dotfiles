@@ -1,20 +1,23 @@
 local blink = require("blink.cmp")
 
 return {
+	-- 1. Lệnh chạy server
 	cmd = { "vscode-html-language-server", "--stdio" },
-	filetypes = {
-		"html",
-		"blade",
-		"javascriptreact",
-		"typescriptreact",
-		"svelte",
+
+	-- 2. Chỉ chạy trên HTML thuần và Template (Tránh chạy trên JS/TS gây trùng lặp với vtsls)
+	filetypes = { "html", "blade", "svelte" },
+
+	-- 3. Cấu hình capabilities cho HTML
+	init_options = {
+		configurationSection = { "html", "css", "javascript" },
+		embeddedLanguages = {
+			css = true,
+			javascript = true,
+		},
+		provideFormatter = false, -- Để Prettier (Conform) lo phần format
 	},
-	root_markers = { "index.html", ".git" },
-	init_options = { provideFormatter = true },
-	on_attach = function(client, bufnr)
-		-- Disable rename
-		client.server_capabilities.renameProvider = false
-	end,
+
+	-- 4. Capabilities (Blink.cmp support)
 	capabilities = vim.tbl_deep_extend(
 		"force",
 		{},

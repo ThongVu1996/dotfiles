@@ -11,18 +11,27 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
+      # Neovim dependencies
       neovim
       
-      # Language Servers & Formatters
+      # Web & Modern Scripting
       lua-language-server stylua
       vue-language-server 
       tailwindcss-language-server 
-      typescript-language-server
+      vtsls
       emmet-language-server 
       vscode-langservers-extracted 
+      
+      # Formatters & Linters
       prettierd eslint_d  
-      typos-lsp 
+      cspell # Spell checker
+      
+      # PHP Environment
+      intelephense 
+      
+      # Markdown & Docs
       markdown-toc markdown-oxide
+      yaml-language-server
     ];
 
     home.sessionVariables = {

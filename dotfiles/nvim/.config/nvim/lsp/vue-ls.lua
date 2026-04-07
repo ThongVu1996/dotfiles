@@ -1,40 +1,32 @@
 local blink = require("blink.cmp")
 
--- Function to get TypeScript SDK path (prefer local, fallback to global)
-local function get_typescript_sdk()
-	local local_sdk = vim.fn.getcwd() .. "/node_modules/typescript/lib"
-	if vim.fn.isdirectory(local_sdk) == 1 then
-		return local_sdk
+-- Helper để tìm TypeScript/Vue plugin cho vtsls
+local function get_vue_plugin_path()
+	local local_plugin = vim.fn.getcwd() .. "/node_modules/@vue/typescript-plugin"
+	if vim.fn.isdirectory(local_plugin) == 1 then
+		return local_plugin
 	end
-
-	-- Try global installation
-	local global_root = vim.fn.system("npm root -g"):gsub("\n", ""):gsub("\r", "")
-	local global_sdk = global_root .. "/typescript/lib"
-	if vim.fn.isdirectory(global_sdk) == 1 then
-		return global_sdk
-	end
-
-	-- If both fail, return nil to let vue-language-server find it automatically
 	return nil
 end
 
 return {
+	-- 1. Lệnh chạy server (Volar 2.0+)
 	cmd = { "vue-language-server", "--stdio" },
+
+	-- 2. Hỗ trợ file Vue
 	filetypes = { "vue" },
-	root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+
+	-- 3. Kích hoạt Hybrid Mode (Siêu nhẹ, siêu ổn định)
 	init_options = {
 		vue = {
-			hybridMode = false, -- Disable for inlay hints support
+			hybridMode = true, -- <== PHẢI LÀ TRUE CHO VTSLS
 		},
-		-- Only set typescript config if we have a valid TypeScript installation
-		typescript = get_typescript_sdk() and {
-			tsdk = get_typescript_sdk(),
-		} or nil,
 	},
-	settings = {
-		-- Remove TypeScript-specific settings to avoid conflicts with ts-ls
-		-- Let the TypeScript Language Server handle TypeScript features
-	},
+
+	-- Export helper cho vtsls
+	get_vue_plugin_path = get_vue_plugin_path,
+
+	-- 4. Capabilities (Blink.cmp support)
 	capabilities = vim.tbl_deep_extend(
 		"force",
 		{},
