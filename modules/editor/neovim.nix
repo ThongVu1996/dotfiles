@@ -10,9 +10,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    stylix.targets.neovim.enable = lib.mkForce false;
+    programs.neovim.enable = true;
+
     home.packages = with pkgs; [
       # Neovim dependencies
-      neovim
+      #neovim
       
       # Web & Modern Scripting
       lua-language-server stylua

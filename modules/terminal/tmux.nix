@@ -10,10 +10,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      tmux
-    ];
-
-    home.file.".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/tmux/.tmux.conf";
+    programs.tmux = {
+      enable = true;
+      extraConfig = ''
+        source-file ${dotfilesPath}/tmux/.tmux.conf
+      '';
+    };
   };
 }

@@ -179,6 +179,168 @@
 # error_symbol = '[🔥](bold fg:color_red)'
 
 
+# # Global settings
+# command_timeout = 5000
+#
+# # Định dạng hiển thị của prompt
+# format = """
+# $os\
+# $directory\
+# $git_branch\
+# $git_status\
+# $fill\
+# $python\
+# $lua\
+# $nodejs\
+# $php\
+# $golang\
+# $haskell\
+# $rust\
+# $ruby\
+# $package\
+# $aws\
+# $docker_context\
+# $jobs\
+# $cmd_duration\
+# $line_break\
+# $character"""
+#
+# add_newline = true
+# palette = 'tokyonight'
+#
+# [os]
+# disabled = false
+# style = 'bold #c0caf5' # Tokyo Night Cyan
+# format = '[$symbol ]($style)'
+#
+# [os.symbols]
+# Windows = "󰍲"
+# Ubuntu = " "
+# SUSE = ""
+# Raspbian = "󰐿"
+# Mint = "󰣭"
+# Macos = ""
+# Manjaro = ""
+# Linux = "󰌽"
+# Gentoo = "󰣨"
+# Fedora = "󰣛"
+# Alpine = ""
+# Amazon = ""
+# Android = ""
+# Arch = "󰣇"
+# Artix = "󰣇"
+# EndeavourOS = ""
+# CentOS = ""
+# Debian = "󰣚"
+# Redhat = "󱄛"
+# RedHatEnterprise = "󱄛"
+# Pop = ""
+#
+# [directory]
+# style = "bold #7aa2f7" # Tokyo Night Blue
+# format = '[$path ]($style)'
+# truncation_length = 3
+#
+# [directory.substitutions]
+# 'Documents' = '󰈙'
+# 'Downloads' = ' '
+# 'Music' = ' '
+# 'Pictures' = ' '
+#
+# [git_branch]
+# style = "bold #bb9af7" # Tokyo Night Magenta/Purple
+# symbol = ' '
+# # Dùng màu xám xanh (#565f89) cho các chữ nối 'at', 'on' để làm nổi bật thông tin chính
+# format = '[at](#565f89)   [on](#565f89) [$symbol$branch ]($style)'
+#
+# [git_status]
+# style = 'bold #9ece6a' # Tokyo Night Green
+# format = '([$all_status$ahead_behind]($style) )'
+#
+# [fill]
+# symbol = " "
+#
+# [python]
+# style = '#73daca' # Tokyo Night Teal/Aqua
+# symbol = ' '
+# format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+# pyenv_version_name = true
+# pyenv_prefix = ''
+#
+# [lua]
+# symbol = ' '
+# style = '#7aa2f7'
+#
+# [nodejs]
+# style = 'bold #9ece6a' # Tokyo Night Green
+# format = '[ $version ]($style) '
+#
+# [php]
+# symbol = "🐘"
+# style = "#bb9af7"
+# format = '[$symbol($version) ]($style)'
+#
+# [golang]
+# style = 'bold #7ad5ff'
+# symbol = ' '
+#
+# [haskell]
+# style = '#bb9af7'
+# symbol = ' '
+#
+# [rust]
+# style = 'bold #ff9e64' # Tokyo Night Orange
+# symbol = ' '
+#
+# [ruby]
+# style = '#f7768e'
+# symbol = ' '
+#
+# [package]
+# symbol = '󰏗 '
+# style = '#e0af68'
+#
+# [aws]
+# symbol = ' '
+# style = '#e0af68' # Tokyo Night Yellow/Orange
+# format = '[$symbol($profile )(\[$duration\] )]($style)'
+#
+# [docker_context]
+# symbol = ' '
+# style = 'bold #2ac3de' # Tokyo Night Cyan
+# format = '[$symbol]($style) $path'
+# detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
+# detect_extensions = ['Dockerfile']
+#
+# [jobs]
+# symbol = ' '
+# style = '#f7768e'
+# number_threshold = 1
+# format = '[$symbol]($style)'
+#
+# [cmd_duration]
+# min_time = 500
+# style = '#e0af68' # Tokyo Night Yellow
+# format = '[$duration]($style)'
+#
+# [character]
+# disabled = false
+# # Sử dụng màu xanh lá và đỏ của Tokyo Night cho các biểu tượng thành công/lỗi
+# success_symbol = '[✨](bold #9ece6a)'
+# error_symbol = '[🔥](bold #f7768e)'
+#
+# [palettes.tokyonight]
+# blue = '#7aa2f7'
+# cyan = '#7dcfff'
+# green = '#9ece6a'
+# magenta = '#bb9af7'
+# orange = '#ff9e64'
+# red = '#f7768e'
+# yellow = '#e0af68'
+# comment = '#565f89'
+# foreground = '#a9b1d6'
+# background = '#1a1b26'
+
 # Global settings
 command_timeout = 5000
 
@@ -206,11 +368,13 @@ $line_break\
 $character"""
 
 add_newline = true
-palette = 'tokyonight'
+
+# Sử dụng palette 'stylix' được tạo tự động bởi Nix/Stylix
+palette = 'base16'
 
 [os]
 disabled = false
-style = 'bold #c0caf5' # Tokyo Night Cyan
+style = 'bold blue' 
 format = '[$symbol ]($style)'
 
 [os.symbols]
@@ -237,7 +401,7 @@ RedHatEnterprise = "󱄛"
 Pop = ""
 
 [directory]
-style = "bold #7aa2f7" # Tokyo Night Blue
+style = "bold cyan"
 format = '[$path ]($style)'
 truncation_length = 3
 
@@ -248,20 +412,20 @@ truncation_length = 3
 'Pictures' = ' '
 
 [git_branch]
-style = "bold #bb9af7" # Tokyo Night Magenta/Purple
+style = "bold magenta"
 symbol = ' '
-# Dùng màu xám xanh (#565f89) cho các chữ nối 'at', 'on' để làm nổi bật thông tin chính
-format = '[at](#565f89)   [on](#565f89) [$symbol$branch ]($style)'
+# Dùng bright-black (thường là màu xám/comment trong Stylix) cho các chữ nối
+format = '[at](bright-black)  [on](bright-black) [$symbol$branch ]($style)'
 
 [git_status]
-style = 'bold #9ece6a' # Tokyo Night Green
+style = 'bold green'
 format = '([$all_status$ahead_behind]($style) )'
 
 [fill]
 symbol = " "
 
 [python]
-style = '#73daca' # Tokyo Night Teal/Aqua
+style = 'cyan'
 symbol = ' '
 format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 pyenv_version_name = true
@@ -269,75 +433,63 @@ pyenv_prefix = ''
 
 [lua]
 symbol = ' '
-style = '#7aa2f7'
+style = 'blue'
 
 [nodejs]
-style = 'bold #9ece6a' # Tokyo Night Green
+style = 'bold green'
 format = '[ $version ]($style) '
 
 [php]
 symbol = "🐘"
-style = "#bb9af7"
+style = "magenta"
 format = '[$symbol($version) ]($style)'
 
 [golang]
-style = 'bold #7ad5ff'
+style = 'bold blue'
 symbol = ' '
 
 [haskell]
-style = '#bb9af7'
+style = 'magenta'
 symbol = ' '
 
 [rust]
-style = 'bold #ff9e64' # Tokyo Night Orange
+style = 'bold orange'
 symbol = ' '
 
 [ruby]
-style = '#f7768e'
+style = 'red'
 symbol = ' '
 
 [package]
 symbol = '󰏗 '
-style = '#e0af68'
+style = 'yellow'
 
 [aws]
 symbol = ' '
-style = '#e0af68' # Tokyo Night Yellow/Orange
+style = 'yellow'
 format = '[$symbol($profile )(\[$duration\] )]($style)'
 
 [docker_context]
 symbol = ' '
-style = 'bold #2ac3de' # Tokyo Night Cyan
+style = 'bold cyan'
 format = '[$symbol]($style) $path'
 detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
 detect_extensions = ['Dockerfile']
 
 [jobs]
 symbol = ' '
-style = '#f7768e'
+style = 'red'
 number_threshold = 1
 format = '[$symbol]($style)'
 
 [cmd_duration]
 min_time = 500
-style = '#e0af68' # Tokyo Night Yellow
+style = 'yellow'
 format = '[$duration]($style)'
 
 [character]
 disabled = false
-# Sử dụng màu xanh lá và đỏ của Tokyo Night cho các biểu tượng thành công/lỗi
-success_symbol = '[✨](bold #9ece6a)'
-error_symbol = '[🔥](bold #f7768e)'
-
-[palettes.tokyonight]
-blue = '#7aa2f7'
-cyan = '#7dcfff'
-green = '#9ece6a'
-magenta = '#bb9af7'
-orange = '#ff9e64'
-red = '#f7768e'
-yellow = '#e0af68'
-comment = '#565f89'
-foreground = '#a9b1d6'
-background = '#1a1b26'
+# Stylix sẽ tự động map màu green/red của Gruvbox vào đây
+success_symbol = '[✨](bold green)'
+error_symbol = '[🔥](bold red)'
 

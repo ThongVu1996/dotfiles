@@ -52,7 +52,3 @@ opt.swapfile = false
 
 -- font
 opt.guifont = "JetBrainsMono Nerd Font:h14"
-
--- line space
--- vim.g.neovide_cursor_vfx_mode = "railgun"
--- opt.linespace = 10
