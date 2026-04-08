@@ -37,8 +37,6 @@
           # Enable Spotlight integration for all HM users
           home-manager.sharedModules = [
             mac-app-util.homeManagerModules.default
-            stylix.homeModules.stylix
-            { stylix.targets.neovim.enable = nixpkgs.lib.mkDefault false; }
           ];
         }
         # Import the main macOS host configuration

@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules   # Recursively auto-import all HM modules
+    ./stylix.nix
   ];
 
   myConfig = {
