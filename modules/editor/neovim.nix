@@ -20,8 +20,8 @@ in
       withRuby = false;
       withPython3 = true; # Khuyên dùng true nếu bạn có dùng các plugin cần python
       withNodeJs = true;
-      plugins = [
-        pkgs.vimPlugins.base16-nvim
+      plugins = with pkgs.vimPlugins; [
+        base16-nvim
       ];
     };
 
@@ -34,8 +34,8 @@ in
       lua-language-server
       stylua
       vue-language-server 
-      tailwindcss-language-server 
       vtsls
+      tailwindcss-language-server
       emmet-language-server 
       vscode-langservers-extracted 
       
@@ -65,6 +65,26 @@ in
       -- Lấy slug an toàn từ Stylix
       vim.g.stylix_theme = "base16-${config.lib.stylix.colors.scheme or "gruvbox-material-dark-medium"}"
       vim.g.base16_plugin_path = "${pkgs.vimPlugins.base16-nvim}"
+
+      -- Tiếp tục xuất bảng màu để Neovim dùng trong Lua
+      vim.g.base16_colors = {
+        base00 = "#${config.lib.stylix.colors.base00}",
+        base01 = "#${config.lib.stylix.colors.base01}",
+        base02 = "#${config.lib.stylix.colors.base02}",
+        base03 = "#${config.lib.stylix.colors.base03}",
+        base04 = "#${config.lib.stylix.colors.base04}",
+        base05 = "#${config.lib.stylix.colors.base05}",
+        base06 = "#${config.lib.stylix.colors.base06}",
+        base07 = "#${config.lib.stylix.colors.base07}",
+        base08 = "#${config.lib.stylix.colors.base08}",
+        base09 = "#${config.lib.stylix.colors.base09}",
+        base0A = "#${config.lib.stylix.colors.base0A}",
+        base0B = "#${config.lib.stylix.colors.base0B}",
+        base0C = "#${config.lib.stylix.colors.base0C}",
+        base0D = "#${config.lib.stylix.colors.base0D}",
+        base0E = "#${config.lib.stylix.colors.base0E}",
+        base0F = "#${config.lib.stylix.colors.base0F}",
+      }
     '';
 
     # 2. SYMLINK QUẢN LÝ CHÍNH

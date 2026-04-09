@@ -9,7 +9,7 @@ end
 
 -- 2. BACKGROUND IMAGE PATH (Automatically detects Home directory)
 local home = wezterm.home_dir
-local bg_path = home .. "/.config/wezterm/bg/bg.jpg"
+local bg_path = nix_bg_path or (home .. "/.config/wezterm/bg/bg.jpg")
 local bg = false -- Toggle background image
 
 -- --------------------------------------------------------------------
@@ -28,7 +28,7 @@ if bg then
 end
 
 config.window_background_image_hsb = {
-    brightness = 0.1,
+    brightness = 0.4,
     hue = 1.0,
     saturation = 1.0,
 }
@@ -36,8 +36,8 @@ config.window_background_image_hsb = {
 -- OS-Specific Optimizations
 if is_mac() then
     config.front_end = "WebGpu"
-    config.macos_window_background_blur = 30
-    config.window_background_opacity = 0.5
+    config.macos_window_background_blur = 20
+    config.window_background_opacity = 0.85
     config.window_decorations = "RESIZE"
 else
     config.front_end = "OpenGL"

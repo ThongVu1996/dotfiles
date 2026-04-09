@@ -12,7 +12,11 @@ in
   config = lib.mkIf cfg.enable {
     programs.wezterm = {
       enable = true;
-      extraConfig = builtins.readFile weztermLuaPath;
+      # "Tiêm" đường dẫn ảnh từ Nix vào code Lua
+      extraConfig = ''
+        local nix_bg_path = "${../../dotfiles/wezterm/.config/wezterm/bg/bg.jpg}"
+        ${builtins.readFile weztermLuaPath}
+      '';
     };
   };
 }

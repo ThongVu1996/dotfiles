@@ -6,7 +6,7 @@
     enable = true;
     autoEnable = false;
     image = ../../modules/core/wallpaper.jpg; 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-soft.yaml";
 
     fonts = {
       monospace = {
