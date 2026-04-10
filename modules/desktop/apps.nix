@@ -2,6 +2,7 @@
 
 let
   cfg = config.myConfig.desktop.apps;
+  dockDoor = pkgs.callPackage ../../modules/custom/dockdoor.nix {};
 in
 {
   options.myConfig.desktop.apps = {
@@ -11,6 +12,9 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       keepassxc
+      discord
+    ] ++ lib.optionals pkgs.stdenv.isDarwin [
+      dockDoor
     ];
   };
 }
