@@ -49,44 +49,123 @@ end
 alias lz='lazygit'
 
 # System Rebuild Alias
-function nixss --description "Build and Switch đa nền tảng (Nix-Darwin / Home Manager)"
-    # Lấy hệ điều hành hiện tại
+function nixss --description "Multi-platform Build and Switch (Nix-Darwin / Home Manager)"
+    # 🛠️ SET YOUR CONFIG PATH HERE
+    # Replace this with the actual path to your nix-config folder
+    set -l flake_path "$HOME/nix-config"
+
+    # Identify the current Operating System
     set -l os_name (uname)
+
     # ============================
-    # 🍎 RẼ NHÁNH CHO MACOS (Darwin)
+    # 🍎 MACOS CONFIGURATION (Darwin)
     # ============================
     if test "$os_name" = "Darwin"
         set -l host (hostname | cut -f1 -d.)
-        echo "🍎 [macOS] Đang Build cho cấu hình: darwinConfigurations.$host..."
-        nix build .#darwinConfigurations."$host".system
+        echo "🍎 [macOS] Building configuration for: darwinConfigurations.$host..."
+        
+        # We point directly to the flake_path to avoid "searching up" warnings
+        nix build "$flake_path#darwinConfigurations.$host.system"
+        
         if test $status -eq 0
-            echo "✅ Cấu trúc được tạo thành công! Yêu cầu Mật khẩu quản trị..."
-            sudo ./result/sw/bin/darwin-rebuild switch --flake .
+            echo "✅ Build successful! Administrator password required for switching..."
+            # Using sudo -H for a clean environment switch
+            sudo -H ./result/sw/bin/darwin-rebuild switch --flake "$flake_path"
             rm result
-            echo "🎉 Tích hợp Mac hoàn tất."
+            echo "🎉 macOS integration complete."
         else
-            echo "❌ Build Flake MacOS thất bại. Xin kiểm tra log."
+            echo "❌ macOS Flake build failed. Please check the logs."
         end
+
     # ============================
-    # 🐧 RẼ NHÁNH CHO LINUX (Home Manager Standalone)
+    # 🐧 LINUX CONFIGURATION (Home Manager Standalone)
     # ============================
     else if test "$os_name" = "Linux"
-        # Ở Linux mình gọi cứng vào block "linux" trong file flake
         set -l target "linux"
-        echo "🐧 [Linux] Kích hoạt Home Manager cho cấu hình: $target..."
-        # Không dùng sudo ở đây để bảo vệ cấu trúc nhóm người dùng!
-        home-manager switch --flake .#$target
+        echo "🐧 [Linux] Activating Home Manager for target: $target..."
+        
+        # Pointing to the flake_path eliminates the search warning
+        home-manager switch --flake "$flake_path#$target"
+        
         if test $status -eq 0
-            echo "🎉 Tích hợp Linux hoàn tất."
+            echo "🎉 Linux integration complete."
         else
-            echo "❌ Home Manager Switch thất bại. Xin kiểm tra log."
+            echo "❌ Home Manager switch failed. Please check the logs."
         end
+
     # ============================
-    # ⚠️ HỆ ĐIỀU HÀNH LẠ
+    # ⚠️ UNKNOWN OPERATING SYSTEM
     # ============================
     else
-        echo "⚠️ Lỗi: Không nhận diện được nền tảng '$os_name'."
+        echo "⚠️ Error: Platform '$os_name' is not recognized."
     end
+end
+
+# Roll back system
+# 1. Display the currently active system generation
+function nix-current
+    echo "🔍 Identifying the active system profile..."
+    # -H ensures sudo uses root's home, keeping Nix security happy
+    sudo -H nix-env --list-generations -p /nix/var/nix/profiles/system | grep "current"
+end
+
+# 2. List all available system generations
+function nix-list
+    echo "📜 Fetching all system generations..."
+    sudo -H nix-env --list-generations -p /nix/var/nix/profiles/system
+end
+
+# 3. Switch to a specific generation (Example: n-back 72)
+function nix-back
+    set -l gen $argv[1]
+    if test -z "$gen"
+        echo "⚠️ Error: Please provide a generation number (Example: n-back 72)"
+        return 1
+    end
+    
+    echo "🔄 Switching system profile to generation: $gen..."
+    
+    # Using -H for both switching and activating
+    sudo -H nix-env --switch-generation $gen -p /nix/var/nix/profiles/system
+    
+    if test $status -eq 0
+        echo "🚀 Activating system configuration..."
+        sudo -H /nix/var/nix/profiles/system/activate
+        echo "✅ Successfully rolled back to generation $gen!"
+        nix-current
+    else
+        echo "❌ Switch failed. Please verify if the generation number exists."
+    end
+end
+
+# Test package in shell
+function nix-test
+    # Check if a package name was provided
+    if test (count $argv) -eq 0
+        echo "❌ Error: No package name provided!"
+        echo "💡 Usage: nix-test <package_name>"
+        return 1
+    end
+
+    set -l pkg $argv[1]
+
+    echo "🔍 Checking package: $pkg..."
+
+    # Pre-check if the package exists in Nixpkgs
+    if not nix-env -qaP $pkg > /dev/null 2>&1
+        echo "⚠️  Warning: Package '$pkg' not found in Nixpkgs!"
+        echo "🔎 Hint: Use 'nix-search $pkg' to find the correct name."
+        
+        # Ask for confirmation to proceed anyway
+        read -l -P "❓ Do you still want to try opening the shell? [y/N]: " confirm
+        if not string match -qi "y" -- $confirm
+            return 1
+        end
+    end
+
+    echo "🚀 Initializing temporary environment for $pkg..."
+    # Launch nix-shell and enter Fish directly
+    nix-shell -p $pkg --run fish
 end
 
 # fzf

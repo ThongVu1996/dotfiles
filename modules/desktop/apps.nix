@@ -14,7 +14,7 @@ in
       keepassxc
       discord
     ] ++ lib.optionals pkgs.stdenv.isDarwin [
-      dockDoor
+      # dockDoor
     ];
   };
 }
