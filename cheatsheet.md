@@ -2,11 +2,22 @@
 
 ## 🟢 Tmux General (Prefix: Ctrl + a)
 [Tmux] C-a + r      | Reload tmux configuration
-[Tmux] C-a + m      | Toggle Zoom Pane (Phóng to/nhỏ)
-[Tmux] C-a + \      | Split Pane Horizontal (Chia dọc)
-[Tmux] C-a + -      | Split Pane Vertical (Chia ngang)
-[Tmux] C-a + x      | Kill current pane (Đóng cửa sổ con)
+[Tmux] C-a + m      | Toggle Zoom Pane (Fullscreen/Restore)
+[Tmux] C-a + \      | Split Pane Horizontal
+[Tmux] C-a + -      | Split Pane Vertical
+[Tmux] C-a + x      | Kill current pane
 [Tmux] C-a + ?      | Open Television Cheatsheet (Custom)
+[Tmux] C-h/j/k/l    | Smart Navigation (Switch between Vim & Tmux panes)
+[Tmux] C-a + h/j/k/l| Resize current pane (Repeatable)
+
+## 🗄️ Tmux Tools (Utilities)
+[Tmux] tsn [name]    | Create or Switch to session [name]
+[Tmux] tsa [name]    | Attach/Switch to existing session
+[Tmux] tsk [name]    | Kill session [name]
+[Tmux] tsr [name]    | Rename current session to [name]
+[Tmux] twn [name]    | Create new window named [name]
+[Tmux] twr [name]    | Rename current window to [name]
+[Tmux] tss           | Reload tmux configuration
 
 ## 🚀 AeroSpace - Window Management (Alt = Option)
 [Aero] Alt + h/j/k/l | Focus Left / Down / Up / Right
@@ -32,14 +43,27 @@
 [Aero] Alt + w      | [W] Work (Slack, Discord)
 [Aero] Alt + x      | [X] VM Enjoy
 
-## 🛠️ Nix Commands (Hàng của Thắng)
-[Nix] nixss         | Build & Switch (Darwin/Linux)
-[Nix] nix-list      | List all generations
-[Nix] nix-current   | Show active generation
-[Nix] n-back [no]   | Rollback to generation X
+## 🛠️ Nix Commands
+[Nix] nixss          | Build & Switch (Darwin/Linux)
+[Nix] nix-list       | List all generations
+[Nix] nix-current    | Show active generation
+[Nix] nix-back [no]  | Rollback to generation X
+[Nix] nix-test [pkg] | Test package in temporary shell
+
+## 🎣 Fish & Git Utils
+[Fish] ss            | Reload Fish configuration
+[Fish] ls [level]    | List files (eza). If number provided (1-9): Show Tree view
+[Git]  git-rescue    | RESCUE: Recover uncommitted code (emergency)
+[Git]  git-toggle    | Toggle Delta's side-by-side mode (Diffing)
+
+## 📂 Fast Navigation
+[Go] ncf             | Jump to Nix Config directory
+[Go] fcf / vcf / tcf | Jump to Fish / Neovim / Tmux config
+[Go] wcf / acf / lzcf| Jump to Wezterm / AeroSpace / Lazygit config
+[Go] pcf             | Jump to Project directory
 
 ## 📺 Television Channels
-[TV] tv files       | Find files
-[TV] tv git-repos   | Find git projects
-[TV] tv text        | Search content (Grep)
-[TV] tv env         | Search environment variables
+[TV] tv files        | Find files
+[TV] tv git-repos    | Find git projects
+[TV] tv text         | Search content (Grep)
+[TV] tv env          | Search environment variables
