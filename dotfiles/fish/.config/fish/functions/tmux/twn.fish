@@ -2,7 +2,7 @@ function twn --description 'Tạo một Tmux Window mới với tên chỉ đị
     # 1. KIỂM TRA THAM SỐ: Đảm bảo người dùng nhập tên Window
     if test (count $argv) -eq 0
         echo (set_color red) "Lỗi:" (set_color normal) "Bạn cần cung cấp tên cho Window mới."
-        echo "Cú pháp: tw <ten_window>"
+        echo "Cú pháp: twn <ten_window>"
         return 1
     end
 

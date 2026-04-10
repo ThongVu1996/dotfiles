@@ -2,7 +2,7 @@ function tsr
     # Kiểm tra xem người dùng có cung cấp tên session hay không
     if test (count $argv) -eq 0
         echo "Lỗi: Bạn cần cung cấp tên mới cho session hiện tại"
-        echo "Cú pháp: trs <ten_session_moi>"
+        echo "Cú pháp: tsr <ten_session_moi>"
         return 1 # Trả về lỗi
     end
 

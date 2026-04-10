@@ -2,7 +2,7 @@ function tsn --description 'Tạo hoặc Switch sang một tmux session'
     # 1. Kiểm tra argument
     if test (count $argv) -eq 0
         echo "Lỗi: Bạn cần cung cấp tên cho session."
-        echo "Cú pháp: ts <ten_session>"
+        echo "Cú pháp: tsn <ten_session>"
         return 1
     end
 

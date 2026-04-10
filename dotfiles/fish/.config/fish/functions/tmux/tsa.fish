@@ -1,7 +1,7 @@
 function tsa --description 'Attach hoặc Switch sang một tmux session (Cách 2)'
     if test (count $argv) -eq 0
         echo "Lỗi: Vui lòng cung cấp tên tmux session để attach/switch."
-        echo "Cú pháp: ta <tên_session>"
+        echo "Cú pháp: tsa <tên_session>"
         return 1
     end
 

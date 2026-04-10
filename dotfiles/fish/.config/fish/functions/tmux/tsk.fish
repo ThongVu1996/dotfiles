@@ -2,7 +2,7 @@ function tsk --description 'Kill a specific tmux session'
     # Kiểm tra xem người dùng có cung cấp tên session không (argument đầu tiên là $argv[1])
     if test (count $argv) -eq 0
         echo "Lỗi: Vui lòng cung cấp tên tmux session để kill."
-        echo "Cú pháp: tks <tên_session>"
+        echo "Cú pháp: tsk <tên_session>"
         return 1
     end
 
