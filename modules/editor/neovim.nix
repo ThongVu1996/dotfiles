@@ -26,8 +26,7 @@ in
     };
 
     home.packages = with pkgs; [
-      # Theme engine để bạn có thể gọi colorscheme trong init.lua thật
-      vimPlugins.base16-nvim
+      (pkgs.callPackage ../custom/tree-sitter-cli.nix { })
 
       # --- LSPs & Tooling ---
       # Web & Modern Scripting

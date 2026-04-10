@@ -10,7 +10,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      git imagemagick pngpaste lazygit
+      git imagemagick pngpaste lazygit gcc
     ] ++ lib.optionals pkgs.stdenv.isDarwin [
       chafa luajit luajitPackages.luarocks 
       luajitPackages.magick switchaudio-osx
