@@ -75,6 +75,17 @@ alias pcf="cd ~/Project/"
 bind \cg toggle_side_by_side
 direnv hook fish | source
 
+# This function registers the 'fish_exit' event at startup.
+# It remains idle and ONLY executes its logic when you close the shell.
+function cleanup_tmux_popup --on-event fish_exit
+    if set -q TMUX
+        set -l current_session (tmux display-message -p '#{session_name}')
+        if test "$current_session" = "floating"
+            tmux detach-client -s "$current_session"
+        end
+    end
+end
+
 set -x LANG en_US.UTF-8
 set -x LC_ALL en_US.UTF-8
 set -U fish_user_paths /usr/sbin $fish_user_paths
