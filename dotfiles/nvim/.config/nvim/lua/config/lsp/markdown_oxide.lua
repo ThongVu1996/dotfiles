@@ -1,10 +1,10 @@
 local blink = require("blink.cmp")
 
 return {
-	-- 1. Lệnh chạy server (Rust-based, cực nhanh)
+	-- 1. Server execution command (Rust-based, extremely fast)
 	cmd = { "markdown-oxide" },
 
-	-- 2. Các loại file hỗ trợ
+	-- 2. Supported filetypes
 	filetypes = { "markdown", "markdown.mdx" },
 
 	-- 3. Root markers
@@ -18,10 +18,10 @@ return {
 		blink.get_lsp_capabilities()
 	),
 
-	-- 5. Cấu hình đặc thù cho Oxide (Nếu cần)
+	-- 5. Oxide specific settings
 	settings = {
 		["markdown-oxide"] = {
-			-- Hỗ trợ wiki-links giống Obsidian
+			-- Obsidian-style wiki-links support
 			wiki_links = {
 				enable = true,
 			},

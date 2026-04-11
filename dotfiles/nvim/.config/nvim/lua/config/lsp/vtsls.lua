@@ -1,6 +1,6 @@
 local blink = require("blink.cmp")
 
--- Helper nội bộ (Để tránh dùng require chéo gây lỗi module not found)
+-- Helper to find TypeScript/Vue plugin for vtsls
 local function get_vue_plugin_path()
 	local local_plugin = vim.fn.getcwd() .. "/node_modules/@vue/typescript-plugin"
 	if vim.fn.isdirectory(local_plugin) == 1 then
@@ -10,19 +10,19 @@ local function get_vue_plugin_path()
 end
 
 return {
-	-- 1. Lệnh chạy server (Bản nâng cấp mạnh mẽ nhất cho TS/React)
+	-- 1. Server execution command (The most powerful choice for TS/React)
 	cmd = { "vtsls", "--stdio" },
 
-	-- 2. Hỗ trợ React và TypeScript thuần
+	-- 2. Support for React and pure TypeScript
 	filetypes = {
 		"javascript", "javascriptreact", "javascript.jsx",
 		"typescript", "typescriptreact", "typescript.tsx"
 	},
 
-	-- 3. Cấu hình lai cho Vue (Hybrid Mode)
+	-- 3. Hybrid configuration for Vue support
 	settings = {
 		vtsls = {
-			-- Cho phép vtsls hiểu file .vue để check types cho Volar
+			-- Allow vtsls to understand .vue files for type checking with Volar
 			tsserver = {
 				globalPlugins = {
 					{
@@ -35,7 +35,7 @@ return {
 				},
 			},
 		},
-		-- Tự động import cực nhanh giống VS Code
+		-- High-speed auto-imports similar to VS Code
 		typescript = {
 			updateImportsOnFileMove = { enabled = "always" },
 			suggest = {

@@ -33,7 +33,7 @@ in {
       extraWrapperArgs = [
         "--set"
         "STYLIX_PALETTE"
-        "'${stylixPalette}'"
+        "${stylixPalette}"
       ];
     };
 
@@ -57,6 +57,7 @@ in {
         phpactor
         markdown-oxide
         yaml-language-server
+        nixd
       ];
 
       # --- 3. Formatting & Linting (conform & nvim-lint) ---

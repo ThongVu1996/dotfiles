@@ -1,54 +1,62 @@
-{ config, pkgs, username, lib, ... }:
-
 {
+  username,
+  hostname,
+  ...
+}: {
   # ================================================================
-  # 1. CẤU HÌNH HỆ THỐNG (nix-darwin)
+  # 1. SYSTEM CONFIGURATION (nix-darwin)
   # ================================================================
   imports = [
-    ./system.nix
-    ./stylix.nix
+    ./system.nix # Includes user definitions, shell registration, and macOS defaults
+    ./stylix.nix # System-wide theming
   ];
 
-  networking.hostName = "MacBook-Pro";
+  # Inherited from specialArgs in flake.nix
+  networking.hostName = hostname;
 
-  # ÉP HỆ THỐNG NHẬN DIỆN ĐÚNG HOME CHO USER
+  # Ensure the system recognizes the correct home directory for the user
   users.users.${username}.home = "/Users/${username}";
 
   # ================================================================
-  # 2. CẤU HÌNH NGƯỜI DÙNG (home-manager)
+  # 2. USER CONFIGURATION (home-manager)
   # ================================================================
-  home-manager.users.${username} = { pkgs, config, lib, ... }: {
-    
-    # ĐỊNH NGHĨA "VÙNG AN TOÀN" CHO HOME MANAGER
+  home-manager.users.${username} = {...}: {
     home = {
-      username = username;
-      homeDirectory = lib.mkForce "/Users/thongvu"; # Cực kỳ quan trọng để fix lỗi 'outside $HOME'
+      inherit username;
+      homeDirectory = "/Users/${username}";
       stateVersion = "24.11";
       enableNixpkgsReleaseCheck = false;
     };
 
     imports = [
-      ../../modules   # Tự động nạp Neovim, Tmux, Shells, v.v.
+      ../../modules # Auto-loads Neovim, Tmux, Shells, etc.
     ];
 
-    # Kích hoạt các tính năng theo cấu trúc Dendritic Pattern của bạn
+    # Feature activation using your Dendritic Pattern
     myConfig = {
-      terminal.tmux.enable = true;
-      terminal.shells.enable = true;
-      terminal.emulators.enable = true;
-      desktop.aerospace.enable = true;
-      desktop.apps.enable = true;
+      terminal = {
+        tmux.enable = true;
+        shells.enable = true;
+        emulators.enable = true;
+      };
+
+      desktop = {
+        aerospace.enable = true;
+        apps.enable = true;
+      };
+
       editor.neovim.enable = true;
-      
-      # Dev Environment
-      dev.tools.devops.enable = true;
-      dev.tools.cli.enable = true;
-      dev.tools.web.enable = true;
-      dev.tools.misc.enable = true;
-      dev.tools.ai.enable = true;
+
+      dev.tools = {
+        devops.enable = true;
+        cli.enable = true;
+        web.enable = true;
+        misc.enable = true;
+        ai.enable = true;
+      };
     };
 
-    # Tắt build các file manual để tránh warning và lỗi vặt
+    # Disable manual generation to prevent warnings and build noise
     manual = {
       json.enable = false;
       html.enable = false;

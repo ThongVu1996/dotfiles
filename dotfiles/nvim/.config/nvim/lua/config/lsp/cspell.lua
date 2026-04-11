@@ -21,16 +21,12 @@ return {
 		"gitcommit",
 	},
 
-	-- Thêm .cspell.json vào để nó nhận diện root dự án tốt hơn
 	root_markers = { "cspell.json", ".cspell.json", "package.json", ".git" },
 
-	-- Cấu hình riêng cho cSpell
 	settings = {
 		cSpell = {
 			enabled = true,
 			checkOnlyEnabledFileTypes = false,
-			-- Nếu bạn muốn load thêm 1 file config global (tùy chọn)
-			-- import = { vim.fn.expand("~/.config/cspell/cspell.json") },
 		},
 	},
 

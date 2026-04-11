@@ -1,39 +1,38 @@
 local blink = require("blink.cmp")
 
 return {
-	-- 1. Lệnh chạy server
+	-- 1. Server execution command
 	cmd = { "yaml-language-server", "--stdio" },
 
-	-- 2. Hỗ trợ YAML (K8s, Docker Compose, CI/CD)
+	-- 2. Supported filetypes (K8s, Docker Compose, CI/CD)
 	filetypes = { "yaml", "yaml.docker-compose", "yaml.gitlab" },
 
-	-- 3. Cấu hình chuyên sâu dựa trên tài liệu chính thức
+	-- 3. Advanced configurations based on official documentation
 	settings = {
 		yaml = {
-			-- Tính năng Validation & Intelligence (CẦN BẬT)
+			-- Validation & Intelligence (MUST BE ENABLED)
 			validate = true,
 			hover = true,
 			completion = true,
 
-			-- Định dạng (TẮT ĐỂ DÙNG PRETTIER CHO ĐẸP HƠN)
+			-- Formatting (DISABLED TO USE PRETTIER FOR BETTER RESULTS)
 			format = {
 				enable = false,
 			},
 
-			-- Tự động nạp Schema từ SchemaStore (CỰC QUAN TRỌNG)
+			-- Auto-load schemas from SchemaStore (CRITICAL)
 			schemaStore = {
 				enable = true,
 				url = "https://www.schemastore.org/api/json/catalog.json",
 			},
 
-			-- Hỗ trợ Kubernetes Custom Resource Definitions (CRDs)
-			-- Một tính năng cao cấp bạn vừa tìm thấy
+			-- Kubernetes Custom Resource Definitions (CRDs) support
 			kubernetesCRDStore = {
 				enable = true,
 				url = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main",
 			},
 
-			-- Khai báo schema tường minh cho các file phổ biến
+			-- Explicit schema mappings for common files
 			schemas = {
 				kubernetes = {
 					"deployment.y*ml",
@@ -51,7 +50,7 @@ return {
 				["https://raw.githubusercontent.com/argoproj/argo-cd/master/assets/schema/kubernetes.json"] = "argocd*.y*ml",
 			},
 
-			-- Tuỳ chỉnh Indent (Theo chuẩn 2 spaces)
+			-- Indent customization (Standard 2 spaces)
 			editor = {
 				tabSize = 2,
 			},

@@ -5,30 +5,30 @@ end
 # Setting config default for MacOS
 set -gx XDG_CONFIG_HOME "$HOME/.config"
 
-# Thêm các thư mục con vào path của function để Fish có thể tự động nạp (Autoload)
+# Add subdirectories to function path for autoloading
 set -l function_subdirs nix tmux git utils vm
 for dir in $function_subdirs
     set -p fish_function_path $XDG_CONFIG_HOME/fish/functions/$dir
 end
 
-# 1. Load môi trường của Nix-Darwin (System Packages)
+# 1. Load Nix-Darwin environment (System Packages)
 if test -e /run/current-system/sw/bin
     fish_add_path /run/current-system/sw/bin
 end
 
-# 2. Load môi trường của Home Manager (Home Packages)
+# 2. Load Home Manager environment (User Packages)
 if test -e /etc/profiles/per-user/$USER/bin
     fish_add_path /etc/profiles/per-user/$USER/bin
 else if test -e ~/.nix-profile/bin
     fish_add_path ~/.nix-profile/bin
 end
 
-# 3. Load Nix Daemon (để đảm bảo các biến môi trường khác)
+# 3. Load Nix Daemon (ensures core environment variables)
 if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
     source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
 end
 
-#Config paste image to markdown in nvim
+# Neovim image paste support (image.nvim)
 set -g allow_passthrough on
 set -ga update_environment TERM
 set -ga update_environment TERM_PROGRAM

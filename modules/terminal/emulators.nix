@@ -1,10 +1,11 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  lib,
+  ...
+}: let
   cfg = config.myConfig.terminal.emulators;
   weztermLuaPath = ../../dotfiles/wezterm/.config/wezterm/wezterm.lua;
-in
-{
+in {
   options.myConfig.terminal.emulators = {
     enable = lib.mkEnableOption "Enable Terminal Emulators (Wezterm, Rio)";
   };

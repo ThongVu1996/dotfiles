@@ -14,18 +14,28 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, mac-app-util, stylix, ... }@inputs:
-  let
+  outputs = {
+    self,
+    nixpkgs,
+    nix-darwin,
+    home-manager,
+    mac-app-util,
+    stylix,
+    ...
+  } @ inputs: let
     username = "thongvu";
     hostname = "MacBook-Pro";
-  in
-  {
+  in {
     # 1. macOS Configuration (Shared HM features)
     darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
-      specialArgs = { inherit self inputs username; };
+      specialArgs = {inherit self inputs username hostname;};
       modules = [
         stylix.darwinModules.stylix
+        {
+          nixpkgs.config.allowUnfree = true;
+          nixpkgs.config.allowBroken = true;
+        }
         # mac-app-util: Auto-generate trampoline apps for Spotlight & Dock
         mac-app-util.darwinModules.default
         home-manager.darwinModules.home-manager
@@ -33,7 +43,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.backupFileExtension = "backup";
-          home-manager.extraSpecialArgs = { inherit inputs username; };
+          home-manager.extraSpecialArgs = {inherit inputs username hostname;};
           # Enable Spotlight integration for all HM users
           home-manager.sharedModules = [
             mac-app-util.homeManagerModules.default
@@ -47,11 +57,11 @@
     # 2. Linux Configuration (Standalone Home Manager)
     homeConfigurations."linux" = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
-      extraSpecialArgs = { inherit inputs username; };
-      modules = [ 
+      extraSpecialArgs = {inherit inputs username;};
+      modules = [
         stylix.homeModules.stylix
         # Import the Linux host configuration (loads exactly the same HM features as macOS)
-        ./hosts/linux/default.nix 
+        ./hosts/linux/default.nix
       ];
     };
   };

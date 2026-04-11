@@ -1,6 +1,6 @@
 local blink = require("blink.cmp")
 
--- Helper để tìm TypeScript/Vue plugin cho vtsls
+-- Helper to find TypeScript/Vue plugin for vtsls
 local function get_vue_plugin_path()
 	local local_plugin = vim.fn.getcwd() .. "/node_modules/@vue/typescript-plugin"
 	if vim.fn.isdirectory(local_plugin) == 1 then
@@ -10,20 +10,20 @@ local function get_vue_plugin_path()
 end
 
 return {
-	-- 1. Lệnh chạy server (Volar 2.0+)
+	-- 1. Server execution command (Volar 2.0+)
 	cmd = { "vue-language-server", "--stdio" },
 
-	-- 2. Hỗ trợ file Vue
+	-- 2. Supported filetypes
 	filetypes = { "vue" },
 
-	-- 3. Kích hoạt Hybrid Mode (Siêu nhẹ, siêu ổn định)
+	-- 3. Hybrid Mode activation (Lightweight and stable)
 	init_options = {
 		vue = {
-			hybridMode = true, -- <== PHẢI LÀ TRUE CHO VTSLS
+			hybridMode = true, -- <== MUST BE TRUE FOR VTSLS COMPATIBILITY
 		},
 	},
 
-	-- Export helper cho vtsls
+	-- Export helper for vtsls integration
 	get_vue_plugin_path = get_vue_plugin_path,
 
 	-- 4. Capabilities (Blink.cmp support)

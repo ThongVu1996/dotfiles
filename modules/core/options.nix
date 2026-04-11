@@ -1,6 +1,8 @@
-{ config, lib, ... }:
-
 {
+  config,
+  lib,
+  ...
+}: {
   options.myConfig.dotfilesPath = lib.mkOption {
     type = lib.types.str;
     default = "${config.home.homeDirectory}/nix-config/dotfiles";

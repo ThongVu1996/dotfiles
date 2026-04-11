@@ -1,10 +1,12 @@
-{ config, pkgs, lib, ... }:
-
-let
-  cfg = config.myConfig.desktop.aerospace;
-  dotfilesPath = config.myConfig.dotfilesPath;
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  cfg = config.myConfig.desktop.aerospace;
+  inherit (config.myConfig) dotfilesPath;
+in {
   options.myConfig.desktop.aerospace = {
     enable = lib.mkEnableOption "Enable AeroSpace Tiling WM";
   };

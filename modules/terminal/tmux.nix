@@ -1,10 +1,11 @@
-{ config, pkgs, lib, ... }:
-
-let
-  cfg = config.myConfig.terminal.tmux;
-  dotfilesPath = config.myConfig.dotfilesPath;
-in
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.myConfig.terminal.tmux;
+  inherit (config.myConfig) dotfilesPath;
+in {
   options.myConfig.terminal.tmux = {
     enable = lib.mkEnableOption "Enable Tmux (cross-platform)";
   };

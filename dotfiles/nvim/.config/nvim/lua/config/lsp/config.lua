@@ -1,37 +1,27 @@
--- Mason PATH is handled by core.mason-path
-
--- Cập nhật capabilities của blink.cmp cho Native LSP
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-local ok, blink = pcall(require, "blink.cmp")
-if ok then
-	capabilities = vim.tbl_deep_extend("force", capabilities, blink.get_lsp_capabilities())
+local ok_blink, blink = pcall(require, "blink.cmp")
+if ok_blink then
+    capabilities = blink.get_lsp_capabilities()
 end
 
+-- Server list (standardized naming)
 local servers = {
-	"lua-ls",
-	"gopls",
-	"zls",
-	"vtsls",
-	"rust-analyzer",
-	"intelephense",
-	"phpactor",
-	"tailwindcss",
-	"html-ls",
-	"css-ls",
-	"vue-ls",
-	"cspell",
-	-- "typos-lsp",
-	"markdown-oxide",
-	"terraformls",
-	"yaml-ls",
+    "lua_ls", "gopls", "zls", "vtsls", "rust_analyzer", "intelephense",
+    "phpactor", "tailwindcss", "html", "cssls", "vue_ls", "cspell",
+    "markdown_oxide", "terraformls", "yaml_ls", "nixd"
 }
 
-for _, server in ipairs(servers) do
-	-- Đảm bảo tên dùng gạch dưới cho vim.lsp.config (VD: lua-ls -> lua_ls)
-	local server_name = server:gsub("%-", "_")
-	vim.lsp.config[server_name] = vim.tbl_deep_extend("force", vim.lsp.config[server_name] or {}, {
-		capabilities = capabilities,
-	})
+-- Initialize Servers
+for _, name in ipairs(servers) do
+    local server_opts = { capabilities = capabilities }
+
+    -- Dynamically load custom server configs from lua/config/lsp/<name>.lua
+    local has_custom, custom_opts = pcall(require, "config.lsp." .. name)
+    if has_custom then
+        server_opts = vim.tbl_deep_extend("force", server_opts, custom_opts)
+    end
+
+    vim.lsp.config[name] = vim.tbl_deep_extend("force", vim.lsp.config[name] or {}, server_opts)
 end
 
 vim.lsp.enable(servers)
@@ -205,7 +195,7 @@ local function lsp_info()
 	print("")
 
 	-- Basic info
-	print("󰈙 Language client log: " .. vim.lsp.get_log_path())
+	print("󰈙 Language client log: " .. (vim.lsp.log.get_filename and vim.lsp.log.get_filename() or vim.lsp.get_log_path()))
 	print("󰈔 Detected filetype: " .. vim.bo.filetype)
 	print("󰈮 Buffer: " .. bufnr)
 	print("󰈔 Root directory: " .. (vim.fn.getcwd() or "N/A"))

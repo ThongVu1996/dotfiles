@@ -1,25 +1,25 @@
 local blink = require("blink.cmp")
 
 return {
-	-- 1. Lệnh chạy server
+	-- 1. Server execution command
 	cmd = { "tailwindcss-language-server", "--stdio" },
 
-	-- 2. Hỗ trợ tất cả file Frontend (Có thêm Blade cho PHP)
+	-- 2. Support for all Frontend files (including Blade for PHP)
 	filetypes = {
 		"javascript", "javascriptreact", "typescript", "typescriptreact",
 		"vue", "svelte", "html", "blade", "css", "scss", "less", "postcss"
 	},
 
-	-- 3. Cấu hình chuyên sâu cho Tailwind
+	-- 3. Advanced Tailwind configurations
 	settings = {
 		tailwindCSS = {
-			-- Hiện bảng màu sắc trực tiếp khi di chuột qua class
+			-- Show color preview on hover
 			hovers = true,
-			-- Gợi ý class cực mạnh kèm ô vuông màu sắc
+			-- Smart suggestions with color icons
 			suggestions = true,
-			-- Tự động hoàn thành mã màu (ví dụ: text-sky-500)
+			-- Show color decorators in the editor
 			colorDecorators = true,
-			-- Linting cho các class (Báo gạch chân nếu bạn gõ class sai cách)
+			-- Linting for utility classes
 			lint = {
 				cssConflict = "warning",
 				invalidApply = "error",
@@ -29,7 +29,7 @@ return {
 				invalidVariant = "error",
 				recommendedVariantOrder = "warning",
 			},
-			-- Tự động sắp xếp class (Ưu tiên dùng Prettier plugin, nhưng ở đây bật để gợi ý tốt hơn)
+			-- Auto-sorting logic (usually handled by Prettier, enabled here for enhanced suggestions)
 			validate = true,
 		},
 	},

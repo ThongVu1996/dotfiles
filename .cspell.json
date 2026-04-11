@@ -1,0 +1,27 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "alejandra",
+    "augroup",
+    "autocmd",
+    "bufnr",
+    "deadnix",
+    "eslint",
+    "filetypes",
+    "keymap",
+    "mfussenegger",
+    "mypy",
+    "nixd",
+    "nixpkgs",
+    "nvim",
+    "phpcs",
+    "pylint",
+    "statix"
+  ],
+  "flagWords": [],
+  "ignorePaths": [
+    "node_modules/**",
+    ".git/**"
+  ]
+}
