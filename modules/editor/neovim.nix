@@ -10,7 +10,7 @@
   inherit (config.myConfig) dotfilesPath;
 
   # Strictly filter only base00 to base0F and prepend '#' for Neovim compatibility
-  baseNames = [ "base00" "base01" "base02" "base03" "base04" "base05" "base06" "base07" "base08" "base09" "base0A" "base0B" "base0C" "base0D" "base0E" "base0F" ];
+  baseNames = ["base00" "base01" "base02" "base03" "base04" "base05" "base06" "base07" "base08" "base09" "base0A" "base0B" "base0C" "base0D" "base0E" "base0F"];
   palette = lib.genAttrs baseNames (name: "#${config.lib.stylix.colors.${name}}");
   stylixPalette = builtins.toJSON palette;
 in {

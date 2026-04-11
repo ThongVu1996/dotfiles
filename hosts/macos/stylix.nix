@@ -34,7 +34,7 @@
       internal = true;
     };
 
-    # SECTION 2: CONFIGURATION - Must be wrapped in 'config' 
+    # SECTION 2: CONFIGURATION - Must be wrapped in 'config'
     # since 'options' are defined above in this module scope.
     config = {
       stylix.targets = {
