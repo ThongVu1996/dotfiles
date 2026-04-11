@@ -1,4 +1,4 @@
-function setupflake
+function nix-init
     # 1. Verify Git repository
     if not test -d .git
         echo "❌ Error: Not a Git repository."
@@ -8,7 +8,7 @@ function setupflake
     # 2. Create flake.nix if it doesn't exist
     if not test -f flake.nix
         echo "🛠 Generating flake.nix..."
-        genflake
+        nix-template
     end
 
     # 3. Create .envrc with PATH mode (CRITICAL: path:.)

@@ -1,4 +1,4 @@
-function genflake
+function nix-template
     if test -f flake.nix
         echo "❌ Error: flake.nix already exists! Will not overwrite."
         return 1
