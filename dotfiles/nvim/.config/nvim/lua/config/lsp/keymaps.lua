@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local opts = { buffer = ev.buf }
 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-		-- Kích hoạt Native Inlay Hints cho các Server có hỗ trợ
+		-- Enable Native Inlay Hints for supported servers
 		if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
 			vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
 		end
@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename Symbol" }))
 		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-		-- Đã gỡ bỏ <leader>fm ở đây để ưu tiên dùng conform.nvim làm formatter
+		-- Removed <leader>fm here to prioritize conform.nvim as the primary formatter
 	end,
 })
 

@@ -22,20 +22,20 @@ return {
 		signature = { enabled = true },
 		completion = {
 			documentation = {
-				-- 1. Tự động hiển thị màn hình phụ (True = Bật)
+				-- 1. Automatically show focus screen (True = Enable)
 				auto_show = true,
 
-				-- 2. Thời gian chờ (Delay) trước khi hiện (ms)
-				-- Để 0 thì hiện ngay lập tức, để 200 cho đỡ nháy mắt khi lướt nhanh
+				-- 2. Delay before showing (ms)
+				-- 0 for instant, 200 to prevent flickering during rapid navigation
 				auto_show_delay_ms = 200,
 
-				-- 3. Cấu hình giao diện cửa sổ
+				-- 3. Window appearance configuration
 				window = {
-					border = "rounded", -- Viền bo tròn cho đẹp (hoặc "single", "double")
+					border = "rounded", -- Rounded border for aesthetics (alt: "single", "double")
 				},
 			},
 
-			-- (Tùy chọn) Cấu hình menu danh sách cho gọn đẹp hơn
+			-- Optional: List menu aesthetics
 			menu = {
 				border = "rounded",
 				draw = {

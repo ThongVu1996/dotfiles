@@ -5,13 +5,13 @@ return {
 	enabled = false,
 	config = function()
 		require("inc_rename").setup({
-			cmd_name = "IncRename", -- Tên lệnh gọi đổi tên
-			hl_group = "Substitute", -- Highlight nhóm cho phần đổi tên
-			show_message = true, -- Hiển thị thông báo sau khi đổi tên
-			input_buffer_type = nil, -- Kiểu buffer nhập liệu (nil = mặc định dùng mini buffer)
+			cmd_name = "IncRename", -- The command name for renaming
+			hl_group = "Substitute", -- Highlight group used during renaming
+			show_message = true, -- Show notification after rename
+			input_buffer_type = nil, -- Input buffer type (nil = default mini buffer)
 		})
 
-		-- Phím tắt cho IncRename
+		-- Short-key for IncRename
 		vim.api.nvim_set_keymap(
 			"n",
 			"<leader>rr",

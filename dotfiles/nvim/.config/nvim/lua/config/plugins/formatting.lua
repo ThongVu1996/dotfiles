@@ -1,42 +1,51 @@
 return {
-	"stevearc/conform.nvim",
-	event = "BufWritePre",
-	config = function()
-		local conform = require("conform")
+  "stevearc/conform.nvim",
+  event = "BufWritePre",
+  config = function()
+    local conform = require("conform")
 
-		conform.setup({
-			formatters_by_ft = {
-				javascript = { "prettier" },
-				typescript = { "prettier" },
-				javascriptreact = { "prettier" },
-				typescriptreact = { "prettier" },
-				svelte = { "prettier" },
-				css = { "prettier" },
-				html = { "prettier" },
-				json = { "prettier" },
-				yaml = { "prettier" },
-				markdown = { "prettier" },
-				graphql = { "prettier" },
-				liquid = { "prettier" },
-				lua = { "stylua" },
-				php = { "pint", "phpcbf" },
-				terraform = { "terraform_fmt" }, -- Format file .tf
-				tf = { "terraform_fmt" }, -- Alias cho .tf
-				hcl = { "packer_fmt" },
-			},
-			format_on_save = {
-				lsp_fallback = true,
-				async = false,
-				timeout_ms = 1000,
-			},
-		})
+    conform.setup({
+      formatters_by_ft = {
+        -- Web & Markup (Using prettierd for instant speed)
+        javascript      = { "prettierd" },
+        typescript      = { "prettierd" },
+        javascriptreact = { "prettierd" },
+        typescriptreact = { "prettierd" },
+        svelte          = { "prettierd" },
+        css             = { "prettierd" },
+        html            = { "prettierd" },
+        json            = { "prettierd" },
+        yaml            = { "prettierd" },
+        markdown        = { "prettierd" },
+        graphql         = { "prettierd" },
+        liquid          = { "prettierd" },
 
-		vim.keymap.set({ "n", "v" }, "<leader>fm", function()
-			conform.format({
-				lsp_fallback = true,
-				async = false,
-				timeout_ms = 1000,
-			})
-		end, { desc = "Format file or range (in visual mode)" })
-	end,
+        -- Backend & Config
+        lua  = { "stylua" },
+        php  = { "pint" }, -- Official Laravel style
+        nix  = { "alejandra" },
+
+        -- Infrastructure
+        terraform = { "terraform_fmt" },
+        tf        = { "terraform_fmt" },
+        hcl       = { "packer_fmt" },
+      },
+
+      -- Auto-format when you save the file
+      format_on_save = {
+        lsp_fallback = true,
+        async = false,
+        timeout_ms = 1000,
+      },
+    })
+
+    -- Manual format shortcut (Works in Normal and Visual mode)
+    vim.keymap.set({ "n", "v" }, "<leader>fm", function()
+      conform.format({
+        lsp_fallback = true,
+        async = false,
+        timeout_ms = 1000,
+      })
+    end, { desc = "Format Code" })
+  end,
 }

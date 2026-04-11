@@ -33,46 +33,42 @@ return {
 				},
 			},
 
-			-- 2. Định dạng hiển thị tên file
+			-- 2. Filename display formatting
 			formatters = {
 				file = {
-					filename_first = true, -- Hiện tên file trước, đường dẫn sau
+					filename_first = true, -- Show filename first, then the path
 				},
 			},
 
-			-- 3. Cấu hình ẩn/hiện file
-			hidden = true, -- Hiện file ẩn (.config, .env...)
-			ignored = false, -- Ẩn file trong .gitignore
-
+			-- 3. Visibility configuration
+			hidden = true, -- Show hidden files (.config, .env, etc.)
+			ignored = false, -- Include files in .gitignore
 			exclude = {
 				"node_modules",
 				".direnv",
 				".git",
 				"dist",
 				"build",
-				-- "vendor", -- Nếu dùng PHP/Laravel thì chặn thêm folder này
+				-- "vendor", -- Uncomment for PHP/Laravel projects
 			},
-			-- 1. KHAI BÁO HÀM XỬ LÝ Ở ĐÂY (Để nhận đúng biến Picker)
+			-- 1. DEFINE HANDLERS HERE (To ensure access to Picker variable)
 			actions = {
 				copy_to_clipboard = function(picker, item)
-					-- Lúc này 'picker' là chuẩn, có hàm :current()
-					-- Và 'item' cũng được truyền sẵn vào luôn
-
-					-- Nếu item chưa có (trường hợp hiếm), thử lấy thủ công
+					-- Access the correct picker instance
 					if not item then
 						item = picker:current()
 					end
 
 					if item then
-						-- Ưu tiên lấy text hiển thị hoặc đường dẫn file
+						-- Extract display text or file path
 						local content = item.text or item.file or item.name or vim.inspect(item)
 
-						-- Copy vào Clipboard hệ thống
+						-- Copy to system clipboard
 						vim.fn.setreg("+", content)
 
-						vim.notify("✅ Đã copy: " .. content, vim.log.levels.INFO)
+						vim.notify("✅ Copied: " .. content, vim.log.levels.INFO)
 					else
-						vim.notify("⚠️ Không có item nào để copy", vim.log.levels.WARN)
+						vim.notify("⚠️ No item selected to copy", vim.log.levels.WARN)
 					end
 				end,
 			},
@@ -80,7 +76,7 @@ return {
 			win = {
 				input = {
 					keys = {
-						-- 2. GỌI TÊN ACTION ĐÃ KHAI BÁO Ở TRÊN
+						-- 2. CALL THE DEFINED ACTION
 						["<c-y>"] = {
 							"copy_to_clipboard",
 							mode = { "n", "i" },
@@ -126,7 +122,7 @@ return {
 		win = {
 			input = {
 				keys = {
-					-- 2. GỌI TÊN ACTION ĐÃ KHAI BÁO Ở TRÊN
+					-- 2. CALL THE DEFINED ACTION
 					["<c-y>"] = {
 						"copy_to_clipboard",
 						mode = { "n", "i" },

@@ -10,12 +10,12 @@ return {
 		vim.g.opencode_opts = {
 			backend = "antigravity",
 			provider = {
-				-- Dùng provider tmux vì bạn đang ở trong tmux
+				-- Using TMUX provider as you are in a tmux environment
 				enabled = "tmux",
 				tmux = {
-					opens_in_pane = true, -- Mở AI ở pane bên cạnh
+					opens_in_pane = true, -- Open AI in a side pane
 					cmd = "opencode",
-					left = "25%", -- Kích thước pane
+					left = "25%", -- Pane size
 				},
 			},
 		}

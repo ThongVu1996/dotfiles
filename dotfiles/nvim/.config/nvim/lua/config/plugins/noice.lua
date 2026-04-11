@@ -26,8 +26,8 @@ return {
       },
     },
     cmdline = {
-      enabled = true, -- Bật cmdline
-      view = "cmdline_popup", -- Hiển thị cmdline ở giữa màn hình
+      enabled = true, -- Enable cmdline
+      view = "cmdline_popup", -- Display cmdline in the center of the screen
       format = {
         cmdline = { pattern = "^:", icon = " ", lang = "vim" },
         search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
@@ -37,16 +37,16 @@ return {
     views = {
       cmdline_popup = {
         position = {
-          row = "50%", -- Hiển thị ở giữa màn hình theo chiều dọc
-          col = "50%", -- Hiển thị ở giữa màn hình theo chiều ngang
+          row = "40%", -- Display slightly above center vertically
+          col = "50%", -- Centered horizontally
         },
         size = {
-          width = 60, -- Chiều rộng cmdline
-          height = 1, -- Chiều cao tự động
+          width = 60, -- Cmdline width
+          height = "auto", -- Auto height
         },
         border = {
-          style = "rounded", -- Viền bo tròn
-          padding = { 0, 1 }, -- Khoảng cách giữa nội dung và viền
+          style = "rounded", -- Rounded corners
+          padding = { 0, 1 }, -- Padding between content and border
         },
       },
       popupmenu = {
@@ -57,22 +57,22 @@ return {
         },
         size = {
           width = 60,
-          height = 1,
+          height = 10,
         },
         border = {
           style = "rounded",
           padding = { 0, 1 },
         },
         win_options = {
-          winblend = 50, -- Tạo hiệu ứng mờ
+          winblend = 10, -- Subtle transparency
         },
       },
     },
     presets = {
-      bottom_search = false, -- Tắt thanh tìm kiếm ở dưới màn hình
-      command_palette = true, -- Hiển thị cmdline ở giữa màn hình
-      long_message_to_split = true, -- Chuyển thông báo dài vào split
-      lsp_doc_border = true, -- Thêm viền cho hover docs và signature help
+      bottom_search = false, -- Disable search bar at the bottom
+      command_palette = true, -- Show cmdline in the center (Command Palette style)
+      long_message_to_split = true, -- Move long messages to a split window
+      lsp_doc_border = true, -- Add borders to hover docs and signature help
     },
   },
 }
