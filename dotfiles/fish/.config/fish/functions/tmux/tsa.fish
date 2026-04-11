@@ -1,23 +1,25 @@
-function tsa --description 'Attach hoặc Switch sang một tmux session (Cách 2)'
+function tsa --description 'Attach or Switch to a tmux session'
+    # Check if the user provided a session name
     if test (count $argv) -eq 0
-        echo "Lỗi: Vui lòng cung cấp tên tmux session để attach/switch."
-        echo "Cú pháp: tsa <tên_session>"
+        echo "Error: Please provide a tmux session name to attach/switch."
+        echo "Usage: tsa <session_name>"
         return 1
     end
 
     set -l session_name $argv[1]
 
+    # Verify session existence
     if not tmux has-session -t "$session_name" 2>/dev/null
-        echo "Lỗi: Session tmux '$session_name' không tồn tại."
+        echo "Error: Tmux session '$session_name' does not exist."
         return 1
     end
 
-    # Kiểm tra xem có đang ở trong Tmux không
+    # Check if already inside a Tmux session
     if set -q TMUX
-        # Đang ở trong Tmux: Dùng switch-client.
+        # Inside Tmux: Use switch-client
         env -u TMUX tmux switch-client -t "$session_name"
     else
-        # Đang ở ngoài Tmux: Dùng attach-session.
+        # Outside Tmux: Use attach-session
         tmux attach-session -t "$session_name"
     end
 end

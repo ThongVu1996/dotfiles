@@ -1,11 +1,11 @@
-function tsr
-    # Kiểm tra xem người dùng có cung cấp tên session hay không
+function tsr --description 'Rename current tmux session'
+    # Check if the user provided a new session name
     if test (count $argv) -eq 0
-        echo "Lỗi: Bạn cần cung cấp tên mới cho session hiện tại"
-        echo "Cú pháp: tsr <ten_session_moi>"
-        return 1 # Trả về lỗi
+        echo "Error: Please provide a new name for the current session"
+        echo "Usage: tsr <new_session_name>"
+        return 1 # Return error
     end
 
-    # Thực thi lệnh Tmux new-session với tham số đầu tiên ($argv[1]) là tên session
+    # Execute tmux rename-session with the first argument ($argv[1])
     tmux rename-session $argv[1]
 end

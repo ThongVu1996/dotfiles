@@ -1,9 +1,9 @@
-function ls --wraps eza
-    # Kiểm tra: Nếu chỉ có đúng 1 tham số VÀ tham số đó là Số (ví dụ: 1, 2, 3...)
-    if test (count $argv) -eq 1; and string match -qr '^[0-9]+$' -- "$argv[1]"
-        eza --tree --level=$argv[1]
+function ls
+    # Check if there is exactly 1 argument AND it is a Number (e.g., 1, 2, 3...)
+    if test (count $argv) -eq 1; and string match -qr '^[0-9]+$' $argv[1]
+        eza --tree --level=$argv[1] --icons
     else
-        # Các trường hợp còn lại (ls, ls -la, ls /tmp...) chạy eza bình thường
-        eza $argv
+        # All other cases (ls, ls -la, ls /tmp...) run eza normally
+        eza --icons $argv
     end
 end

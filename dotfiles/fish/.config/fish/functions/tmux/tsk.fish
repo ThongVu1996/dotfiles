@@ -1,20 +1,20 @@
 function tsk --description 'Kill a specific tmux session'
-    # Kiểm tra xem người dùng có cung cấp tên session không (argument đầu tiên là $argv[1])
+    # Check if the user provided a session name
     if test (count $argv) -eq 0
-        echo "Lỗi: Vui lòng cung cấp tên tmux session để kill."
-        echo "Cú pháp: tsk <tên_session>"
+        echo "Error: Please provide a tmux session name to kill."
+        echo "Usage: tsk <session_name>"
         return 1
     end
 
     set -l session_name $argv[1]
 
-    # Thực thi lệnh tmux kill-session
+    # Execute tmux kill-session
     tmux kill-session -t "$session_name"
 
-    # Kiểm tra mã thoát ($status)
+    # Check exit code ($status)
     if test $status -eq 0
-        echo "Đã kill session tmux: $session_name"
+        echo "Successfully killed tmux session: $session_name"
     else
-        echo "Không thể kill session tmux: $session_name (có thể session không tồn tại)"
+        echo "Failed to kill tmux session: $session_name (it might not exist)"
     end
 end

@@ -1,153 +1,149 @@
-# **🚀 VIM CHEATSHEET: TƯ DUY TỰ NHIÊN**
+# **🚀 VIM CHEATSHEET: NATURAL THINKING**
 
-"Đừng học vẹt, hãy nhớ hình ảnh và ý nghĩa."
+"Don't memorize by rote; remember through Mnemonics and Logic."
 
-Tài liệu này tổng hợp các phím tắt Vim dựa trên tư duy hình ảnh (Mnemonics) giúp bạn nhớ lâu và phản xạ tự nhiên.
+This guide summarizes Vim shortcuts based on visual and logical patterns (Mnemonics) to help you develop natural muscle memory.
 
-## **1\. Cơ bản (Basic Navigation)**
+## **1. Basic Navigation**
 
-_Bạn đã nắm vững, nhưng liệt kê để đầy đủ._
-
-| Phím | Tác dụng  | Mẹo nhớ                                       |
+| Key | Action | Mnemonic |
 | :--- | :-------- | :-------------------------------------------- |
-| h    | Sang trái | Ngón trỏ (bên trái).                          |
-| j    | Đi xuống  | Hình dáng chữ j móc xuống dưới.               |
-| k    | Đi lên    | Chữ k (King) ở trên cao / Hình dáng vươn lên. |
-| l    | Sang phải | Ngón út (bên phải).                           |
+| h    | Left      | Index finger (left side).                     |
+| j    | Down      | The shape of 'j' hooks downward.              |
+| k    | Up        | 'k' for King (on top) / Upward shape.         |
+| l    | Right     | Pinky finger (right side).                    |
 
-## **2\. Di chuyển trong dòng (Line Motion)**
+## **2. Line Motion**
 
-_Quy tắc: Hình tượng & Regex_
+_Rules: Visual Metaphors & Regex_
 
-| Phím  | Tác dụng                           | Mẹo nhớ (Mnemonics)                                                             |
-| :---- | :--------------------------------- | :------------------------------------------------------------------------------ |
-| **^** | Về **đầu dòng** (chữ cái đầu tiên) | Hình mũi tên chỉ lên/vào điểm bắt đầu. (Regex start).                           |
-| **$** | Về **cuối dòng**                   | **Tiền ($)** luôn nằm ở cuối cùng sau khi thanh toán. (Regex end).              |
-| **%** | Nhảy qua lại cặp (), {}, \[\]      | Hai vòng tròn ở hai đầu % tượng trưng cho một **cặp đôi**. Dùng để debug ngoặc. |
+| Key   | Action                             | Mnemonic                                                                 |
+| :---- | :--------------------------------- | :----------------------------------------------------------------------- |
+| **^** | To **start of line** (non-blank)   | Arrow pointing up to the start. (Regex start).                          |
+| **$** | To **end of line**                 | **Money ($)** is always at the end after payment. (Regex end).           |
+| **%** | Jump between matching (), {}, []   | Two circles at ends of % represent a **pair**. Use for debugging braces. |
 
-## **3\. Di chuyển theo từ (Word vs WORD)**
+## **3. Word Motion (word vs WORD)**
 
-_Quy tắc: Kích thước (Thường \= Nhỏ/Nhạy cảm, Hoa \= Lớn/Cục súc)_
+_Rule: Size matters (Lowercase = Small/Sensitive, Uppercase = Big/Aggressive)_
 
-| Phím  | Tác dụng                        | Mẹo nhớ (Mnemonics)                                              |
-| :---- | :------------------------------ | :--------------------------------------------------------------- |
-| **w** | Đi tới đầu từ sau (**word**)    | **w**ord (nhỏ). Bị chặn bởi dấu chấm, phẩy.                      |
-| **W** | Đi tới đầu từ sau (**WORD**)    | **W**HOLE word (lớn). Chỉ dừng khi gặp **Khoảng trắng (Space)**. |
-| **b** | Lùi lại đầu từ trước (**back**) | **b**ack (nhỏ). Bị chặn bởi ký tự đặc biệt.                      |
-| **B** | Lùi lại đầu từ trước (**BACK**) | Đi lùi xuyên qua mọi dấu chấm phẩy, chỉ sợ Space.                |
-| **e** | Tới cuối từ (**end**)           | **e**nd (nhỏ). Dừng ngay trước dấu chấm/phẩy.                    |
-| **E** | Tới cuối từ (**END**)           | **E**ND (lớn). Giống W, nhảy xuyên qua dấu câu tới cuối từ.      |
+| Key   | Action                        | Mnemonic                                                      |
+| :---- | :---------------------------- | :------------------------------------------------------------ |
+| **w** | Next **word** start           | **w**ord (small). Stopped by dots, commas, etc.               |
+| **W** | Next **WORD** start           | **W**HOLE word (big). Only stops at **Whitespace (Space)**.   |
+| **b** | Previous **word** start       | **b**ack (small). Stopped by special characters.              |
+| **B** | Previous **WORD** start       | **B**ACK through everything, only stops at Space.             |
+| **e** | To **word** end               | **e**nd (small). Stops just before punctuation.               |
+| **E** | To **WORD** end               | **E**ND (big). Jumps through punctuation to word end.         |
 
-## **4\. Di chuyển màn hình & Khối (Scrolling & Blocks)**
+## **4. Scrolling & Blocks**
 
-_Quy tắc: Tiếng Anh cơ bản & Lật trang sách_
+| Key           | Action                          | Mnemonic                                                      |
+| :------------ | :------------------------------ | :------------------------------------------------------------ |
+| **Ctrl + u** | Up half a page                  | **U**p.                                                       |
+| **Ctrl + d** | Down half a page                | **D**own.                                                     |
+| **Ctrl + f** | Forward full page               | **F**orward (Flip page forward).                              |
+| **Ctrl + b** | Backward full page              | **B**ackward (Flip page backward).                            |
+| **Ctrl + e** | Scroll down 1 line (keep cursor)| **E**xpose (Show more lines at bottom) or **E**xtra lines.    |
+| **Ctrl + y** | Scroll up 1 line (keep cursor)  | **Y**oyo (Pull up). 'Y' is on the top row, pulls view up.     |
+| **{**         | Previous paragraph              | Jump to empty line above (Start of code block {).             |
+| **}**         | Next paragraph                  | Jump to empty line below (End of code block }).               |
 
-| Phím          | Tác dụng                        | Mẹo nhớ (Mnemonics)                                                  |
-| :------------ | :------------------------------ | :------------------------------------------------------------------- |
-| **Ctrl \+ u** | Lên nửa trang                   | **U**p.                                                              |
-| **Ctrl \+ d** | Xuống nửa trang                 | **D**own.                                                            |
-| **Ctrl \+ f** | Xuống 1 trang (Lật tới)         | **F**orward (Tiến về phía trước).                                    |
-| **Ctrl \+ b** | Lên 1 trang (Lật lùi)           | **B**ackward (Lùi lại phía sau).                                     |
-| **Ctrl \+ e** | Cuộn xuống 1 dòng (Giữ con trỏ) | **E**xpose (Lộ ra thêm dòng ở dưới) hoặc **E**xtra lines.            |
-| **Ctrl \+ y** | Cuộn lên 1 dòng (Giữ con trỏ)   | **Y**oyo (Kéo lên). Chữ Y nằm ở hàng phím trên nên kéo màn hình lên. |
-| **{**         | Lùi lại một đoạn văn            | Nhảy lên dòng trống phía trên (Đầu block code {).                    |
-| **}**         | Đi tới một đoạn văn             | Nhảy xuống dòng trống phía dưới (Cuối block code }).                 |
+## **5. Bracket Jumping (Structured Navigation)**
 
-## **5\. Di chuyển theo Cấu trúc Code (Bracket Jumping)**
+_Rule: **[** is Back/Previous, **]** is Forward/Next. Second character is the target._
 
-_Quy tắc: **\[** là Lùi/Trước (Back), **\]** là Tới/Sau (Next). Ký tự thứ 2 là đích đến._
+| Key     | Action                             | Mnemonic                                                                        |
+| :------ | :--------------------------------- | :------------------------------------------------------------------------------ |
+| **[{**  | Jump to start of surrounding {     | **[** (Back) to **{** (start of function/block). Useful for finding function name.|
+| **]}**  | Jump to end of surrounding }       | **]** (Next) to **}** (end of function/block).                                  |
+| **[(**  | Jump to previous unclosed (        | **[** (Back) to **(** (start of expression).                                     |
+| **])**  | Jump to next unclosed )            | **]** (Next) to **)** (end of expression).                                       |
 
-| Phím    | Tác dụng                           | Mẹo nhớ (Mnemonics)                                                                    |
-| :------ | :--------------------------------- | :------------------------------------------------------------------------------------- |
-| **\[{** | Nhảy về đầu khối { bao quanh       | **\[** (Lùi) về **{** (đầu hàm/block). Rất hay dùng để tìm tên hàm chứa dòng hiện tại. |
-| **}\]** | Nhảy tới cuối khối } bao quanh     | **\]** (Tới) chỗ **}** (cuối hàm/block).                                               |
-| **\[(** | Nhảy về dấu ( chưa đóng trước đó   | **\[** (Lùi) về **(** (đầu biểu thức).                                                 |
-| **\])** | Nhảy tới dấu ) chưa đóng tiếp theo | **\]** (Tới) chỗ **)** (cuối biểu thức).                                               |
+## **6. Time Travel (Navigation History)**
 
-## **6\. Lịch sử Di chuyển (Time Travel)**
+_Rule: Similar to Back/Forward buttons in a web browser._
 
-_Quy tắc: Giống nút Back/Forward trên trình duyệt web._
-
-| Phím          | Tác dụng                 | Mẹo nhớ (Mnemonics)                            |
+| Key           | Action                   | Mnemonic                                       |
 | :------------ | :----------------------- | :--------------------------------------------- |
-| **Ctrl \+ o** | Quay lại vị trí vừa đứng | **O**ld positions (Vị trí cũ).                 |
-| **Ctrl \+ i** | Đi tới vị trí mới hơn    | Đối lập với o. Hoặc **I**n front (Phía trước). |
+| **Ctrl + o** | Go to previous position  | **O**ld positions.                             |
+| **Ctrl + i** | Go to newer position     | Opposite of 'o'. Or **I**n front.              |
 
-## **7\. Ngôn ngữ Chỉnh sửa (Editing Operators) \- QUAN TRỌNG**
+## **7. Editing Language (Operators) - CRITICAL**
 
-_Tư duy: **Động từ (Operators)** \+ **Danh từ (Motions/Objects)** \= Câu lệnh._
+_Mindset: **Verb (Operator)** + **Noun (Motion/Object)** = Command._
 
-| Phím  | Ý nghĩa (Động từ)     | Tác dụng thực tế & Mẹo nhớ                                                    |
+| Key   | Meaning (Verb)        | Practical Use & Mnemonic                                                      |
 | :---- | :-------------------- | :---------------------------------------------------------------------------- |
-| **d** | **D**elete (Xóa)      | Cắt đoạn văn bản vào clipboard (có thể paste lại).                            |
-| **c** | **C**hange (Thay đổi) | **Xóa \+ Vào chế độ Insert**. Dùng khi bạn muốn sửa cái gì đó thành cái khác. |
-| **y** | **Y**ank (Sao chép)   | Copy (Yank nghe giống tiếng giật mạnh cái gì đó ra để giữ lấy).               |
-| **p** | **P**ut (Dán)         | Paste (Dán nội dung vừa d hoặc y ra sau con trỏ).                             |
+| **d** | **D**elete            | Cuts text into clipboard (can be pasted).                                     |
+| **c** | **C**hange            | **Delete + Enter Insert Mode**. Use when replacing something with new text.   |
+| **y** | **Y**ank              | Copy (Yank sounds like pulling something out to keep it).                     |
+| **p** | **P**ut               | Paste (Put content after cursor).                                             |
 
-### **Text Objects: "Bên trong" vs "Bao quanh"**
+### **Text Objects: "Inner" vs "Around"**
 
-_Đây là đỉnh cao của Vim: Tác động vào cấu trúc thay vì đếm ký tự._
+_The pinnacle of Vim: Targeting structure instead of counting characters._
 
-- **i** \= **I**nner (Bên trong): Chỉ nội dung, KHÔNG tính dấu bao quanh.
-- **a** \= **A**round (Bao quanh): Cả nội dung VÀ dấu bao quanh.
+- **i** = **I**nner: Only content, NOT the delimiters.
+- **a** = **A**round: Content AND the delimiters.
 
-| Combo   | Ý nghĩa                        | Giải thích (Tư duy)                                             |
+| Combo   | Meaning                        | Logic / Practical Use                                           |
 | :------ | :----------------------------- | :-------------------------------------------------------------- |
-| **di(** | **D**elete **I**nner **(**     | Xóa hết chữ **trong** ngoặc (), giữ lại dấu ngoặc.              |
-| **ci(** | **C**hange **I**nner **(**     | Xóa chữ trong ngoặc () và cho phép gõ mới ngay. (Cực hay dùng). |
-| **da(** | **D**elete **A**round **(**    | Xóa **cả cụm** (...) bao gồm cả dấu ngoặc.                      |
-| **ci"** | **C**hange **I**nner **"**     | Thay đổi nội dung trong dấu nháy kép "...".                     |
-| **yi{** | **Y**ank **I**nner **{**       | Copy toàn bộ nội dung trong block code {...}.                   |
-| **daw** | **D**elete **A**round **W**ord | Xóa từ và cả khoảng trắng thừa phía sau (làm sạch văn bản).     |
+| **di(** | **D**elete **I**nner **(**     | Deletes everything **inside** (), keeps parentheses.            |
+| **ci(** | **C**hange **I**nner **(**     | Deletes inside () and starts typing immediately. (High use).   |
+| **da(** | **D**elete **A**round **(**    | Deletes **the whole unit** including parentheses.               |
+| **ci"** | **C**hange **I**nner **"**     | Change contents within double quotes "...".                     |
+| **yi{** | **Y**ank **I**nner **{**       | Copy everything inside a code block {...}.                      |
+| **daw** | **D**elete **A**round **W**ord | Delete word and the trailing space (clean text).                |
 
-### **Quyền năng của dấu chấm . (The Dot)**
+### **The Power of Dot . (The Dot)**
 
-Đây là vũ khí mạnh nhất của Vim để tăng tốc độ.
+The ultimate weapon for speeding up repetitive edits.
 
-| Phím  | Tác dụng                           | Tư duy luồng suy nghĩ                                        |
+| Key   | Action                             | Mindset / Workflow                                           |
 | :---- | :--------------------------------- | :----------------------------------------------------------- |
-| **.** | Lặp lại thao tác sửa đổi cuối cùng | "Tao vừa làm gì xong, thì làm lại **y hệt** cái đó tại đây". |
+| **.** | Repeat last modification           | "Whatever I just did, do **exactly** that again here."     |
 
-**Ví dụ luồng suy nghĩ (Workflow):**
+**Workflow Example:**
 
-1. Bạn muốn xóa một từ: Gõ dw (Delete Word).
-2. Bạn di chuyển đến từ rác tiếp theo (w, j...).
-3. Bạn muốn xóa nó? Đừng gõ dw nữa. **Gõ .**.
-4. Di chuyển tiếp \-\> Gõ . \-\> Di chuyển tiếp \-\> Gõ ..
+1. Delete a word: Type `dw`.
+2. Move to next garbage word: `w`, `j`, etc.
+3. Want to delete it? Don't type `dw`. Just type **`.`**.
+4. Move again -> Type **`.`** -> Move again -> Type **`.`**.
 
-## **8\. Định vị & Tầm nhìn (Z-Commands)**
+## **8. Zoning & Vision (Z-Commands)**
 
-_Quy tắc: **Z**one (Vùng nhìn) & Zoom_
+_Rule: **Z**one (View) & Zoom_
 
-| Phím   | Tác dụng                                 | Mẹo nhớ (Mnemonics)                                                          |
-| :----- | :--------------------------------------- | :--------------------------------------------------------------------------- |
-| **zz** | Đưa dòng hiện tại vào **Giữa** màn hình  | **Z**one **Z**ero (Về tâm). Hoặc tiếng ngáy "zz" ngủ gật đầu gục xuống giữa. |
-| **zt** | Đưa dòng hiện tại lên **Đỉnh** màn hình  | **Z**one **T**op.                                                            |
-| **zb** | Đưa dòng hiện tại xuống **Đáy** màn hình | **Z**one **B**ottom.                                                         |
-| **zh** | Cuộn màn hình sang **Trái**              | Giữ z \+ hướng h (trái). Hữu dụng khi tắt wrap text.                         |
-| **zl** | Cuộn màn hình sang **Phải**              | Giữ z \+ hướng l (phải).                                                     |
-| **zm** | Đóng bớt các nếp gấp (Fold)              | Fold **M**ore (Gấp thêm vào).                                                |
-| **zr** | Mở bớt các nếp gấp (Fold)                | **R**educe folding (Giảm gấp).                                               |
+| Key    | Action                                   | Mnemonic                                                       |
+| :----- | :--------------------------------------- | :------------------------------------------------------------- |
+| **zz** | Center current line on screen            | **Z**one **Z**ero (Center). Or "zz" sleeping (head drops mid). |
+| **zt** | Move current line to **Top** of screen   | **Z**one **T**op.                                              |
+| **zb** | Move current line to **Bottom** of screen| **Z**one **B**ottom.                                           |
+| **zh** | Scroll screen to the **Left**            | Hold 'z' + direction 'h'. Useful when wrap-text is off.        |
+| **zl** | Scroll screen to the **Right**           | Hold 'z' + direction 'l'.                                      |
+| **zm** | Fold **More** (close folds)               | Fold **M**ore.                                                 |
+| **zr** | **R**educe folding (open folds)           | **R**educe folding.                                            |
 
-## **9\. Tìm kiếm chính xác trong dòng (Inline Search)**
+## **9. Inline Search**
 
-_Quy tắc: Combo bộ ba f \- ; \- ,_
+_Rule: The triad combo of f - ; - ,_
 
-| Phím          | Tác dụng                 | Mẹo nhớ (Mnemonics)                            |
+| Key           | Action                   | Mnemonic                                       |
 | :------------ | :----------------------- | :--------------------------------------------- |
-| **f** \+ kytu | Nhảy ngay tới kytu       | **F**ind (Tìm).                                |
-| **;**         | Lặp lại lệnh f (đi tiếp) | Ngón út phải $\\rightarrow$ Thuận tay đi tới.  |
-| **,**         | Lặp lại lệnh f (đi lùi)  | Dấu phẩy có móc ngược $\\rightarrow$ Quay đầu. |
+| **f** + char  | Find next 'char'         | **F**ind.                                      |
+| **;**         | Repeat 'f' (next)        | Right pinky -> Natural forward motion.         |
+| **,**         | Repeat 'f' (previous)    | Comma looks like a reverse hook -> Go back.   |
 
-## **10\. Lệnh thao tác đặc biệt (Special Command)**
+## **10. Special Commands**
 
-| Phím  | Tác dụng                                 | Mẹo nhớ (Mnemonics)                                                         |
-| :---- | :--------------------------------------- | :-------------------------------------------------------------------------- |
-| **&** | Lặp lại lệnh **Thay thế** (:s) cuối cùng | **Ampersand** \= **AND** (Và). _"Làm dòng trên VÀ (&) làm dòng này y hệt."_ |
+| Key   | Action                                     | Mnemonic                                                     |
+| :---- | :----------------------------------------- | :----------------------------------------------------------- |
+| **&** | Repeat last **Substitute** (:s) command    | **Ampersand** = **AND**. _"Do what I did to the line above AND (&) this one."_|
 
-### **💡 Lộ trình luyện tập cập nhật**
+### **💡 Update Training Roadmap**
 
-1. **Tuần 1:** w/W \+ Ctrl-u/d.
-2. **Tuần 2:** ^/$ \+ zz \+ Ctrl+o/i (Nhảy đi rồi nhảy về).
-3. **Tuần 3:** dw, cw kết hợp với dấu . (Đây là tuần quan trọng nhất để tăng tốc).
-4. **Tuần 4:** f/;/, \+ ci(, di{ (Thao tác trên cấu trúc code).
+1. **Week 1:** Master `w/W` + `Ctrl-u/d`.
+2. **Week 2:** Master `^/$` + `zz` + `Ctrl+o/i` (Jump and return).
+3. **Week 3:** Master `dw`, `cw` combined with the `.` dot (Crucial for speed).
+4. **Week 4:** Master `f/;/`, + `ci(`, `di{` (Structural Editing).

@@ -9,6 +9,12 @@
 [Tmux] C-a + ?      | Open Television Cheatsheet (Custom)
 [Tmux] C-h/j/k/l    | Smart Navigation (Switch between Vim & Tmux panes)
 [Tmux] C-a + h/j/k/l| Resize current pane (Repeatable)
+[Tmux] C-a + C-j    | Join Pane (Horizontal)
+[Tmux] C-a + C-k    | Join Pane (Vertical)
+[Tmux] C-a + C-b     | Break Pane (Tách cửa sổ ra thành tab mới)
+[Tmux] Alt + Space   | Floating Terminal (Mở terminal nổi - Không cần Prefix)
+[Tmux] Alt + g       | Lazygit Popup (Quản lý Git nổi - Không cần Prefix)
+[Tmux] Alt + t       | Television Popup (Tìm kiếm trung tâm nổi - Không cần Prefix)
 
 ## 🗄️ Tmux Tools (Utilities)
 [Tmux] tsn [name]    | Create or Switch to session [name]

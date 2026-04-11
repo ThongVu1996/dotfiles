@@ -1,85 +1,76 @@
 function vmrun
-    # --- PHẦN 1: KIỂM TRA THAM SỐ (CHỈ CHẤP NHẬN 2 THAM SỐ) ---
-    echo "$count $argv"
+    # --- PART 1: ARGUMENT VALIDATION (EXACTLY 2 ARGUMENTS) ---
     if test (count $argv) -ne 2
-        echo (set_color red) "Lỗi:" (set_color normal) "Cú pháp không hợp lệ. Hàm này chỉ chấp nhận 2 tham số."
-        echo "Cú pháp: vmrun <start|stop> <all-in-one|harbor|k8s>"
+        echo (set_color red) "Error:" (set_color normal) "Invalid syntax. This function accepts exactly 2 arguments."
+        echo "Usage: vmrun <start|stop> <all-in-one|harbor|k8s>"
         return 1
     end
 
-    set cmd $argv[1] # Lệnh: start hoặc stop
-    set service_name $argv[2] # Tên dịch vụ: all-in-one, harbor, k8s
+    set -l cmd $argv[1] # Action: start or stop
+    set -l service_name $argv[2] # Target: all-in-one, harbor, k8s
 
-    # Bạn có thể giữ lại dòng DEBUG này cho lần kiểm tra cuối cùng
-    echo "DEBUG: \$service_name được nhận là: '$service_name'" 
-    if test "$service_name = "all-in-one""
-        echo "Hai chuỗi bằng nhau."
-    else
-        echo "Hai chuỗi KHÔNG bằng nhau." # Kết quả sẽ là dòng này
-    end
+    # DEBUG: echo "DEBUG: service_name received as: '$service_name'"
 
-    # --- PHẦN 2: HÀM CON ĐỂ KHỞI ĐỘNG (service_run) ---
-    function service_run
-        # Dùng if test để so sánh chuỗi
-        echo "Da vao day"
-        if test "$service_name = "all-in-one""
-            echo "Đang khời động máy ảo $service_name"
-            vmrun start "/Users/thongvu/Virtual Machines.localized/all-in-one.vmwarevm/all-in-one.vm" nogui
-            return 0
-        else if test "$service_name" = "harbor"
-            echo "Đang khời động máy ảo $service_name"
-            vmrun start "/Users/thongvu/Virtual Machines.localized/Harbo-registry.vmwarevm/Harbo-registry.vmx" nogui
-            return 0
-        else if test "$service_name" = "k8s"
-            echo "Đang khời động cụm máy ảo $service_name"
-            vmrun start "/Users/thongvu/Virtual Machines.localized/k8s-master-1.vmwarevm/k8s-master-1.vmx" nogui
-            vmrun start "/Users/thongvu/Virtual Machines.localized/k8s-master-2.vmwarevm/k8s-master-2.vmx" nogui
-            vmrun start "/Users/thongvu/Virtual Machines.localized/k8s-master-3.vmwarevm/k8s-master-3.vmx" nogui
-            return 0
-        else
-            # Xử lý trường hợp không khớp với bất kỳ dịch vụ nào
-            echo "Loi 12234"
-            echo (set_color red) "Lỗi:" (set_color normal) "Tên dịch vụ không hợp lệ."
-            echo "Tham số đầu vào chỉ có thể là k8s, all-in-one, harbor"
-            return 1
-        end
-    end
-
-    # --- PHẦN 3: HÀM CON ĐỂ DỪNG (service_stop) ---
-    function service_stop
+    # --- PART 2: HELPER FUNCTION TO START (service_run) ---
+    # Note: Use 'command vmrun' to call the VMware binary and avoid recursion
+    function service_run -V service_name
         switch "$service_name"
-            case all-in-one
-                echo "Đang tắt máy ảo $service_name"
-                vmrun stop "/Users/thongvu/Virtual Machines.localized/all-in-one.vmwarevm/all-in-one.vm"
+            case "all-in-one"
+                echo "Starting virtual machine: $service_name"
+                command vmrun start "/Users/thongvu/Virtual Machines.localized/all-in-one.vmwarevm/all-in-one.vm" nogui
                 return 0
-            case harbor
-                echo "Đang tắt máy ảo $service_name"
-                vmrun stop "/Users/thongvu/Virtual Machines.localized/Harbo-registry.vmwarevm/Harbo-registry.vmx"
+            case "harbor"
+                echo "Starting virtual machine: $service_name"
+                command vmrun start "/Users/thongvu/Virtual Machines.localized/Harbo-registry.vmwarevm/Harbo-registry.vmx" nogui
                 return 0
-            case k8s
-                echo "Đang tắt cụm máy ảo $service_name"
-                vmrun stop "/Users/thongvu/Virtual Machines.localized/k8s-master-1.vmwarevm/k8s-master-1.vmx"
-                vmrun stop "/Users/thongvu/Virtual Machines.localized/k8s-master-2.vmwarevm/k8s-master-2.vmx"
-                vmrun stop "/Users/thongvu/Virtual Machines.localized/k8s-master-3.vmwarevm/k8s-master-3.vmx"
+            case "k8s"
+                echo "Starting Kubernetes cluster machines..."
+                command vmrun start "/Users/thongvu/Virtual Machines.localized/k8s-master-1.vmwarevm/k8s-master-1.vmx" nogui
+                command vmrun start "/Users/thongvu/Virtual Machines.localized/k8s-master-2.vmwarevm/k8s-master-2.vmx" nogui
+                command vmrun start "/Users/thongvu/Virtual Machines.localized/k8s-master-3.vmwarevm/k8s-master-3.vmx" nogui
                 return 0
             case '*'
-                echo (set_color red) "Lỗi:" (set_color normal) "Tên dịch vụ không hợp lệ."
-                echo "Tham số đầu vào chỉ có thể là k8s, all-in-one, harbor"
+                echo (set_color red) "Error:" (set_color normal) "Invalid service name."
+                echo "Acceptable targets: k8s, all-in-one, harbor"
                 return 1
         end
     end
 
-    # --- PHẦN 4: LỆNH CHÍNH XỬ LÝ (cmd) ---
+    # --- PART 3: HELPER FUNCTION TO STOP (service_stop) ---
+    function service_stop -V service_name
+        switch "$service_name"
+            case "all-in-one"
+                echo "Stopping virtual machine: $service_name"
+                command vmrun stop "/Users/thongvu/Virtual Machines.localized/all-in-one.vmwarevm/all-in-one.vm"
+                return 0
+            case "harbor"
+                echo "Stopping virtual machine: $service_name"
+                command vmrun stop "/Users/thongvu/Virtual Machines.localized/Harbo-registry.vmwarevm/Harbo-registry.vmx"
+                return 0
+            case "k8s"
+                echo "Stopping Kubernetes cluster machines..."
+                command vmrun stop "/Users/thongvu/Virtual Machines.localized/k8s-master-1.vmwarevm/k8s-master-1.vmx"
+                command vmrun stop "/Users/thongvu/Virtual Machines.localized/k8s-master-2.vmwarevm/k8s-master-2.vmx"
+                command vmrun stop "/Users/thongvu/Virtual Machines.localized/k8s-master-3.vmwarevm/k8s-master-3.vmx"
+                return 0
+            case '*'
+                echo (set_color red) "Error:" (set_color normal) "Invalid service name."
+                echo "Acceptable targets: k8s, all-in-one, harbor"
+                return 1
+        end
+    end
+
+    # --- PART 4: EXECUTION LOGIC ---
     switch "$cmd"
         case start
             service_run
-            return $status 
+            return $status
         case stop
             service_stop
             return $status
         case '*'
-            echo (set_color red) "Lỗi:" (set_color normal) "Lệnh không hợp lệ."
-            echo "Lệnh chỉ có thể là 'start' hoặc 'stop'."
+            echo (set_color red) "Error:" (set_color normal) "Invalid command."
+            echo "Command must be 'start' or 'stop'."
             return 1
     end
 end

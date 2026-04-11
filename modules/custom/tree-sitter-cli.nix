@@ -6,7 +6,6 @@
   cmake,
   installShellFiles,
 }:
-
 rustPlatform.buildRustPackage rec {
   pname = "tree-sitter-cli";
   version = "0.26.1";
@@ -20,7 +19,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-hnFHYQ8xPNFqic1UYygiLBWu3n82IkTJuQvgcXcMdv0=";
 
-  doCheck = false; # Bỏ qua chạy tests để tránh lỗi trong môi trường sandbox của Nix
+  doCheck = false; # Skip tests to avoid failure in Nix sandbox environment
 
   nativeBuildInputs = [
     pkg-config
@@ -28,8 +27,8 @@ rustPlatform.buildRustPackage rec {
     installShellFiles
   ];
 
-  # Tree-sitter CLI thường không cần buildInputs đặc biệt
-  buildInputs = [ ];
+  # Tree-sitter CLI typically doesn't require special buildInputs
+  buildInputs = [];
 
   meta = with lib; {
     description = "Incremental parsing system for programming tools - CLI";

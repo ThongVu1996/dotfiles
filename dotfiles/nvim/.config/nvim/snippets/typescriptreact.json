@@ -2,7 +2,7 @@
   "Console Log Labeled": {
     "prefix": ["clo", "log"],
     "body": ["console.log('🚀 ${1:variable}:', ${1:variable});"],
-    "description": "Log biến kèm nhãn (Best for debugging)"
+    "description": "Log variable with label (Best for debugging)"
   },
   "Console Error": {
     "prefix": "cle",
