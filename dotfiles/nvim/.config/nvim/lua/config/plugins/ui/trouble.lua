@@ -28,16 +28,16 @@ return {
 		{
 			"<leader>dl",
 			function()
-				require("diagnostic_helper").show_diagnostics("workspace")
+				Snacks.picker.diagnostics()
 			end,
-			desc = "Project Diagnostics",
+			desc = "Project Diagnostics (Snacks)",
 		},
 		{
 			"<leader>db",
 			function()
-				require("diagnostic_helper").show_diagnostics("document")
+				Snacks.picker.diagnostics_buffer()
 			end,
-			desc = "Buffer Diagnostics",
+			desc = "Buffer Diagnostics (Snacks)",
 		},
 		{
 			"<leader>dc",

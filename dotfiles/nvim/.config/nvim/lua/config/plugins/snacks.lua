@@ -135,6 +135,7 @@ return {
 
 	keys = {
 		-- Top Pickers & Explorer
+		{ "<leader>hh", function() Snacks.picker.help() end, desc = "Help Pages" },
 		{
 			"<leader><space>",
 			function()
