@@ -1,8 +1,8 @@
 return {
 	"smjonas/inc-rename.nvim",
-	event = "BufReadPre",
+	event = "BufReadPost", -- Load after buffer is read for better stability
 	lazy = true,
-	enabled = false,
+	enabled = false, -- ENABLED now!
 	config = function()
 		require("inc_rename").setup({
 			cmd_name = "IncRename", -- The command name for renaming
@@ -10,13 +10,12 @@ return {
 			show_message = true, -- Show notification after rename
 			input_buffer_type = nil, -- Input buffer type (nil = default mini buffer)
 		})
-
-		-- Short-key for IncRename
-		vim.api.nvim_set_keymap(
-			"n",
-			"<leader>rr",
-			":IncRename ",
-			{ noremap = true, silent = false, desc = "Rename variable" }
-		)
 	end,
+	keys = {
+		{
+			"<leader>rn",
+			":IncRename ",
+			desc = "LSP Incremental Rename",
+		},
+	},
 }
