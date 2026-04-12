@@ -13,13 +13,20 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      btop
+      bottom # htop
+      procs # ps
+      dust # du
       bat
       jq
       fd
       ripgrep
       fzf
-      eza
+      eza # ls
+      zoxide # cd
+      git
+      lazygit
+      lazydocker
+      delta
       myDuf
     ];
   };

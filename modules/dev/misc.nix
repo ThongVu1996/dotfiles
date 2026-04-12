@@ -13,9 +13,6 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs;
       [
-        git
-        lazygit
-        delta
         imagemagick
         pngpaste
         gcc
