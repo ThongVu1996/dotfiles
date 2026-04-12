@@ -6,7 +6,7 @@ return {
 	},
 	opts = {
 		show_icons = true,
-		leader_key = "\t", -- Recommended to be a single key, e.g Tab
-		buffer_leader_key = "m", -- Per Buffer Mappings
+		leader_key = "\t",
+		buffer_leader_key = "m",
 	},
 }

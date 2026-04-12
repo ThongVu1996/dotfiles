@@ -1,9 +1,5 @@
 return {
-  {
-    "nvim-lua/plenary.nvim",
-  },
-  {
-    "christoomey/vim-tmux-navigator",
-    lazy = false,
-  },
+	{ import = "config.plugins.ui" },
+	{ import = "config.plugins.lsp" },
+	{ import = "config.plugins.code" },
 }

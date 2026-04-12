@@ -2,19 +2,16 @@ return {
 	"MagicDuck/grug-far.nvim",
 	config = function()
 		require("grug-far").setup({
-			-- 1. Explicit keymaps within Grug-far
 			keymaps = {
 				replace = { n = ",r" },
 				syncAll = { n = ",s" },
-				q = { n = "q" }, -- Use 'q' to quit easily
+				q = { n = "q" },
 			},
 		})
 
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "grug-far",
 			callback = function()
-				-- Removed old Esc mapping.
-				-- Use 'q' in Normal mode to close the window.
 				vim.keymap.set("n", "q", "<Cmd>bd!<CR>", { buffer = true })
 			end,
 		})
