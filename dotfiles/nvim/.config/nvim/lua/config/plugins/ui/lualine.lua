@@ -12,7 +12,19 @@ return {
 	opts = function()
 		local lualine_require = require("lualine_require")
 		lualine_require.require = require
-		local icons = require("icons")
+		local icons = {
+			diagnostics = {
+				Error = " ",
+				Warn = " ",
+				Hint = " ",
+				Info = " ",
+			},
+			git = {
+				added = " ",
+				modified = " ",
+				removed = " ",
+			},
+		}
 		vim.o.laststatus = vim.g.lualine_laststatus
 
 		local opts = {
@@ -30,47 +42,6 @@ return {
 					{ "filename", separator = "", icon_only = true, padding = { left = 1, right = 0 } },
 				},
 				lualine_x = {
-					-- Snacks.profiler.status(),
-					-- {
-					-- 	function()
-					-- 		return require("noice").api.status.command.get()
-					-- 	end,
-					-- 	cond = function()
-					-- 		return package.loaded["noice"] and require("noice").api.status.command.has()
-					-- 	end,
-					-- 	color = function()
-					-- 		return { fg = Snacks.util.color("Statement") }
-					-- 	end,
-					-- },
-					-- {
-					-- 	function()
-					-- 		return require("noice").api.status.mode.get()
-					-- 	end,
-					-- 	cond = function()
-					-- 		return package.loaded["noice"] and require("noice").api.status.mode.has()
-					-- 	end,
-					-- 	color = function()
-					-- 		return { fg = Snacks.util.color("Constant") }
-					-- 	end,
-					-- },
-					-- {
-					-- 	function()
-					-- 		return "  " .. require("dap").status()
-					-- 	end,
-					-- 	cond = function()
-					-- 		return package.loaded["dap"] and require("dap").status() ~= ""
-					-- 	end,
-					-- 	color = function()
-					-- 		return { fg = Snacks.util.color("Debug") }
-					-- 	end,
-					-- },
-					-- {
-					-- 	require("lazy.status").updates,
-					-- 	cond = require("lazy.status").has_updates,
-					-- 	color = function()
-					-- 		return { fg = Snacks.util.color("Special") }
-					-- 	end,
-					-- },
 					{
 						"diff",
 						symbols = {

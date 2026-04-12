@@ -137,6 +137,13 @@ return {
 		-- Top Pickers & Explorer
 		{ "<leader>hh", function() Snacks.picker.help() end, desc = "Help Pages" },
 		{
+			"<leader>uu",
+			function()
+				Snacks.picker.undo()
+			end,
+			desc = "Undo History",
+		},
+		{
 			"<leader><space>",
 			function()
 				Snacks.picker.smart()
