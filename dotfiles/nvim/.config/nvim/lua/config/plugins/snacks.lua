@@ -12,7 +12,7 @@ return {
 			},
 		},
 		indent = { enabled = true },
-		input = { enabled = true },
+		input = { enabled = false },
 		rename = { enabled = true },
 		notifier = {
 			enabled = true,
@@ -135,7 +135,13 @@ return {
 
 	keys = {
 		-- Top Pickers & Explorer
-		{ "<leader>hh", function() Snacks.picker.help() end, desc = "Help Pages" },
+		{
+			"<leader>hh",
+			function()
+				Snacks.picker.help()
+			end,
+			desc = "Help Pages",
+		},
 		{
 			"<leader>uu",
 			function()
@@ -411,7 +417,7 @@ return {
 	},
 	config = function(_, opts)
 		require("snacks").setup(opts)
-
+		
 		--  LSP Progress redirection to Snacks Notifier
 		local progress = vim.defaulttable()
 		vim.api.nvim_create_autocmd("LspProgress", {

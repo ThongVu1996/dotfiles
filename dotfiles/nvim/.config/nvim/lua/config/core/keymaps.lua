@@ -96,6 +96,7 @@ vim.keymap.set("n", "<C-f>", function()
 	smart_page_scroll("down")
 end, { desc = "Smart Page down" })
 
+-- Full page scroll up
 vim.keymap.set("n", "<C-b>", function()
 	smart_page_scroll("up")
 end, { desc = "Smart Page up" })

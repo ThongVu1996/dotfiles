@@ -35,3 +35,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 	end,
 })
+
+-- Highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank({
+			higroup = "IncSearch", -- Highlight group (IncSearch is typically orange/yellow)
+			timeout = 150, -- Duration of the highlight (ms)
+		})
+	end,
+})
