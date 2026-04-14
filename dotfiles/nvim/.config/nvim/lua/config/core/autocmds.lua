@@ -14,7 +14,15 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Draw virtual vertical guide (Virt-Column)
-vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "BufWinEnter" }, {
+vim.api.nvim_create_autocmd({
+	"BufEnter",
+	"WinEnter",
+	"CursorMoved",
+	"CursorMovedI",
+	"WinScrolled",
+	"TextChanged",
+	"TextChangedI",
+}, {
 	callback = function()
 		require("config.utils.ui").set_virt_column()
 	end,
