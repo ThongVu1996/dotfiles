@@ -6,9 +6,18 @@ return {
         "nvim-treesitter/nvim-treesitter-context",
     },
     config = function()
+        local parsers = require("nvim-treesitter.parsers")
+        parsers.blade = {
+            install_info = {
+                url = "https://github.com/EmranMR/tree-sitter-blade",
+                files = { "src/parser.c" },
+                branch = "main",
+            },
+            filetype = "blade",
+        }
+
         local ts = require("nvim-treesitter")
 
-        -- --- 1. TREESITTER CONTEXT SETUP ---
         local ctx_ok, ts_context = pcall(require, "treesitter-context")
         if ctx_ok then
             ts_context.setup({
@@ -60,6 +69,7 @@ return {
             "php",
             "xml",
             "nix",
+            "blade",
         })
 
         -- Enable Highlight (Built-in for Neovim 0.12+)
@@ -67,31 +77,6 @@ return {
             callback = function()
                 pcall(vim.treesitter.start)
             end,
-        })
-
-        -- Register Blade Parser (Template for Rewrite)
-        vim.api.nvim_create_autocmd("User", {
-            pattern = "TSUpdate",
-            callback = function()
-                local p_ok, parsers = pcall(require, "nvim-treesitter.parsers")
-                if p_ok and parsers then
-                    parsers.blade = {
-                        install_info = {
-                            url = "https://github.com/EmranMR/tree-sitter-blade",
-                            files = { "src/parser.c" },
-                            branch = "main",
-                        },
-                        filetype = "blade",
-                    }
-                end
-            end,
-        })
-
-        -- Define filetype for Blade
-        vim.filetype.add({
-            pattern = {
-                [".*%.blade%.php"] = "blade",
-            },
         })
     end,
 }

@@ -68,16 +68,16 @@ end
 -- 1. SEARCH MAPPINGS - KEEP CENTERED
 -- Functions used to ensure view is centered after jumping
 vim.keymap.set("n", "n", function()
-	vim.cmd("normal! nzzzv")
+	pcall(function() vim.cmd("normal! nzzzv") end)
 end, { desc = "Next result (centered)" })
 vim.keymap.set("n", "N", function()
-	vim.cmd("normal! Nzzzv")
+	pcall(function() vim.cmd("normal! Nzzzv") end)
 end, { desc = "Prev result (centered)" })
 vim.keymap.set("n", "*", function()
-	vim.cmd("normal! *zzzv")
+	pcall(function() vim.cmd("normal! *zzzv") end)
 end, { desc = "Search word (centered)" })
 vim.keymap.set("n", "#", function()
-	vim.cmd("normal! #zzzv")
+	pcall(function() vim.cmd("normal! #zzzv") end)
 end, { desc = "Search backward (centered)" })
 
 -- 2. HALF PAGE SCROLLING - CENTERED

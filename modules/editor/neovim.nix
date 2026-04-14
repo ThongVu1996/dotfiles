@@ -13,6 +13,20 @@
   baseNames = ["base00" "base01" "base02" "base03" "base04" "base05" "base06" "base07" "base08" "base09" "base0A" "base0B" "base0C" "base0D" "base0E" "base0F"];
   palette = lib.genAttrs baseNames (name: "#${config.lib.stylix.colors.${name}}");
   stylixPalette = builtins.toJSON palette;
+  tree-sitter-blade = pkgs.stdenv.mkDerivation {
+    name = "tree-sitter-blade-queries";
+    src = pkgs.fetchFromGitHub {
+      owner = "EmranMR";
+      repo = "tree-sitter-blade";
+      rev = "v0.12.3";
+      hash = "sha256-3/gY68F+xOF5Fv6rK9cEIJCVDzg/3ap1/gzkEacGuy4=";
+    };
+    buildPhase = "true";
+    installPhase = ''
+      mkdir -p $out/queries/blade
+      cp queries/*.scm $out/queries/blade/
+    '';
+  };
 in {
   options.myConfig.editor.neovim = {
     enable = lib.mkEnableOption "Enable Neovim configuration and LSPs";
@@ -27,7 +41,10 @@ in {
       withRuby = false;
       withPython3 = true; # Enabled for plugins requiring python provider
       withNodeJs = true;
-      plugins = [pkgs.vimPlugins.base16-nvim];
+      plugins = [
+        pkgs.vimPlugins.base16-nvim
+        tree-sitter-blade
+      ];
 
       # Inject palette via environment variable for zero-file integration logic
       extraWrapperArgs = [
