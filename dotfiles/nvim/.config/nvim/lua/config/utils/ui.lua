@@ -53,13 +53,17 @@ function M.set_virt_column(column)
 	local target_col = column + offset - 1
 
 	-- Place virtual text marks on all existing lines
-	local last_line = vim.api.nvim_buf_line_count(bufnr)
-	for i = 0, last_line - 1 do
-		vim.api.nvim_buf_set_extmark(bufnr, ns, i, 0, {
-			virt_text = { { "┆", "Comment" } },
-			virt_text_win_col = target_col,
-			priority = 10,
-		})
+	local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+	for i, line in ipairs(lines) do
+		-- Only draw the guide if the line is shorter than the target column
+		-- to prevent it from overlaying and hiding real characters
+		if vim.fn.strdisplaywidth(line) < column then
+			vim.api.nvim_buf_set_extmark(bufnr, ns, i - 1, 0, {
+				virt_text = { { "┆", "Comment" } },
+				virt_text_win_col = target_col,
+				priority = 10,
+			})
+		end
 	end
 end
 
