@@ -1,9 +1,9 @@
 vim.cmd("let g:netrw_liststyle = 3")
 
 vim.filetype.add({
-    pattern = {
-        [".*%.blade%.php"] = "blade",
-    },
+	pattern = {
+		[".*%.blade%.php"] = "blade",
+	},
 })
 
 local opt = vim.opt
@@ -12,6 +12,7 @@ opt.relativenumber = true
 opt.number = true
 opt.cursorline = true -- Highlight the current line
 
+opt.laststatus = 3
 -- set check spell
 
 opt.spell = true

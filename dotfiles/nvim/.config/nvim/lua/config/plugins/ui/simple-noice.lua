@@ -2,7 +2,7 @@ return {
 	"ThongVu1996/simple-noice.nvim",
 	-- event = "VeryLazy",
 	-- dir = "/Users/thongvu/nix-config/git-plugin-nvim/simple-noice.nvim",
-	event = { "BufReadPost", "BufNewFile" },
+	lazy = false,
 	opts = {
 		keymaps = {
 			confirm = "<Tab>", -- Execute command or accept blink suggestion

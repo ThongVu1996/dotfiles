@@ -18,6 +18,7 @@ in {
       dust # du
       bat
       jq
+      bc
       fd
       ripgrep
       fzf
