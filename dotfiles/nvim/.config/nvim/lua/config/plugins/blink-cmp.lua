@@ -18,6 +18,16 @@ return {
 		},
 		sources = {
 			default = { "snippets", "lsp", "path", "buffer" },
+			per_filetype = {
+				simple_noice_input = { "simple_noice" }, -- Thử xem nguồn cmdline mặc định có chạy không
+			},
+			providers = {
+				simple_noice = {
+					name = "SimpleNoice",
+					module = "simple-noice.blink_source",
+					score_offset = 100, -- Ưu tiên hàng đầu
+				},
+			},
 		},
 		signature = { enabled = true },
 		completion = {
