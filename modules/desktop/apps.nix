@@ -15,9 +15,11 @@ in {
       [
         keepassxc
         discord
+        antigravity
       ]
       ++ lib.optionals pkgs.stdenv.isDarwin [
         # dockDoor
+        wifi-unredactor
       ];
   };
 }

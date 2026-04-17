@@ -1,6 +1,12 @@
 after-login-command = []
 after-startup-command = []
 
+exec-on-workspace-change = [
+  'bash',
+  '-c',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
 start-at-login = true
 
 enable-normalization-flatten-containers = true
@@ -18,7 +24,6 @@ automatically-unhide-macos-hidden-apps = false
 
 [key-mapping]
 preset = 'qwerty'
-
 [gaps]
 inner.horizontal = 4
 inner.vertical = 5

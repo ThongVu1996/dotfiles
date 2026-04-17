@@ -1,7 +1,6 @@
 #!/bin/bash
-
-# Script này dùng để sửa icon và quyền (codesign) cho các ứng dụng Nix trên macOS
-# Chạy dưới quyền root (thông qua activationScripts)
+# Đảm bảo có đầy đủ PATH để chạy các lệnh hệ thống (mount, osascript, codesign)
+export PATH="/run/current-system/sw/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
 USER_NAME=$1
 TRAMPOLINE_DIR="/Users/$USER_NAME/Applications/Home Manager Trampolines"
@@ -10,10 +9,10 @@ LOG_FILE="/tmp/macos-app-fixer-$USER_NAME.log"
 
 echo "--- Bắt đầu Fixer ($(date)) ---" > "$LOG_FILE"
 
-# 1. Xử lý quyền (Codesign) cho wifi-unredactor
-# Ký tên TRƯỚC khi dán icon để tránh lỗi "detritus not allowed"
-echo "Xử lý Codesign cho wifi-unredactor..." >> "$LOG_FILE"
-find -L "$NIX_APPS_DIR" "$TRAMPOLINE_DIR" -name "wifi-unredactor.app" 2>/dev/null | while read -r app; do
+# 1. Xử lý quyền (Codesign) cho TẤT CẢ các App
+# Việc ký tên lại (re-sign) giúp fix lỗi app không chạy trên macOS mới
+echo "Xử lý Codesign cho toàn bộ Apps..." >> "$LOG_FILE"
+find -L "$NIX_APPS_DIR" "$TRAMPOLINE_DIR" -name "*.app" -maxdepth 2 2>/dev/null | while read -r app; do
     echo "Re-signing: $app" >> "$LOG_FILE"
     /usr/bin/codesign --force --deep --sign - "$app" >> "$LOG_FILE" 2>&1 || true
 done

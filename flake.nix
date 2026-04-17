@@ -36,13 +36,23 @@
           nixpkgs.config.allowUnfree = true;
           nixpkgs.config.allowBroken = true;
         }
+        {
+          nixpkgs.overlays = [
+            (final: _prev: {
+              menubar-cli = final.callPackage ./overlays/menubar-cli.nix {};
+              wifi-unredactor = final.callPackage ./overlays/wifi-unredactor.nix {};
+            })
+          ];
+        }
         # mac-app-util: Auto-generate trampoline apps for Spotlight & Dock
         mac-app-util.darwinModules.default
         home-manager.darwinModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "backup";
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = "backup";
+          };
           home-manager.extraSpecialArgs = {inherit inputs username hostname;};
           # Enable Spotlight integration for all HM users
           home-manager.sharedModules = [
