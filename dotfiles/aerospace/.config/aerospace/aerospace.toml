@@ -1,5 +1,7 @@
 after-login-command = []
-after-startup-command = []
+after-startup-command = [
+  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+]
 
 exec-on-workspace-change = []
 
@@ -20,13 +22,14 @@ automatically-unhide-macos-hidden-apps = false
 
 [key-mapping]
 preset = 'qwerty'
+
 [gaps]
-inner.horizontal = 4
+inner.horizontal = 16  # Giữ nguyên hoặc tùy ý
 inner.vertical = 5
-outer.left = [{monitor."Built-in Retina Display" = 0}, {monitor.secondary = 25}, {monitor."DELL P2422H" = 10}, 3]
-outer.top = [{monitor."Built-in Retina Display" = 0}, {monitor.secondary = 25}, {monitor."DELL P2422H" = 0}, 3]
-outer.bottom = [{monitor."Built-in Retina Display" = 0}, {monitor.secondary = 25}, {monitor."DELL P2422H" = 0}, 3]
-outer.right = [{monitor."Built-in Retina Display" = 0}, {monitor.secondary = 25}, {monitor."DELL P2422H" = 10}, 3]
+outer.left = 10
+outer.bottom = 10
+outer.top = 10
+outer.right = 10
 
 [mode.main.binding]
 

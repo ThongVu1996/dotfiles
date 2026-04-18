@@ -43,6 +43,7 @@
       desktop = {
         aerospace.enable = true;
         apps.enable = true;
+        jankyborders.enable = true;
       };
 
       editor.neovim.enable = true;

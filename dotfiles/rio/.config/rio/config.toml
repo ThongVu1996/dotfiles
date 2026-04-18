@@ -15,6 +15,7 @@ size = 15
 
 [navigation]
 mode = "Plain"
+use-split = false
 
 [renderer]
 backend = "Automatic"
@@ -24,15 +25,8 @@ performance = "High"
 blur = true
 decorations = "Buttonless"
 opacity = 0.5
-padding-x = 10
-padding-y = 10
-
-[bindings]
-# Disable Rio's native split-pane shortcuts to avoid conflicts with Tmux
-keys = [
-  { key = "d", with = "super", action = "None" },
-  { key = "d", with = "super | shift", action = "None" }
-]
+padding-x = 15
+padding-y = 15
 
 [hints]
 alphabet = "jfkdls;ahgurieowpqtybnmzxcv"
