@@ -9,8 +9,12 @@
 
     fonts = {
       monospace = {
-        package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+        package = pkgs.nerd-fonts.jetbrains-mono;
         name = "JetBrainsMono Nerd Font";
+      };
+      emoji = {
+        package = pkgs.noto-fonts-color-emoji;
+        name = "Noto Color Emoji";
       };
       sizes.terminal = 15;
     };
@@ -20,6 +24,7 @@
       tmux.enable = true;
       starship.enable = true;
       wezterm.enable = true;
+      rio.enable = true;
     };
   };
 }

@@ -62,20 +62,26 @@
 [Nix] nix-publish    | Promote private Nix config to repository (Public)
 [Nix] nix-unpublish  | Revert public Nix config back to Private/Stealth
 
-## 🎣 Fish & Git Utils
-[Fish] ss            | Reload Fish shell configuration
-[Fish] ls [level]    | Enhanced directory listing (eza). Use 1-9 for Tree view
-[Git]  git-rescue    | EMERGENCY: Recover uncommitted local changes
-[Git]  git-toggle    | Toggle Delta's side-by-side diff mode
-
 ## 📂 Fast Navigation
 [Go] ncf             | Jump to Nix Config base directory
 [Go] fcf / vcf / tcf | Jump to Fish / Neovim / Tmux configs
 [Go] wcf / acf / lzcf| Jump to Wezterm / AeroSpace / Lazygit configs
 [Go] pcf             | Jump to main Projects directory
 
+## 🎣 Fish & Git Utils
+[Fish] ss            | Reload Fish shell configuration
+[Fish] ls [level]    | Enhanced directory listing (eza). Use 1-9 for Tree view
+[Git]  git-rescue    | EMERGENCY: Recover uncommitted local changes
+[Git]  git-toggle    | Toggle Delta's side-by-side diff mode
+
 ## 📺 Television Channels
 [TV] tv files        | Search for files
 [TV] tv git-repos    | Search for Git projects
 [TV] tv text         | Global text search (Grep)
 [TV] tv env          | Search environment variables
+
+## 🎨 Rio Terminal - Advanced Hints
+[Rio] Ctrl + Shift + o     | URL Hint: Open links in browser
+[Rio] Ctrl + Shift + f     | File Hint: Open path in Neovim (Tmux split)
+[Rio] Ctrl + Shift + g     | Git Hint: Copy commit SHA to clipboard
+[Rio] Ctrl + Shift + l     | Localhost Hint: Open dev server links

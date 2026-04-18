@@ -13,10 +13,19 @@
 
     fonts = {
       monospace = {
-        package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+        package = pkgs.nerd-fonts.jetbrains-mono;
         name = "JetBrainsMono Nerd Font";
       };
-      sizes.terminal = 15;
+      emoji = {
+        package = pkgs.noto-fonts-color-emoji;
+        name = "Noto Color Emoji";
+      };
+      sizes = {
+        applications = 15;
+        terminal = 15;
+        desktop = 15;
+        popups = 15;
+      };
     };
   };
 
@@ -37,10 +46,12 @@
     # SECTION 2: CONFIGURATION - Must be wrapped in 'config'
     # since 'options' are defined above in this module scope.
     config = {
+      fonts.fontconfig.enable = true;
       stylix.targets = {
         tmux.enable = true;
         starship.enable = true;
         wezterm.enable = true;
+        rio.enable = true;
       };
     };
   };

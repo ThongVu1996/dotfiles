@@ -1,11 +1,7 @@
 after-login-command = []
 after-startup-command = []
 
-exec-on-workspace-change = [
-  'bash',
-  '-c',
-  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
-]
+exec-on-workspace-change = []
 
 start-at-login = true
 

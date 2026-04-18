@@ -1,91 +1,77 @@
-# ==========================================
-# RIO TERMINAL CONFIG - MACOS RICING STYLE
-# ==========================================
+option-as-alt = 'both'
+confirm-before-quit = false
 
-confirm-before-quit = false # Đã set false tại đây
-# 1. Hiệu năng & Render
-# ------------------------------------------
-[renderer]
-performance = "High"
-backend = "Automatic"
-disable-unfocused-render = false
+[cursor]
+blinking = true
+shape = "Beam"
 
-[platform]
-macos.renderer.backend = "Metal"
+[effects]
+custom-mouse-cursor = true
+trail-cursor = true
 
-# 2. Font chữ & Hiển thị
-# ------------------------------------------
 [fonts]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono Nerd Font Mono"
 size = 15
-line-height = 1.2
 
-regular = { weight = 500 }
-bold = { weight = 800 }
-italic = { style = "Italic" }
-
-# 3. Giao diện cửa sổ
-# ------------------------------------------
-[window]
-width = 1000
-height = 600
-decorations = "Buttonless"
-opacity = 0.90
-blur = true
-
-[window.padding-x]
-left = 10
-right = 10
-
-[window.padding-y]
-top = 10
-bottom = 10
-
-# 4. Điều hướng & Tabs
-# ------------------------------------------
 [navigation]
 mode = "Plain"
-clickable = true
-use-current-path = true
 
-# 5. Con trỏ (Cursor)
-# ------------------------------------------
-[cursor]
-shape = "beam"
-blinking = true
+[renderer]
+backend = "Automatic"
+performance = "High"
 
-# 6. Shell & Editor
-# ------------------------------------------
-[shell]
-program = "/etc/profiles/per-user/thongvu/bin/nu"
-args = ["--login"]
+[window]
+blur = true
+decorations = "Buttonless"
+opacity = 0.5
+padding-x = 10
+padding-y = 10
 
-[editor]
-program = "nvim"
+[bindings]
+# Disable Rio's native split-pane shortcuts to avoid conflicts with Tmux
+keys = [
+  { key = "d", with = "super", action = "None" },
+  { key = "d", with = "super | shift", action = "None" }
+]
 
-# 7. Màu sắc (Tokyo Night Storm)
-# ------------------------------------------
-[colors]
-background = '#24283b'
-foreground = '#c0caf5'
-selection-background = '#364a82'
-selection-foreground = '#c0caf5'
-cursor = '#c0caf5'
-black = '#1d202f'
-red = '#f7768e'
-green = '#9ece6a'
-yellow = '#e0af68'
-blue = '#7aa2f7'
-magenta = '#bb9af7'
-cyan = '#7dcfff'
-white = '#a9b1d6'
-light_black = '#414868'
-light_red = '#f7768e'
-light_green = '#9ece6a'
-light_yellow = '#e0af68'
-light_blue = '#7aa2f7'
-light_magenta = '#bb9af7'
-light_cyan = '#7dcfff'
-light_white = '#c0caf5'
+[hints]
+alphabet = "jfkdls;ahgurieowpqtybnmzxcv"
 
-# [bindings] -> Đã xóa binding Cmd+Q thừa
+# 1. URL Hint - Open URL in browser
+[[hints.rules]]
+regex = "(https://|http://)[^\\s]+"
+hyperlinks = true
+post-processing = true
+persist = false
+[hints.rules.command]
+command = "open"
+[hints.rules.binding]
+key = "O"
+mods = ["Control", "Shift"]
+
+# 2. File Path Hint - Open file in Editor (F)
+[[hints.rules]]
+regex = "(?:[./\\w\\-_]+/[\\w\\-_]+(?:\\:\\d+)?)"
+[hints.rules.command]
+command = "sh -c 'file=$0; tmux split-window -h \"nvim ${file%%:*}\" +\"${file##*:}\"'"
+[hints.rules.binding]
+key = "F"
+mods = ["Control", "Shift"]
+
+# 3. Git SHA Hint - Copy commit hash (G)
+[[hints.rules]]
+regex = "[0-9a-f]{7,40}"
+[hints.rules.action]
+action = "Copy"
+[hints.rules.binding]
+key = "G"
+mods = ["Control", "Shift"]
+
+# 4. Localhost Hint - Open local dev server link (L)
+[[hints.rules]]
+regex = "(?:localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0):\\d+"
+[hints.rules.command]
+command = "open"
+[hints.rules.binding]
+key = "L"
+mods = ["Control", "Shift"]

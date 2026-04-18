@@ -62,9 +62,15 @@
   # ================================================================
   services.tailscale.enable = true;
 
+  # Thêm fontconfig vào đây để có lệnh fc-list
+  environment.systemPackages = with pkgs; [
+    fontconfig
+  ];
+
   fonts.packages = with pkgs; [
     jetbrains-mono
     nerd-fonts.jetbrains-mono
     nerd-fonts.hack
+    noto-fonts-color-emoji
   ];
 }
