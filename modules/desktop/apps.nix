@@ -20,6 +20,7 @@ in {
       ++ lib.optionals pkgs.stdenv.isDarwin [
         # dockDoor
         wifi-unredactor
+        betterdisplay
       ];
   };
 }
