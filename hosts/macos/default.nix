@@ -20,7 +20,7 @@
   # ================================================================
   # 2. USER CONFIGURATION (home-manager)
   # ================================================================
-  home-manager.users.${username} = {...}: {
+  home-manager.users.${username} = {pkgs, lib, ...}: {
     home = {
       inherit username;
       homeDirectory = "/Users/${username}";
@@ -62,5 +62,9 @@
       html.enable = false;
       manpages.enable = false;
     };
+
+    home.activation.fixmacosAppIcons = lib.hm.dag.entryAfter ["trampolineApps"] ''
+      /bin/bash ${../../modules/scripts/macos-app-fixer.sh} ${username}
+    '';
   };
 }

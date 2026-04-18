@@ -5,6 +5,7 @@ export PATH="/run/current-system/sw/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 USER_NAME=$1
 TRAMPOLINE_DIR="/Users/$USER_NAME/Applications/Home Manager Trampolines"
 NIX_APPS_DIR="/Applications/Nix Apps"
+HOME_MANAGER_APPS_DIR="/Users/$USER_NAME/Applications/Home Manager Apps"
 LOG_FILE="/tmp/macos-app-fixer-$USER_NAME.log"
 
 echo "--- Bắt đầu Fixer ($(date)) ---" > "$LOG_FILE"
@@ -12,7 +13,7 @@ echo "--- Bắt đầu Fixer ($(date)) ---" > "$LOG_FILE"
 # 1. Xử lý quyền (Codesign) cho TẤT CẢ các App
 # Việc ký tên lại (re-sign) giúp fix lỗi app không chạy trên macOS mới
 echo "Xử lý Codesign cho toàn bộ Apps..." >> "$LOG_FILE"
-find -L "$NIX_APPS_DIR" "$TRAMPOLINE_DIR" -name "*.app" -maxdepth 2 2>/dev/null | while read -r app; do
+find -L "$NIX_APPS_DIR" "$TRAMPOLINE_DIR" "$HOME_MANAGER_APPS_DIR" -maxdepth 2 -name "*.app" 2>/dev/null | while read -r app; do
     echo "Re-signing: $app" >> "$LOG_FILE"
     /usr/bin/codesign --force --deep --sign - "$app" >> "$LOG_FILE" 2>&1 || true
 done
@@ -24,22 +25,28 @@ if [ -d "$TRAMPOLINE_DIR" ]; then
         appname=$(basename "$app" .app)
         echo "Sửa icon cho: $appname" >> "$LOG_FILE"
         
-        # Tìm app gốc trong Nix Apps hoặc profiles
-        nixapp=$(find -L "$NIX_APPS_DIR" "/etc/profiles/per-user/$USER_NAME/Applications" -maxdepth 2 -name "$appname.app" 2>/dev/null | head -1)
+        # Tìm app gốc trong Nix Apps, Home Manager Apps hoặc profiles
+        nixapp=$(find -L "$NIX_APPS_DIR" "$HOME_MANAGER_APPS_DIR" "/etc/profiles/per-user/$USER_NAME/Applications" -maxdepth 2 -name "$appname.app" 2>/dev/null | head -1)
         
         icns=""
         if [ -n "$nixapp" ]; then
-            icns=$(find -L "$nixapp/Contents/Resources" -maxdepth 1 -name "*.icns" 2>/dev/null | head -1)
+            # Ưu tiên tìm icon trùng tên với app hoặc AppIcon.icns
+            icns=$(find -L "$nixapp/Contents/Resources" -maxdepth 1 \( -name "$appname.icns" -o -name "AppIcon.icns" -o -name "Electron.icns" \) 2>/dev/null | head -1)
+            
+            # Nếu vẫn không thấy, lấy file .icns đầu tiên tìm được
+            if [ -z "$icns" ]; then
+                icns=$(find -L "$nixapp/Contents/Resources" -maxdepth 1 -name "*.icns" 2>/dev/null | head -1)
+            fi
         fi
 
         # Nếu không tìm thấy app gốc, thử tìm icon ngay trong bản thân Trampoline
         if [ -z "$icns" ]; then
-            icns=$(find -L "$app/Contents/Resources" -maxdepth 1 -name "*.icns" 2>/dev/null | head -1)
+            icns=$(find -L "$app/Contents/Resources" -maxdepth 1 \( -name "$appname.icns" -o -name "AppIcon.icns" \) 2>/dev/null | head -1)
         fi
         
         if [ -n "$icns" ]; then
             echo "Dán icon cho $appname từ $icns" >> "$LOG_FILE"
-            /run/current-system/sw/bin/fileicon set "$app" "$icns" >> "$LOG_FILE" 2>&1 || true
+            fileicon set "$app" "$icns" >> "$LOG_FILE" 2>&1 || true
         else
             echo "Không tìm thấy icon cho $appname" >> "$LOG_FILE"
         fi

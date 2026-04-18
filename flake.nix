@@ -41,6 +41,7 @@
             (final: _prev: {
               menubar-cli = final.callPackage ./overlays/menubar-cli.nix {};
               wifi-unredactor = final.callPackage ./overlays/wifi-unredactor.nix {};
+              fileicon = final.callPackage ./modules/custom/fileicon.nix {};
             })
           ];
         }

@@ -65,6 +65,7 @@
   # Thêm fontconfig vào đây để có lệnh fc-list
   environment.systemPackages = with pkgs; [
     fontconfig
+    fileicon
   ];
 
   fonts.packages = with pkgs; [
