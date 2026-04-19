@@ -57,9 +57,7 @@ in {
     home.packages = let
       # --- 1. Neovim Core & Tree-sitter ---
       neovimTools = with pkgs; [
-        (pkgs.callPackage ../custom/tree-sitter-cli.nix {})
-        ripgrep
-        fd
+        tree-sitter-cli
       ];
 
       # --- 2. Language Servers (LSP) ---

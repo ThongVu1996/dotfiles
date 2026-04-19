@@ -36,13 +36,10 @@
           nixpkgs.config.allowUnfree = true;
           nixpkgs.config.allowBroken = true;
         }
+        # Add custom package to nixpkgs
         {
           nixpkgs.overlays = [
-            (final: _prev: {
-              menubar-cli = final.callPackage ./overlays/menubar-cli.nix {};
-              wifi-unredactor = final.callPackage ./overlays/wifi-unredactor.nix {};
-              fileicon = final.callPackage ./modules/custom/fileicon.nix {};
-            })
+            (import ./overlays)
           ];
         }
         # mac-app-util: Auto-generate trampoline apps for Spotlight & Dock

@@ -5,7 +5,6 @@
   ...
 }: let
   cfg = config.myConfig.dev.tools.cli;
-  myDuf = pkgs.callPackage ../../modules/custom/duf.nix {};
 in {
   options.myConfig.dev.tools.cli = {
     enable = lib.mkEnableOption "Enable CLI visualization utilities";
@@ -28,7 +27,7 @@ in {
       lazygit
       lazydocker
       delta
-      myDuf
+      duf
     ];
   };
 }
