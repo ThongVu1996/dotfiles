@@ -9,7 +9,10 @@
   imports = [
     ./system.nix # Includes user definitions, shell registration, and macOS defaults
     ./stylix.nix # System-wide theming
+    ../../modules/desktop/kanata-system.nix
   ];
+
+  myConfig.desktop.kanata.enable = true;
 
   # Inherited from specialArgs in flake.nix
   networking.hostName = hostname;

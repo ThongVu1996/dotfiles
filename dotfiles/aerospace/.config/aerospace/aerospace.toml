@@ -50,36 +50,20 @@ alt-shift-l = 'move right'
 alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
-alt-a = 'workspace A' # Any: Docker, Postman,... 
-alt-2 = 'workspace B' # Browser
-alt-1 = 'workspace C' # Coding
-alt-4 = 'workspace D' # Document/Finder
-alt-5 = 'workspace G' # Game
-alt-6 = 'workspace M' # Music
-alt-n = 'workspace N' # NOTE
-alt-r = 'workspace R' # Reading
-alt-s = 'workspace S' # Setting
-alt-t = 'workspace T' # Terminal
-alt-3 = 'workspace V' # Edit Video
-alt-w = 'workspace W' # Work: Slack, ggmeet, discord,...
-alt-x = 'workspace X' # VM - enjoy
+alt-c = 'workspace C' # Coding & Terminal
+alt-b = 'workspace B' # Browser
+alt-w = 'workspace W' # Work/Comm (Slack, Discord, Meet,...)
+alt-n = 'workspace N' # Notes/Docs
+alt-m = 'workspace M' # Music/Media/Game/Misc
+alt-s = 'workspace S' # Settings/System
 
-alt-shift-a = 'move-node-to-workspace A'
-alt-shift-2 = 'move-node-to-workspace B'
-alt-shift-1 = 'move-node-to-workspace C'
-
-alt-shift-d = 'move-node-to-workspace D'
-alt-shift-g = 'move-node-to-workspace G'
-alt-shift-m = 'move-node-to-workspace M'
-alt-shift-n = 'move-node-to-workspace N'
-alt-shift-r = 'move-node-to-workspace R'
-alt-shift-s = 'move-node-to-workspace S'
-alt-shift-t = 'move-node-to-workspace T'
-alt-shift-3 = 'move-node-to-workspace V'
+alt-shift-c = 'move-node-to-workspace C'
+alt-shift-b = 'move-node-to-workspace B'
 alt-shift-w = 'move-node-to-workspace W'
-alt-shift-x = 'move-node-to-workspace X'
+alt-shift-n = 'move-node-to-workspace N'
+alt-shift-m = 'move-node-to-workspace M'
+alt-shift-s = 'move-node-to-workspace S'
 
-# alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
 alt-shift-semicolon = 'mode service'
@@ -97,15 +81,15 @@ alt-shift-l = ['join-with right', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
-run = "move-node-to-workspace B"
-
-[[on-window-detected]]
-if.app-id ='com.mitchellh.ghostty'
 run = "move-node-to-workspace C"
 
-# [[on-window-detected]]
-# if.app-id = 'com.github.wez.wezterm'
-# run = 'layout floating'
+[[on-window-detected]]
+if.app-id ='com.google.antigravity'
+run = "move-node-to-workspace C"
+
+[[on-window-detected]]
+if.app-id ='com.raphaelamorim.rio'
+run = "move-node-to-workspace C"
 
 #Browser
 [[on-window-detected]]
@@ -128,10 +112,14 @@ run = "move-node-to-workspace B"
 if.app-id = 'com.brave.Browser'
 run = "move-node-to-workspace B"
 
+[[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = "move-node-to-workspace B"
+
 #Document
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
-run = "move-node-to-workspace D"
+run = "move-node-to-workspace S"
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
@@ -139,15 +127,15 @@ run = "move-node-to-workspace W"
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Preview'
-run = "move-node-to-workspace R"
+run = "move-node-to-workspace N"
 
 [[on-window-detected]]
 if.app-id = 'com.apple.iBooksX'
-run = "move-node-to-workspace R"
+run = "move-node-to-workspace N"
 
 [[on-window-detected]]
 if.app-id = 'info.sioyek.sioyek'
-run = "move-node-to-workspace R"
+run = "move-node-to-workspace N"
  
 [[on-window-detected]]
 if.app-id = 'notion.id'
@@ -163,7 +151,7 @@ run = "move-node-to-workspace N"
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
-run = 'move-node-to-workspace S'
+run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
@@ -171,15 +159,15 @@ run = 'move-node-to-workspace W'
 
 [[on-window-detected]]
 if.app-id = 'com.blackmagic-design.DaVinciResolveLite'
-run = 'move-node-to-workspace V'
+run = 'move-node-to-workspace S'
 
 [[on-window-detected]]
 if.app-id = 'com.obsproject.obs-studio'
-run = 'move-node-to-workspace V'
+run = 'move-node-to-workspace S'
 
 [[on-window-detected]]
 if.app-id = 'com.vmware.fusion'
-run = 'move-node-to-workspace V'
+run = 'move-node-to-workspace S'
 
 [[on-window-detected]]
 if.app-id = 'org.qutebrowser.qutebrowser'
@@ -188,10 +176,11 @@ run = ['layout tiling', 'move-node-to-workspace B']
 #which work space is on which monitor
 [workspace-to-monitor-force-assignment]
 W = 1 
-C = 'secondary'
-V = 'main'
+C = 'main'
 B = 'main'
 S = 'main'
+N = 'secondary'
+M = 'secondary'
 
 #join 
 # alt-shift-; for service mode

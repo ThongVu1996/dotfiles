@@ -165,7 +165,33 @@ nix-collect-garbage
     ```bash
     ~/nix-config/setup-mac.sh
     ```
+
 - Thêm shell vào hệ thống 
-   ```bash
-        echo "/etc/profiles/per-user/$USER/bin/nu" | sudo tee -a /etc/shells
+    ```bash
+    echo "/etc/profiles/per-user/$USER/bin/nu" | sudo tee -a /etc/shells
     ```
+
+## **9. Cài đặt Kanata (Keyboard Remapper)**
+
+Kanata giúp remap lại phím (ví dụ: Caps Lock -> Esc/Hyper). Trên macOS, Kanata hoạt động tốt nhất khi kết hợp với driver của Karabiner-Elements.
+
+### **Cài đặt Driver**
+1. Cài đặt [Karabiner-Elements](https://karabiner-elements.pqrs.org/) thủ công từ trang chủ.
+2. Không cần cấu hình gì trong app Karabiner, chỉ cần để nó cài đặt DriverKit VirtualHIDDevice vào hệ thống.
+
+### **Áp dụng cấu hình**
+1. Chạy rebuild hệ thống để tạo service Kanata:
+   ```bash
+   darwin-rebuild switch --flake .
+   ```
+2. **Cấp quyền hệ thống (Bắt buộc):**
+   - Lấy đường dẫn binary: `ls -d /nix/store/*/bin/kanata | head -n 1`
+   - Vào **System Settings > Privacy & Security**:
+     - Thêm binary trên vào mục **Input Monitoring**.
+     - Thêm binary trên vào mục **Accessibility** (Trợ năng).
+   - Nếu vẫn báo lỗi `not permitted`, hãy **Khởi động lại máy**.
+
+### **Quản lý Service**
+- Kiểm tra trạng thái: `sudo launchctl list | grep kanata`
+- Xem log lỗi: `tail -f /tmp/kanata.err.log`
+- Nếu sửa file `config.kbd`, chỉ cần chạy `darwin-rebuild switch` để tự động cập nhật.

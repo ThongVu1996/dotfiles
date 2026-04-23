@@ -85,3 +85,52 @@
 [Rio] Ctrl + Shift + f     | File Hint: Open path in Neovim (Tmux split)
 [Rio] Ctrl + Shift + g     | Git Hint: Copy commit SHA to clipboard
 [Rio] Ctrl + Shift + l     | Localhost Hint: Open dev server links
+
+## ⌨️ Kanata - Keyboard Remap (Home Row Mods & Layers)
+[Kanata] CapsLock (Tap) | Escape
+[Kanata] g (Hold)        | Numeric Layer (uio=789, jkl=456, m,.=123, n=0, h=.)
+[Kanata] v (Hold)        | Navigation Layer (hjkl: Phím mũi tên ←↓↑→)
+[Kanata] Space (Hold)    | Mouse & Tmux Layer (hjkl: Di chuyển chuột)
+[Kanata] c (Hold)        | Media Layer (hjkl: Âm lượng/Độ sáng)
+[Kanata] b (Hold)        | Symbols Layer (&*($%^!@#)
+[Kanata] d + f (Chord)   | Escape (Fast exit for Vim)
+[Kanata] j + k (Chord)   | Backspace
+[Kanata] k + l (Chord)   | Enter
+[Kanata] c + v (Chord)   | Tab
+[Kanata] m + , (Chord)   | Shift + Tab
+[Kanata] x + c (Chord)   | Clear Terminal (Type 'clear' + Enter)
+
+## 🎛️ Kanata - Mouse, Media, Sym & Num Details
+[Kanata] Space + h/j/k/l | Mouse: Left / Down / Up / Right (Vim Move) 🖱️
+[Kanata] Space + u / i / o | Clicks: Left Click / Middle Click / Right Click 🖱️
+[Kanata] Space + ; / '   | History: Back / Next trang (Browser) 🔄
+[Kanata] Space + n / m   | AeroSpace: Workspace N / M
+[Kanata] Space + , / .   | Scroll: Cuộn xuống / Cuộn lên ↕️
+[Kanata] v + h / j / k / l | Navigation: Phím mũi tên ← ↓ ↑ →
+[Kanata] c + h / l       | Brightness Down / Up ☀️
+[Kanata] c + j / k       | Volume Down / Up 🔊
+[Kanata] b + u / i / o   | Symbols: & * (
+[Kanata] b + j / k / l   | Symbols: $ % ^
+[Kanata] b + n / m / , / . | Symbols: ) ! @ #
+[Kanata] b + p           | Play / Pause Music ⏸️
+[Kanata] g + u / i / o   | Numbers: 7 8 9
+[Kanata] g + j / k / l   | Numbers: 4 5 6
+[Kanata] g + n / m / , / . | Numbers: 0 1 2 3
+
+## 🎯 Kanata - Space Layer (Space + Key)
+[Kanata] Spc + h/j/k/l   | Mouse: Left / Down / Up / Right (Mouse Move)
+[Kanata] Spc + u/i/o     | Mouse: Clicks (Left / Middle / Right)
+[Kanata] Spc + ;/'       | Browser: Back / Next trang 🔄
+[Kanata] Spc + q/y/a     | System: Cmd + Q / Cmd + S / Cmd + A
+[Kanata] Spc + e         | Ctrl + Shift (Toggle / Multi-use)
+[Kanata] Spc + d         | Backspace (Right hand navigation)
+
+[Kanata] Spc + f         | Search (/)
+[Kanata] Spc + s/v/z/x   | Tmux: Split Side / Split Bottom / Zoom / Kill
+[Kanata] Spc + u/i/o/g   | Tmux: Copy Mode / Next Win / Previous Win / Session List
+[Kanata] Spc + c/b/w/n/m | AeroSpace: Switch to Code/Browser/Work/Notes/Media
+
+## ⚡ Kanata - Hyper Layer (Hold CapsLock + Key)
+[Kanata] Hyper + q/w/x   | Neovim: Save & Quit / Save All / Quit No Save
+[Kanata] Hyper + a/t/k   | Raycast: App Launcher / Terminal / Search (Auto Enter)
+[Kanata] Hyper + f       | Neovim: Global Search (/)

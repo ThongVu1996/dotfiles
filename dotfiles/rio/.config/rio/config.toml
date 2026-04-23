@@ -6,7 +6,7 @@ blinking = true
 shape = "Beam"
 
 [effects]
-custom-mouse-cursor = true
+custom-mouse-cursor = false
 trail-cursor = true
 
 [fonts]
