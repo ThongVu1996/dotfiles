@@ -17,22 +17,37 @@ Tài liệu này mô tả kiến trúc Quản lý Phím tắt Hệ thống (SKHD
 
 ## ⚡ 1. Context-Aware Shortcuts (Space Layer)
 
-Khi bạn giữ phím `Space` và bấm các phím tương ứng, Kanata sẽ gửi chuỗi tín hiệu `F13` đến `F19`. `skhd` sẽ nhận các phím `F` này và chuyển quyền xử lý cho `skhd_dispatcher.sh`.
+Khi bạn giữ phím `Space` và bấm các phím tương ứng, Kanata sẽ gửi chuỗi tín hiệu **`F20` đến `F24`** (Dải phím an toàn để lách các phím cứng mặc định của macOS như Brightness/Volume). `skhd` sẽ nhận các phím `F` này và chuyển quyền xử lý cho `skhd_dispatcher.sh`.
 
 ### Cơ chế hoạt động:
-1. `skhdrc` kích hoạt: `f14 : /.../skhd_dispatcher.sh "s" "cmd - s"`
+1. `skhdrc` kích hoạt: `f21 : /.../skhd_dispatcher.sh "s" "cmd - s"`
 2. Script chạy `osascript` để lấy tên ứng dụng đang Focus.
 3. Nếu ứng dụng là `rio` (Terminal hiện hành): script tự động gửi Tổ hợp phím Tmux `Ctrl+A`, tạm dừng nhẹ 0.05s, rồi gửi phím tmux tiếp theo.
 4. Nếu ứng dụng khác: script gửi lệnh Global (như `Cmd+S`).
 
-### Bảng Phím tắt Ngữ cảnh:
-| Phím Kanata | Tín hiệu | Hành động trong Rio (Terminal) | Hành động Cầu (Global) |
+### Bảng Phím tắt Ngữ cảnh (Space Layer):
+| Phím Kanata | Tín hiệu | Hành động trong Rio (Terminal) | Hành động Global (Mặc định) |
 | :--- | :--- | :--- | :--- |
-| `Space + S` | `F14` | Tmux: Split Ngang (`Ctrl+A`, `S`) | Lưu file (`Cmd + S`) |
-| `Space + V` | `F15` | Tmux: Split Dọc (`Ctrl+A`, `V`) | Lưu file (`Cmd + S`) |
-| `Space + Z` | `F16` | Tmux: Zoom Pane (`Ctrl+A`, `Z`) | *(Không có)* |
-| `Space + X` | `F17` | Tmux: Kill Pane (`Ctrl+A`, `X`) | *(Không có)* |
-| `Space + G` | `F19` | Tmux: View Sessions (`Ctrl+A`, `W`)| *(Không có)* |
+| `Space + Q` | `F20` | *(Không có)* | Thoát App (`Cmd + Q`) |
+| `Space + S` | `F21` | Tmux: Split-H (`Ctrl+A`, `s`) | Lưu file (`Cmd + S`) |
+| `Space + Y` | `F22` | Tmux: Split-V (`Ctrl+A`, `v`) | Lưu file (`Cmd + S`) |
+| `Space + Z` | `F23` | Tmux: Zoom Pane (`Ctrl+A`, `z`) | *(Không có)* |
+| `Space + X` | `F24` | Tmux: Kill Pane (`Ctrl+A`, `x`) | *(Không có)* |
+| `Space + V` | `S-F21` | Tmux: Split Vertical (`Ctrl+A`, `v`) | *(Không có)* |
+| `Space + G` | `S-F22` | Tmux: Session/Window (`Ctrl+A`, `w`) | *(Không có)* |
+
+---
+
+## 🔊 3. Precision Media Control (C Layer)
+
+MacOS mặc định chì chia âm lượng/độ sáng thành 16 nấc (khá thô). Hệ thống của chúng ta sử dụng Kanata làm tín hiệu và SKHD làm "hành động" để chia nhỏ thành **50-64 nấc** siêu mịn (mỗi lần bấm dịch chuyển đúng 2%).
+
+| Phím Kanata | Tín hiệu | Hành động điều khiển | Chi tiết kỹ thuật |
+| :--- | :--- | :--- | :--- |
+| `C + H` | `S-F1` | Giảm Độ Sáng mịn (-2%) | BetterDisplay URL Scheme |
+| `C + L` | `S-F2` | Tăng Độ Sáng mịn (+2%) | BetterDisplay URL Scheme |
+| `C + J` | `S-F9` | Giảm Âm Lượng mịn (-2%) | AppleScript `output volume` |
+| `C + K` | `S-F10` | Tăng Âm Lượng mịn (+2%) | AppleScript `output volume` |
 
 ---
 

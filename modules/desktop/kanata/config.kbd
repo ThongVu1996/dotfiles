@@ -60,6 +60,16 @@
   c_media (tap-hold $tap-timeout $hold-timeout c (layer-toggle media))
   b_sym (tap-hold $tap-timeout $hold-timeout b (layer-toggle sym))
   spc_mouse (tap-hold $tap-timeout $hold-timeout spc (layer-toggle mouse))
+  
+  ;; Media Signals (Intercepted by SKHD for precision 64-step control)
+  ;; Volume: Shift + F9/F10 -> SKHD -> AppleScript (Delta 2%)
+  vol_dn_fine (macro S-f9)
+  vol_up_fine (macro S-f10)
+  
+  ;; Brightness: Shift + F1/F2 -> SKHD -> BetterDisplay URL (Delta 2%)
+  meh_br_dn (macro S-f1)
+  meh_br_up (macro S-f2)
+
   ws_c A-c
   ws_b A-b
   ws_w A-w
@@ -122,7 +132,7 @@
 )
 (deflayer media
   _  _  _  _  _  _  _  _  _  _  _  _  _
-  _  _  _  _  _  brdn vold volu brup _ _
+  _  _  _  _  _  @meh_br_dn @vol_dn_fine @vol_up_fine @meh_br_up _ _
   _  _  _  _  _  _  _  _  _  _
   _
 )

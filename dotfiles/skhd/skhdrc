@@ -69,3 +69,11 @@ shift - f21 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh
 
 # Shift+F22 (Space + G): Tmux session/window chooser (Rio only)
 shift - f22 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "w" ""
+
+# --- [ Fine-Scale Brightness (BetterDisplay URL Scheme- Shift+F1/F2) ] ---
+shift - f1 : open -g "betterdisplay://set?brightness=delta(-2)"
+shift - f2 : open -g "betterdisplay://set?brightness=delta(2)"
+
+# --- [ Fine-Scale Volume (AppleScript- Shift+F9/F10) ] ---
+shift - f9 : osascript -e "set volume output volume ((output volume of (get volume settings)) - 2)"
+shift - f10 : osascript -e "set volume output volume ((output volume of (get volume settings)) + 2)"
