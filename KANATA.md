@@ -41,17 +41,17 @@ Khi nhấn giữ phím **Space**, bàn phím của bạn sẽ biến thành trun
 - **`,` / `.`** ➔ **Scroll** (Cuộn xuống / Cuộn lên) - *Distance: 20*
 - **`;` / `'`** ➔ **Browser History** (Quay lại / Tiến tới trang) 🔄
 
-#### Tmux (Quản lý Pane siêu tốc):
-- **`s`** ➔ **Split Ngang** (Side-by-side)
-- **`v`** ➔ **Split Dọc** (Top-and-bottom)
-- **`u`** ➔ **Smart Toggle Copy Mode** (Dùng phím `u` trong Mouse mode)
-- **`z`** ➔ **Zoom** (Phóng to/Thu nhỏ Pane)
-- **`x`** ➔ **Kill Pane** (Đóng cửa sổ hiện tại)
-- **`g`** ➔ **Go to** (Mở danh sách Session/Window)
+#### Tmux (Chạy thông qua SKHD Context-Aware Dispatcher):
+- Khi đang ở ứng dụng `Rio` (hoặc Terminal được chỉ định), các phím sau sẽ kích hoạt Tmux nhanh. Nếu ở app khác, nó sẽ chuyển thành phím chức năng hệ thống (như Lưu, Thoát).
+- **`s`** ➔ **Split Ngang** (Tmux) `hoặc` **Lưu File** (Cmd + S) (App khác)
+- **`v`** ➔ **Split Dọc** (Tmux) `hoặc` **Lưu File** (Cmd + S) (App khác)
+- **`z`** ➔ **Zoom Pane** (Tmux)
+- **`x`** ➔ **Kill Pane** (Tmux)
+- **`g`** ➔ **Go to Session/Window** (Tmux)
+- **`u`** ➔ **Smart Toggle Copy Mode** (Tmux, xử lý qua f-key/macro)
 
-#### Hệ thống:
+#### Hệ thống & Workflow:
 - **`q`** ➔ **Quit App** (Cmd + Q)
-- **`y`** ➔ **Save File** (Cmd + S)
 - **`a`** ➔ **Select All** (Cmd + A)
 
 #### Thao tác trong danh sách Session (Space + g):
@@ -93,11 +93,13 @@ Nhấn các phím sau khi đang giữ Space để nhảy Workspace:
 - **`m`** ➔ **Media/Music** (Giải trí)
 
 ### 6. Hyper Layer (Nhấn giữ CapsLock)
-Tổ hợp phím dành riêng cho các thao tác nhanh trong Neovim và hệ thống:
-- **`q`** ➔ **Save & Quit** (ZZ): Lưu và đóng cửa sổ nhanh.
-- **`w`** ➔ **Save All** (:wa): Lưu tất cả các buffer đang mở.
-- **`x`** ➔ **Quit No Save** (ZQ): Thoát nhanh không cần lưu.
-- **`t` / `a` / `k`** ➔ Các lệnh Hyper đặc biệt khác.
+Tổ hợp phím dành riêng cho các thao tác hệ thống (liên kết với SKHD) và lệnh nhanh Neovim. Lớp này sử dụng tổ hợp trực tiếp `multi lctl lmet lalt lsft` để gửi phím cực kỳ chính xác:
+- **Hệ thống (SkHD điều hướng):**
+  - **`a` / `b` / `t` / `e` / `k`...** ➔ Gửi phím Hyper (Ctrl+Cmd+Alt+Shift) sang cho SKHD nhận để mở nhanh App (Antigravity, Web, Terminal, vv).
+- **Lệnh nhanh Neovim:**
+  - **`q`** ➔ **Save & Quit** (ZZ): Lưu và đóng cửa sổ nhanh.
+  - **`w`** ➔ **Save All** (:wa): Lưu tất cả các buffer đang mở.
+  - **`z`** ➔ **Quit No Save** (ZQ): Thoát nhanh không cần lưu.
 
 ---
 

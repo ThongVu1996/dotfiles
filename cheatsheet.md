@@ -117,18 +117,23 @@
 [Kanata] g + j / k / l   | Numbers: 4 5 6
 [Kanata] g + n / m / , / . | Numbers: 0 1 2 3
 
-## 🎯 Kanata - Space Layer (Space + Key)
-[Kanata] Spc + h/j/k/l   | Mouse: Di chuyển chuột (Smooth Move)
-[Kanata] Spc + s         | Save: Cmd + S 💾
-[Kanata] Spc + q         | Quit App: Cmd + Q ❌
-[Kanata] Spc + a         | Select All: Cmd + A
-[Kanata] Spc + u/i/o     | Mouse: Clicks (Left / Middle / Right)
-[Kanata] Spc + ;/'       | Browser: Back / Next trang 🔄
+## 🎯 Kanata - Space Layer (Context Aware & Workflow)
+Lớp **Space Layer** không chỉ đóng vai trò di chuột, mà còn là luồng làm việc "Nhận diện ngữ cảnh" (Context-Aware) thông minh qua `skhd_dispatcher.sh`.
 
-## 🗄️ Tmux & Workspaces (Space + Key)
-[Kanata] Spc + z/x       | Tmux: Zoom / Kill Pane
-[Kanata] Spc + v/g       | Tmux: Split Vertical / Session List
-[Kanata] Spc + c/b/w/n/m | AeroSpace: Code / Browser / Work / Notes / Media
+- [Kanata] Spc + h/j/k/l   | Mouse: Di chuyển chuột (Smooth Move)
+- [Kanata] Spc + ;/'       | Browser: Back / Next trang 🔄
+- [Kanata] Spc + c/b/w/n/m | AeroSpace: Code / Browser / Work / Notes / Media
+
+**🖥️ Context-Aware Keys (Chỉ ở Terminal Rio -> Tmux, Còn lại -> Hành động Toàn cầu):**
+- [Kanata] Spc + s         | Rio: Split Ngang Tmux   / Toàn cầu: Save (Cmd + S) 💾
+- [Kanata] Spc + v         | Rio: Split Dọc Tmux     / Toàn cầu: Save (Cmd + S) 💾
+- [Kanata] Spc + z         | Rio: Zoom Toggle Tmux 
+- [Kanata] Spc + x         | Rio: Kill Pane Tmux     
+- [Kanata] Spc + g         | Rio: Bật Session List Tmux
+
+**⚡ Lệnh Hệ Thống Toàn Cầu (Giữ Space):**
+- [Kanata] Spc + q         | Quit App: Cmd + Q ❌
+- [Kanata] Spc + a         | Select All: Cmd + A
 
 ## ⚡ Kanata - Hyper Layer (Hold CapsLock + Key)
 [Kanata] Hyper + a/b/t/e  | System: Lệnh Raycast / Skhd (Hyper + key)
