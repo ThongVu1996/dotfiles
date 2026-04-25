@@ -47,33 +47,25 @@ cmd + alt + ctrl + shift - r : aerospace reload-config
 # Signal from Kanata Space Layer → SKHD dispatches based on focused app
 # ==============================================================================
 
-# F20 (Space + Q): Quit current app
-f20 : /etc/profiles/per-user/thongvu/bin/skhd -k "cmd - q"
+# F13 (Space + Q): Quit current app (Robust AppleScript)
+f13 : osascript -e 'tell application "System Events" to set frontApp to name of first application process whose frontmost is true' -e 'tell application frontApp to quit'
 
-# F21 (Space + S): Tmux Split-H (Rio) / Save (other apps)
-f21 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "s" "cmd - s"
+# F16 (Space + S): Tmux Split-H (Rio) / Save (other apps)
+f16 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "s" "cmd - s"
 
-# F22 (Space + Y): Tmux Split-V (Rio) / Save (other apps)
-f22 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" "cmd - s"
+# F17 (Space + Y): Tmux Split-V (Rio) / Save (other apps)
+f17 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" "cmd - s"
 
 # --- [ Tmux Actions (Terminal Only) ] ---
 
-# F23 (Space + Z): Zoom pane (Rio only)
-f23 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "z" ""
+# F18 (Space + Z): Zoom pane (Rio only)
+f18 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "z" ""
 
-# F24 (Space + X): Kill current pane (Rio only)
-f24 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "x" ""
+# F19 (Space + X): Kill current pane (Rio only)
+f19 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "x" ""
 
-# Shift+F21 (Space + V): Split pane vertically (Rio only)
-shift - f21 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" ""
+# Shift+F16 (Space + V): Split pane vertically (Rio only)
+shift - f16 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" ""
 
-# Shift+F22 (Space + G): Tmux session/window chooser (Rio only)
-shift - f22 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "w" ""
-
-# --- [ Fine-Scale Brightness (BetterDisplay URL Scheme- Shift+F1/F2) ] ---
-shift - f1 : open -g "betterdisplay://set?brightness=delta(-2)"
-shift - f2 : open -g "betterdisplay://set?brightness=delta(2)"
-
-# --- [ Fine-Scale Volume (AppleScript- Shift+F9/F10) ] ---
-shift - f9 : osascript -e "set volume output volume ((output volume of (get volume settings)) - 2)"
-shift - f10 : osascript -e "set volume output volume ((output volume of (get volume settings)) + 2)"
+# Shift+F17 (Space + G): Tmux session/window chooser (Rio only)
+shift - f17 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "w" ""

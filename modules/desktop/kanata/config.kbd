@@ -1,9 +1,5 @@
 (defcfg
   process-unmapped-keys yes
-  macos-dev-names-include (
-      "0xD4359520DA829EC8" ;; Internal
-      "0xE329BEB8F1D4D729" ;; M71 5.0
-  )
 )
 (defsrc
   caps q w e r t y u i o p [ ]
@@ -17,7 +13,7 @@
   m-speed 10
   m-delay 15
 )
-(defchords my-chords 30
+(defchords my-chords 100
   (d f) esc
   (j k) bspc
   (k l) ent
@@ -38,7 +34,7 @@
 )
 (defalias
   hyper (multi lmet lalt lctl lsft)
-  caps_hyper (tap-hold $tap-timeout $hold-timeout esc (layer-toggle hyper))
+  caps_hyper (tap-hold-release $tap-timeout $hold-timeout esc (layer-toggle hyper))
   ;; Home Row Mods
   a_sft (tap-hold-release $tap-timeout $hold-timeout a lsft)
   s_met (tap-hold-release $tap-timeout $hold-timeout s lmet)
@@ -55,21 +51,17 @@
   tmux_g (macro C-a w)
   tmux_copy (macro C-a u)
   tmux_z (macro C-a z)
-  g_num (tap-hold $tap-timeout $hold-timeout g (layer-toggle num))
-  v_nav (tap-hold $tap-timeout $hold-timeout v (layer-toggle nav))
-  c_media (tap-hold $tap-timeout $hold-timeout c (layer-toggle media))
-  b_sym (tap-hold $tap-timeout $hold-timeout b (layer-toggle sym))
-  spc_mouse (tap-hold $tap-timeout $hold-timeout spc (layer-toggle mouse))
-  
-  ;; Media Signals (Intercepted by SKHD for precision 64-step control)
-  ;; Volume: Shift + F9/F10 -> SKHD -> AppleScript (Delta 2%)
-  vol_dn_fine (macro S-f9)
-  vol_up_fine (macro S-f10)
-  
-  ;; Brightness: Shift + F1/F2 -> SKHD -> BetterDisplay URL (Delta 2%)
+  g_num (tap-hold-release $tap-timeout $hold-timeout g (layer-toggle num))
+  v_nav (tap-hold-release $tap-timeout $hold-timeout v (layer-toggle nav))
+  c_media (tap-hold-release $tap-timeout 150 c (layer-toggle media))
+  b_sym (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
+  spc_mouse (tap-hold-release $tap-timeout $hold-timeout spc (layer-toggle mouse))
+  ;; Media Signals
+  vol_dn_fine S-f7
+  vol_up_fine S-f8
+  vol_mute S-f9
   meh_br_dn (macro S-f1)
   meh_br_up (macro S-f2)
-
   ws_c A-c
   ws_b A-b
   ws_w A-w
@@ -80,15 +72,15 @@
   br_back (multi lmet [)
   br_fwd (multi lmet ])
   clr (macro c l e a r ent)
-  ;; Context-aware signals to SKHD (Sử dụng F20-F24 để tránh MacOS bắt lầm phím Brightness/Volume)
-  meh_q (macro f20)
-  meh_s (macro f21)
-  meh_y (macro f22)
-  meh_z (macro f23)
-  meh_x (macro f24)
-  meh_v (macro S-f21)
-  meh_g (macro S-f22)
-  ;; Hyper keys for SKHD (chỉ những phím đang dùng)
+  ;; Context-aware signals to SKHD
+  meh_q (macro f13)
+  meh_s (macro f16)
+  meh_y (macro f17)
+  meh_z (macro f18)
+  meh_x (macro f19)
+  meh_v (macro S-f16)
+  meh_g (macro S-f17)
+  ;; Hyper keys for SKHD
   hyp_a (multi lctl lmet lalt lsft a)
   hyp_b (multi lctl lmet lalt lsft b)
   hyp_d (multi lctl lmet lalt lsft d)
@@ -133,13 +125,13 @@
 (deflayer media
   _  _  _  _  _  _  _  _  _  _  _  _  _
   _  _  _  _  _  @meh_br_dn @vol_dn_fine @vol_up_fine @meh_br_up _ _
-  _  _  _  _  _  _  _  _  _  _
+  _  _  _  _  _  _  @vol_mute _ _ _
   _
 )
 (deflayer mouse
-  _ @meh_q @ws_w @cs_toggle _ _ @meh_y mlft mmid mrgt _ @br_back @br_fwd
-  @all_cmd @meh_s bspc / @meh_g (movemouse-left $m-speed $m-delay) (movemouse-down $m-speed $m-delay) (movemouse-up $m-speed $m-delay) (movemouse-right $m-speed $m-delay) @br_back @br_fwd
-  @meh_z @meh_x @ws_c @meh_v @ws_b @ws_n @ws_m (mwheel-down 50 20) (mwheel-up 50 20) _
+  _  @meh_q  @ws_w  @cs_toggle  _  _  @meh_y  mlft  mmid  mrgt  _  @br_back  @br_fwd
+  @all_cmd  @meh_s  bspc  /  @meh_g  (movemouse-left $m-speed $m-delay)  (movemouse-down $m-speed $m-delay)  (movemouse-up $m-speed $m-delay)  (movemouse-right $m-speed $m-delay)  @br_back  @br_fwd
+  @meh_z  @meh_x  @ws_c  @meh_v  @ws_b  @ws_n  @ws_m  (mwheel-down 50 20)  (mwheel-up 50 20)  _
   _
 )
 (deflayer hyper
