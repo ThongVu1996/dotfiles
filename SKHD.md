@@ -74,3 +74,38 @@ Khi bạn kích hoạt `Hyper` (thường bằng thao tác nhấn đè CapsLock)
   nix-ss
   ```
   *(Vì NixOS sẽ copy file cấu hình vào `/nix/store` mỗi khi rebuild).*
+
+---
+
+## 🚨 Post-Mortem: Tóm tắt bài học Debug SKHD (Sự cố mất Hotkey)
+
+Dưới đây là chuỗi sự cố "kinh điển" đã xảy ra và dẫn đến mất toàn bộ phím tắt (cả Hyper và phím tắt Space), cùng với bài học xương máu:
+
+1. Thêm nhầm cấu hình `[app="rio"]` sai cú pháp vào file `skhdrc`
+   **↓**
+2. `skhd` gặp lỗi Parse Error, không load cấu hình
+   **↓**
+3. Mọi shortcut đều "chết" (Hyper A, B, T, E và Space + S đều không hoạt động)
+   **↓**
+4. Rebuild bằng Nix để sửa lỗi Fix Syntax nhưng dịch vụ SKHD không Restart đúng cách (bị rác tiến trình)
+   **↓**
+5. Lỗi cũ in ra file log từ đời nào che lấp mất lỗi thực tế → Debug bị kéo dài và lệch hướng không ngừng
+   **↓**
+6. Tới khi **Xóa sạch Log + Kill tiến trình** thì SKHD mới restart sạch sẽ → Load cấu hình mới và chạy trơn tru 100%.
+
+> [!IMPORTANT]
+> **BÀI HỌC:** Khi SKHD có vẻ không nhận bất kỳ shortcut nào cả, việc đầu tiên và kiên quyết phải làm để xác định đúng nguyên nhân là chạy khối lệnh "Clear State" sau:
+
+```bash
+# Bỏ hoàn toàn file rác / rỗng log để biết lỗi hiện tại
+rm ~/Library/Logs/skhd/skhd.err.log
+
+# Bắt buộc ép kill toàn bộ tiến trình ảo của skhd
+sudo kill -9 $(pgrep skhd)
+
+# Đợi hệ thống tự kéo skhd (launchd) lên lại
+sleep 5
+
+# Đọc log thật sự mới mẻ nhất
+cat ~/Library/Logs/skhd/skhd.err.log
+```
