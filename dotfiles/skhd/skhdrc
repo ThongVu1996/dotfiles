@@ -1,0 +1,72 @@
+# ==============================================================================
+# SKHD Configuration (Clean Architecture)
+# ==============================================================================
+
+# Modifiers:
+# Hyper = cmd + alt + ctrl + shift
+
+# --- [ Application Launchers (Hyper) ] ---
+
+# Hyper + A: Antigravity
+cmd + alt + ctrl + shift - a : open -a "/Users/thongvu/Applications/Home Manager Trampolines/Antigravity.app"
+
+# Hyper + K: KeePassXC
+cmd + alt + ctrl + shift - k : open -a "/Users/thongvu/Applications/Home Manager Trampolines/KeePassXC.app"
+
+# Hyper + B: Zen Browser
+cmd + alt + ctrl + shift - b : open -a "/Applications/Zen.app"
+
+# Hyper + T: Rio Terminal
+cmd + alt + ctrl + shift - t : open -a "/Users/thongvu/Applications/Home Manager Trampolines/Rio.app"
+
+# Hyper + E: Finder (Home)
+cmd + alt + ctrl + shift - e : open ~
+
+# --- [ System Actions (Hyper) ] ---
+
+# Hyper + S: Sleep Mac
+cmd + alt + ctrl + shift - s : pmset displaysleepnow
+
+# Hyper + M: Mute/Unmute Microphone (Toggle)
+cmd + alt + ctrl + shift - m : osascript -e 'set volume input volume (if ((get volume input volume) = 0) then 100 else 0)'
+
+# Hyper + L: Lock Screen
+cmd + alt + ctrl + shift - l : /System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend
+
+# Hyper + D: Screenshot Area (Interactive)
+cmd + alt + ctrl + shift - d : screencapture -i ~/Desktop/Screenshot_$(date +%Y%m%d_%H%M%S).png
+
+# Hyper + F: Screenshot Full Screen
+cmd + alt + ctrl + shift - f : screencapture ~/Desktop/Screenshot_$(date +%Y%m%d_%H%M%S).png
+
+# Hyper + R: Reload AeroSpace Config
+cmd + alt + ctrl + shift - r : aerospace reload-config
+
+# ==============================================================================
+# CONTEXT-AWARE SHORTCUTS (via Dispatcher Script)
+# Signal from Kanata Space Layer → SKHD dispatches based on focused app
+# ==============================================================================
+
+# F13 (Space + Q): Quit current app
+f13 : /etc/profiles/per-user/thongvu/bin/skhd -k "cmd - q"
+
+# F14 (Space + S): Tmux Split-H (Rio) / Save (other apps)
+f14 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "s" "cmd - s"
+
+# F15 (Space + Y): Tmux Split-V (Rio) / Save (other apps)
+f15 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" "cmd - s"
+
+# --- [ Tmux Actions (Terminal Only) ] ---
+
+# F16 (Space + Z): Zoom pane (Rio only)
+f16 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "z" ""
+
+# F17 (Space + X): Kill current pane (Rio only)
+f17 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "x" ""
+
+# F18 (Space + V): Split pane vertically (Rio only)
+f18 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" ""
+
+# F19 (Space + G): Tmux session/window chooser (Rio only)
+f19 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "w" ""
+

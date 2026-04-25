@@ -90,7 +90,7 @@
 [Kanata] CapsLock (Tap) | Escape
 [Kanata] g (Hold)        | Numeric Layer (uio=789, jkl=456, m,.=123, n=0, h=.)
 [Kanata] v (Hold)        | Navigation Layer (hjkl: Phím mũi tên ←↓↑→)
-[Kanata] Space (Hold)    | Mouse & Tmux Layer (hjkl: Di chuyển chuột)
+[Kanata] Space (Hold)    | Mouse, Tmux & Cmd Layer (hjkl: Mouse Move)
 [Kanata] c (Hold)        | Media Layer (hjkl: Âm lượng/Độ sáng)
 [Kanata] b (Hold)        | Symbols Layer (&*($%^!@#)
 [Kanata] d + f (Chord)   | Escape (Fast exit for Vim)
@@ -118,19 +118,19 @@
 [Kanata] g + n / m / , / . | Numbers: 0 1 2 3
 
 ## 🎯 Kanata - Space Layer (Space + Key)
-[Kanata] Spc + h/j/k/l   | Mouse: Left / Down / Up / Right (Mouse Move)
+[Kanata] Spc + h/j/k/l   | Mouse: Di chuyển chuột (Smooth Move)
+[Kanata] Spc + s         | Save: Cmd + S 💾
+[Kanata] Spc + q         | Quit App: Cmd + Q ❌
+[Kanata] Spc + a         | Select All: Cmd + A
 [Kanata] Spc + u/i/o     | Mouse: Clicks (Left / Middle / Right)
 [Kanata] Spc + ;/'       | Browser: Back / Next trang 🔄
-[Kanata] Spc + q/y/a     | System: Cmd + Q / Cmd + S / Cmd + A
-[Kanata] Spc + e         | Ctrl + Shift (Toggle / Multi-use)
-[Kanata] Spc + d         | Backspace (Right hand navigation)
 
-[Kanata] Spc + f         | Search (/)
-[Kanata] Spc + s/v/z/x   | Tmux: Split Side / Split Bottom / Zoom / Kill
-[Kanata] Spc + u/i/o/g   | Tmux: Copy Mode / Next Win / Previous Win / Session List
-[Kanata] Spc + c/b/w/n/m | AeroSpace: Switch to Code/Browser/Work/Notes/Media
+## 🗄️ Tmux & Workspaces (Space + Key)
+[Kanata] Spc + z/x       | Tmux: Zoom / Kill Pane
+[Kanata] Spc + v/g       | Tmux: Split Vertical / Session List
+[Kanata] Spc + c/b/w/n/m | AeroSpace: Code / Browser / Work / Notes / Media
 
 ## ⚡ Kanata - Hyper Layer (Hold CapsLock + Key)
-[Kanata] Hyper + q/w/x   | Neovim: Save & Quit / Save All / Quit No Save
-[Kanata] Hyper + a/t/k   | Raycast: App Launcher / Terminal / Search (Auto Enter)
-[Kanata] Hyper + f       | Neovim: Global Search (/)
+[Kanata] Hyper + a/b/t/e  | System: Lệnh Raycast / Skhd (Hyper + key)
+[Kanata] Hyper + q/w/x    | Neovim: Save & Quit / Save All / Quit No Save
+[Kanata] Hyper + f        | Neovim: Global Search (/)

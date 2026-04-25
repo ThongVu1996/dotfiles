@@ -5,22 +5,18 @@
       "0xE329BEB8F1D4D729" ;; M71 5.0
   )
 )
-
 (defsrc
   caps q w e r t y u i o p [ ]
   a s d f g h j k l ; '
   z x c v b n m , . /
   spc
 )
-
 (defvar
   tap-timeout 150
   hold-timeout 200
   m-speed 10
   m-delay 15
 )
-
-;; Chords: Timeout 30ms để giảm trễ cho Home Row Mods
 (defchords my-chords 30
   (d f) esc
   (j k) bspc
@@ -40,107 +36,105 @@
   (,) ,
   (x) x
 )
-
 (defalias
   hyper (multi lmet lalt lctl lsft)
   caps_hyper (tap-hold $tap-timeout $hold-timeout esc (layer-toggle hyper))
-
-  ;; Home Row Mods - Sử dụng tap-hold-release để tránh kích hoạt nhầm khi gõ nhanh
+  ;; Home Row Mods
   a_sft (tap-hold-release $tap-timeout $hold-timeout a lsft)
   s_met (tap-hold-release $tap-timeout $hold-timeout s lmet)
   d_alt (tap-hold-release $tap-timeout $hold-timeout d lalt)
   f_ctl (tap-hold-release $tap-timeout $hold-timeout f lctl)
-
   j_ctl (tap-hold-release $tap-timeout $hold-timeout j rctl)
   k_alt (tap-hold-release $tap-timeout $hold-timeout k ralt)
   l_met (tap-hold-release $tap-timeout $hold-timeout l rmet)
   ;_sft (tap-hold-press $tap-timeout $hold-timeout ; rsft)
-
+  ;; Tmux Commands
   tmux_s (macro C-a s)
   tmux_v (macro C-a v)
   tmux_x (macro C-a x)
   tmux_g (macro C-a w)
   tmux_copy (macro C-a u)
   tmux_z (macro C-a z)
-  tmux_prev (macro C-a S-9)
-  tmux_next (macro C-a S-0)
-
   g_num (tap-hold $tap-timeout $hold-timeout g (layer-toggle num))
   v_nav (tap-hold $tap-timeout $hold-timeout v (layer-toggle nav))
   c_media (tap-hold $tap-timeout $hold-timeout c (layer-toggle media))
   b_sym (tap-hold $tap-timeout $hold-timeout b (layer-toggle sym))
-
   spc_mouse (tap-hold $tap-timeout $hold-timeout spc (layer-toggle mouse))
-
   ws_c A-c
   ws_b A-b
   ws_w A-w
   ws_n A-n
   ws_m A-m
   ws_s A-s
-  q_cmd (multi lmet q)
-  s_cmd (multi lmet s)
   all_cmd (multi lmet a)
   br_back (multi lmet [)
   br_fwd (multi lmet ])
   clr (macro c l e a r ent)
-  hyper_e (macro M-A-C-S-e 400)
-  hyper_b (macro M-A-C-S-b 400 ent)
-  hyper_t (macro M-A-C-S-t 400 ent)
-  hyper_a (macro M-A-C-S-a 400 ent)
-  hyper_k (macro M-A-C-S-k 400 ent)
+  ;; Context-aware signals to SKHD (F13-F19)
+  meh_q (macro f13)
+  meh_s (macro f14)
+  meh_y (macro f15)
+  meh_z (macro f16)
+  meh_x (macro f17)
+  meh_v (macro f18)
+  meh_g (macro f19)
+  ;; Hyper keys for SKHD (chỉ những phím đang dùng)
+  hyp_a (multi lctl lmet lalt lsft a)
+  hyp_b (multi lctl lmet lalt lsft b)
+  hyp_d (multi lctl lmet lalt lsft d)
+  hyp_e (multi lctl lmet lalt lsft e)
+  hyp_f (multi lctl lmet lalt lsft f)
+  hyp_k (multi lctl lmet lalt lsft k)
+  hyp_l (multi lctl lmet lalt lsft l)
+  hyp_m (multi lctl lmet lalt lsft m)
+  hyp_r (multi lctl lmet lalt lsft r)
+  hyp_s (multi lctl lmet lalt lsft s)
+  hyp_t (multi lctl lmet lalt lsft t)
   cs_toggle (multi lctl lsft)
   nvim_wa (macro S-; 100 w a l l 100 ent ent)
   nvim_zz (macro S-z S-z)
   nvim_zq (macro S-z S-q)
   nvim_search /
 )
-
 (deflayer base
   @caps_hyper _ _ _ _ _ _ _ _ _ _ _ _
   @a_sft @s_met (chord my-chords d) (chord my-chords f) @g_num h (chord my-chords j) (chord my-chords k) (chord my-chords l) @;_sft _
   _ (chord my-chords x) (chord my-chords c) (chord my-chords v) @b_sym _ (chord my-chords m) (chord my-chords ,) _ _
   @spc_mouse
 )
-
 (deflayer nav
   _  _  _  _  _  _  _  _  _  _  _  _  _
   _  _  _  _  _  left down up right _ _
   _  _  _  _  _  _  _  @br_back @br_fwd _
   _
 )
-
 (deflayer num
   _  _  _  _  _  _  _  7  8  9  _  _  _
   _  _  _  _  _  .  4  5  6  _ _
   _  _  _  _  _  0  1  2  3  _
   _
 )
-
 (deflayer sym
   _  _  _  _  _  _  _  S-7 S-8 S-9 pp  _  _
   _  _  _  _  _  S-4 S-5 S-6 _ _ _
   _  _  _  _  _  S-0 S-1 S-2 S-3 _
   _
 )
-
 (deflayer media
   _  _  _  _  _  _  _  _  _  _  _  _  _
   _  _  _  _  _  brdn vold volu brup _ _
   _  _  _  _  _  _  _  _  _  _
   _
 )
-
 (deflayer mouse
-  _ @q_cmd @ws_w @cs_toggle _ _ @s_cmd mlft mmid mrgt _ @br_back @br_fwd
-  @all_cmd @tmux_s bspc / @tmux_g (movemouse-left $m-speed $m-delay) (movemouse-down $m-speed $m-delay) (movemouse-up $m-speed $m-delay) (movemouse-right $m-speed $m-delay) @br_back @br_fwd
-  @tmux_z @tmux_x @ws_c @tmux_v @ws_b @ws_n @ws_m (mwheel-down 50 20) (mwheel-up 50 20) _
+  _ @meh_q @ws_w @cs_toggle _ _ @meh_y mlft mmid mrgt _ @br_back @br_fwd
+  @all_cmd @meh_s bspc / @meh_g (movemouse-left $m-speed $m-delay) (movemouse-down $m-speed $m-delay) (movemouse-up $m-speed $m-delay) (movemouse-right $m-speed $m-delay) @br_back @br_fwd
+  @meh_z @meh_x @ws_c @meh_v @ws_b @ws_n @ws_m (mwheel-down 50 20) (mwheel-up 50 20) _
   _
 )
-
 (deflayer hyper
-  _  @nvim_zz  @nvim_wa  @hyper_e  _  @hyper_t  _  _  _  _  _  _  _
-  @hyper_a  _  _  @nvim_search  _  _  _  @hyper_k  _  _ _
-  _  @nvim_zq  _  _  @hyper_b  _  _  _  _  _
+  _  @nvim_zz  @nvim_wa  @hyp_e  @hyp_r  @hyp_t  _  _  _  _  _  _  _
+  @hyp_a  @hyp_s  @hyp_d  @hyp_f  _  _  _  @hyp_k  @hyp_l  _  _
+  _  @nvim_zq  _  _  @hyp_b  _  @hyp_m  _  _  _
   _
 )
