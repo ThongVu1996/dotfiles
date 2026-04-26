@@ -1,5 +1,9 @@
 (defcfg
   process-unmapped-keys yes
+  macos-dev-names-include (
+    "0xE329BEB8F1D4D729"
+    "0x2E7E3EBD4C615B55"
+  )
 )
 (defsrc
   caps q w e r t y u i o p [ ]
@@ -57,11 +61,11 @@
   b_sym (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
   spc_mouse (tap-hold-release $tap-timeout $hold-timeout spc (layer-toggle mouse))
   ;; Media Signals
-  vol_dn_fine S-f7
-  vol_up_fine S-f8
-  vol_mute S-f9
-  meh_br_dn (macro S-f1)
-  meh_br_up (macro S-f2)
+  vol_dn_fine (multi lalt lsft vold)
+  vol_up_fine (multi lalt lsft volu)
+  vol_mute mute
+  meh_br_dn (multi lalt lsft brdn)
+  meh_br_up (multi lalt lsft brup)
   ws_c A-c
   ws_b A-b
   ws_w A-w
@@ -122,10 +126,10 @@
   _  _  _  _  _  S-0 S-1 S-2 S-3 _
   _
 )
-(deflayer media
+(deflayer media   
   _  _  _  _  _  _  _  _  _  _  _  _  _
   _  _  _  _  _  @meh_br_dn @vol_dn_fine @vol_up_fine @meh_br_up _ _
-  _  _  _  _  _  _  @vol_mute _ _ _
+  _  _  _  _  _  _  @vol_mute prev next pp
   _
 )
 (deflayer mouse

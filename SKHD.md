@@ -17,10 +17,10 @@ Tài liệu này mô tả kiến trúc Quản lý Phím tắt Hệ thống (SKHD
 
 ## ⚡ 1. Context-Aware Shortcuts (Space Layer)
 
-Khi bạn giữ phím `Space` và bấm các phím tương ứng, Kanata sẽ gửi chuỗi tín hiệu **`F20` đến `F24`** (Dải phím an toàn để lách các phím cứng mặc định của macOS như Brightness/Volume). `skhd` sẽ nhận các phím `F` này và chuyển quyền xử lý cho `skhd_dispatcher.sh`.
+Khi bạn giữ phím `Space` và bấm các phím tương ứng, Kanata sẽ gửi chuỗi tín hiệu **`F13`, `F16`-`F19`, `S-F16`, `S-F17`** (Dải phím an toàn). `skhd` sẽ nhận các phím `F` này và chuyển quyền xử lý cho `skhd_dispatcher.sh`.
 
 ### Cơ chế hoạt động:
-1. `skhdrc` kích hoạt: `f21 : /.../skhd_dispatcher.sh "s" "cmd - s"`
+1. `skhdrc` kích hoạt: `f16 : /.../skhd_dispatcher.sh "s" "cmd - s"`
 2. Script chạy `osascript` để lấy tên ứng dụng đang Focus.
 3. Nếu ứng dụng là `rio` (Terminal hiện hành): script tự động gửi Tổ hợp phím Tmux `Ctrl+A`, tạm dừng nhẹ 0.05s, rồi gửi phím tmux tiếp theo.
 4. Nếu ứng dụng khác: script gửi lệnh Global (như `Cmd+S`).
@@ -28,32 +28,41 @@ Khi bạn giữ phím `Space` và bấm các phím tương ứng, Kanata sẽ g�
 ### Bảng Phím tắt Ngữ cảnh (Space Layer):
 | Phím Kanata | Tín hiệu | Hành động trong Rio (Terminal) | Hành động Global (Mặc định) |
 | :--- | :--- | :--- | :--- |
-| `Space + Q` | `F20` | *(Không có)* | Thoát App (`Cmd + Q`) |
-| `Space + S` | `F21` | Tmux: Split-H (`Ctrl+A`, `s`) | Lưu file (`Cmd + S`) |
-| `Space + Y` | `F22` | Tmux: Split-V (`Ctrl+A`, `v`) | Lưu file (`Cmd + S`) |
-| `Space + Z` | `F23` | Tmux: Zoom Pane (`Ctrl+A`, `z`) | *(Không có)* |
-| `Space + X` | `F24` | Tmux: Kill Pane (`Ctrl+A`, `x`) | *(Không có)* |
-| `Space + V` | `S-F21` | Tmux: Split Vertical (`Ctrl+A`, `v`) | *(Không có)* |
-| `Space + G` | `S-F22` | Tmux: Session/Window (`Ctrl+A`, `w`) | *(Không có)* |
+| `Space + Q` | `F13` | *(Không có)* | Thoát App (`Cmd + Q`) |
+| `Space + S` | `F16` | Tmux: Split-H (`Ctrl+A`, `s`) | Lưu file (`Cmd + S`) |
+| `Space + Y` | `F17` | Tmux: Split-V (`Ctrl+A`, `v`) | Lưu file (`Cmd + S`) |
+| `Space + Z` | `F18` | Tmux: Zoom Pane (`Ctrl+A`, `z`) | *(Không có)* |
+| `Space + X` | `F19` | Tmux: Kill Pane (`Ctrl+A`, `x`) | *(Không có)* |
+| `Space + V` | `S-F16` | Tmux: Split Vertical (`Ctrl+A`, `v`) | *(Không có)* |
+| `Space + G` | `S-F17` | Tmux: Session/Window (`Ctrl+A`, `w`) | *(Không có)* |
 
 ---
 
-## 🔊 3. Precision Media Control (C Layer)
+## 🔊 2. Media Control (C Layer)
 
-MacOS mặc định chì chia âm lượng/độ sáng thành 16 nấc (khá thô). Hệ thống của chúng ta sử dụng Kanata làm tín hiệu và SKHD làm "hành động" để chia nhỏ thành **50-64 nấc** siêu mịn (mỗi lần bấm dịch chuyển đúng 2%).
+Giữ `C` rồi nhấn các phím tương ứng để điều khiển âm lượng, độ sáng và media.
 
-| Phím Kanata | Tín hiệu | Hành động điều khiển | Chi tiết kỹ thuật |
-| :--- | :--- | :--- | :--- |
-| `C + H` | `S-F1` | Giảm Độ Sáng mịn (-2%) | BetterDisplay URL Scheme |
-| `C + L` | `S-F2` | Tăng Độ Sáng mịn (+2%) | BetterDisplay URL Scheme |
-| `C + J` | `S-F9` | Giảm Âm Lượng mịn (-2%) | AppleScript `output volume` |
-| `C + K` | `S-F10` | Tăng Âm Lượng mịn (+2%) | AppleScript `output volume` |
+### Bảng Phím tắt Media (C Layer):
+| Phím Kanata | Hành động | Chi tiết kỹ thuật |
+| :--- | :--- | :--- |
+| `C + H` | Giảm Độ Sáng (`Option+Shift+BrDn`) | Native macOS fine-tune |
+| `C + L` | Tăng Độ Sáng (`Option+Shift+BrUp`) | Native macOS fine-tune |
+| `C + J` | Giảm Âm Lượng (`Option+Shift+VolDn`) | Native macOS fine-tune |
+| `C + K` | Tăng Âm Lượng (`Option+Shift+VolUp`) | Native macOS fine-tune |
+| `C + M` | Mute/Unmute | Native macOS `mute` key |
+| `C + ,` | Bài trước / Tua lại | Native app: `prev` media key / Web (YouTube): keystroke `j` |
+| `C + .` | Bài tiếp / Tua tới | Native app: `next` media key / Web (YouTube): keystroke `l` |
+| `C + /` | Play/Pause | Native app: `pp` media key / Web (YouTube): keystroke `k` |
+
+> **Lưu ý:** `C + ,`, `C + .`, `C + /` hoạt động context-aware:
+> - **Native app** (Spotify, Music.app...): gửi media key `prev`/`next`/`pp`
+> - **Web browser** (YouTube...): gửi keystroke `j`/`l`/`k` trực tiếp vào trang
 
 ---
 
-## 🚀 2. Application Launchers & System (Hyper Layer)
+## 🚀 3. Application Launchers & System (Hyper Layer)
 
-Khi bạn kích hoạt `Hyper` (thường bằng thao tác nhấn đè CapsLock) cộng với 1 phím chữ, Kanata sẽ gửi tổ hợp `Cmd + Alt + Ctrl + Shift + Phím`. 
+Khi bạn kích hoạt `Hyper` (giữ CapsLock) cộng với 1 phím chữ, Kanata sẽ gửi tổ hợp `Cmd + Alt + Ctrl + Shift + Phím`.
 
 `skhd` sẽ hứng trực tiếp tổ hợp `Hyper` này để thực thi thao tác cấu hình dưới đây:
 
@@ -78,23 +87,26 @@ Khi bạn kích hoạt `Hyper` (thường bằng thao tác nhấn đè CapsLock)
 
 - Xem Log hệ thống để kiểm tra lỗi của SKHD:
   ```bash
-  cat /Library/Logs/skhd/skhd.err.log
+  cat ~/Library/Logs/skhd/skhd.err.log
   ```
 - Nếu `skhd` bị dừng đột ngột, khởi động lại nó bằng:
   ```bash
-  launchctl stop org.nix-community.home.skhd && launchctl start org.nix-community.home.skhd
+  launchctl kickstart -k gui/$(id -u)/org.nix-community.home.skhd
   ```
-- Nếu thay đổi các phím trong `skhdrc`, bạn cần chạy:
+- Nếu thay đổi các phím trong `skhdrc` hoặc `config.kbd`, bạn cần chạy:
   ```bash
-  nix-ss
+  darwin-rebuild switch --flake /Users/thongvu/nix-config
   ```
-  *(Vì NixOS sẽ copy file cấu hình vào `/nix/store` mỗi khi rebuild).*
+- Nếu không thấy apply config kanata mới nhất:
+  ```bash
+  sudo rm /Library/Logs/kanata.err.log && sudo kill -9 $(pgrep kanata) && sleep 5 && cat /Library/Logs/kanata.err.log
+  ```
 
 ---
 
-## 🚨 Post-Mortem: Tóm tắt bài học Debug SKHD (Sự cố mất Hotkey)
+## 🚨 Post-Mortem: Tóm tắt bài học Debug (Sự cố mất Hotkey)
 
-Dưới đây là chuỗi sự cố "kinh điển" đã xảy ra và dẫn đến mất toàn bộ phím tắt (cả Hyper và phím tắt Space), cùng với bài học xương máu:
+### SKHD mất toàn bộ phím tắt
 
 1. Thêm nhầm cấu hình `[app="rio"]` sai cú pháp vào file `skhdrc`
    **↓**
@@ -102,25 +114,50 @@ Dưới đây là chuỗi sự cố "kinh điển" đã xảy ra và dẫn đế
    **↓**
 3. Mọi shortcut đều "chết" (Hyper A, B, T, E và Space + S đều không hoạt động)
    **↓**
-4. Rebuild bằng Nix để sửa lỗi Fix Syntax nhưng dịch vụ SKHD không Restart đúng cách (bị rác tiến trình)
+4. Rebuild bằng Nix để sửa lỗi nhưng SKHD không restart đúng cách
    **↓**
-5. Lỗi cũ in ra file log từ đời nào che lấp mất lỗi thực tế → Debug bị kéo dài và lệch hướng không ngừng
+5. Log cũ che lấp lỗi thực tế → Debug bị kéo dài và lệch hướng
    **↓**
-6. Tới khi **Xóa sạch Log + Kill tiến trình** thì SKHD mới restart sạch sẽ → Load cấu hình mới và chạy trơn tru 100%.
+6. Xóa sạch Log + Kill tiến trình → SKHD restart sạch → Load config mới → OK
 
 > [!IMPORTANT]
-> **BÀI HỌC:** Khi SKHD có vẻ không nhận bất kỳ shortcut nào cả, việc đầu tiên và kiên quyết phải làm để xác định đúng nguyên nhân là chạy khối lệnh "Clear State" sau:
+> **BÀI HỌC SKHD:** Khi SKHD không nhận bất kỳ shortcut nào, chạy ngay:
+> ```bash
+> rm ~/Library/Logs/skhd/skhd.err.log
+> sudo kill -9 $(pgrep skhd)
+> sleep 5
+> cat ~/Library/Logs/skhd/skhd.err.log
+> ```
 
+### Kanata không load config mới
+
+1. Sửa config nhưng quên rebuild → Nix store vẫn là bản cũ
+2. Kanata parse error → bàn phím không hoạt động
+3. Log cũ không bị xóa → không biết lỗi thực tế là gì
+
+> [!IMPORTANT]
+> **BÀI HỌC KANATA:** Sau mỗi lần sửa config:
+> ```bash
+> # 1. Rebuild để Nix tạo hash mới
+> darwin-rebuild switch --flake /Users/thongvu/nix-config
+>
+> # 2. Xóa log cũ + restart Kanata
+> sudo rm /Library/Logs/kanata.err.log
+> sudo kill -9 $(pgrep kanata)
+> sleep 5
+> cat /Library/Logs/kanata.err.log
+> ```
+> Log trống = thành công. Log có lỗi = đọc lỗi và fix.
+
+### Verify config đang chạy đúng chưa
 ```bash
-# Bỏ hoàn toàn file rác / rỗng log để biết lỗi hiện tại
-rm ~/Library/Logs/skhd/skhd.err.log
+# Kanata đang dùng config nào
+/bin/ps -p $(pgrep kanata | head -1) -o args=
 
-# Bắt buộc ép kill toàn bộ tiến trình ảo của skhd
-sudo kill -9 $(pgrep skhd)
+# SKHD có load config không
+lsof -p $(pgrep skhd | head -1) | grep skhdrc
 
-# Đợi hệ thống tự kéo skhd (launchd) lên lại
-sleep 5
-
-# Đọc log thật sự mới mẻ nhất
-cat ~/Library/Logs/skhd/skhd.err.log
-```
+# Symlink trỏ đúng chưa
+readlink ~/.config/skhd/skhdrc
+readlink /etc/kanata/config.kbd
+``` 
