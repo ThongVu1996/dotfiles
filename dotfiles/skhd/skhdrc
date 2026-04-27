@@ -1,26 +1,25 @@
 # ==============================================================================
 # SKHD Configuration (Clean Architecture)
 # ==============================================================================
-
 # Modifiers:
 # Hyper = cmd + alt + ctrl + shift
 
 # --- [ Application Launchers (Hyper) ] ---
 
 # Hyper + A: Antigravity
-cmd + alt + ctrl + shift - a : open -a "/Users/thongvu/Applications/Home Manager Trampolines/Antigravity.app"
+cmd + alt + ctrl + shift - a : open -a "$HOME/Applications/Home Manager Trampolines/Antigravity.app"
 
 # Hyper + K: KeePassXC
-cmd + alt + ctrl + shift - k : open -a "/Users/thongvu/Applications/Home Manager Trampolines/KeePassXC.app"
+cmd + alt + ctrl + shift - k : open -a "$HOME/Applications/Home Manager Trampolines/KeePassXC.app"
 
 # Hyper + B: Zen Browser
 cmd + alt + ctrl + shift - b : open -a "/Applications/Zen.app"
 
 # Hyper + T: Rio Terminal
-cmd + alt + ctrl + shift - t : open -a "/Users/thongvu/Applications/Home Manager Trampolines/Rio.app"
+cmd + alt + ctrl + shift - t : open -a "$HOME/Applications/Home Manager Trampolines/Rio.app"
 
 # Hyper + E: Finder (Home)
-cmd + alt + ctrl + shift - e : open ~
+cmd + alt + ctrl + shift - e : open $HOME
 
 # --- [ System Actions (Hyper) ] ---
 
@@ -28,16 +27,16 @@ cmd + alt + ctrl + shift - e : open ~
 cmd + alt + ctrl + shift - s : pmset displaysleepnow
 
 # Hyper + M: Mute/Unmute Microphone (Toggle)
-cmd + alt + ctrl + shift - m : osascript -e 'set volume input volume (if ((get volume input volume) = 0) then 100 else 0)'
+cmd + alt + ctrl + shift - m : osascript -e 'if (get volume settings)'"'"'s input volume = 0 then set volume input volume 100 else set volume input volume 0 end if'
 
 # Hyper + L: Lock Screen
 cmd + alt + ctrl + shift - l : /System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend
 
-# Hyper + D: Screenshot Area (Interactive)
-cmd + alt + ctrl + shift - d : screencapture -i ~/Desktop/Screenshot_$(date +%Y%m%d_%H%M%S).png
+# Hyper + D (Chụp vùng chọn)
+cmd + alt + ctrl + shift - d : ~/nix-config/dotfiles/skhd/scripts/screenshot.sh -i
 
-# Hyper + F: Screenshot Full Screen
-cmd + alt + ctrl + shift - f : screencapture ~/Desktop/Screenshot_$(date +%Y%m%d_%H%M%S).png
+# Hyper + F (Chụp toàn màn hình)
+cmd + alt + ctrl + shift - f : ~/nix-config/dotfiles/skhd/scripts/screenshot.sh
 
 # Hyper + R: Reload AeroSpace Config
 cmd + alt + ctrl + shift - r : aerospace reload-config
@@ -47,25 +46,25 @@ cmd + alt + ctrl + shift - r : aerospace reload-config
 # Signal from Kanata Space Layer → SKHD dispatches based on focused app
 # ==============================================================================
 
-# F13 (Space + Q): Quit current app (Robust AppleScript)
+# F13 (Space + Q): Quit current app
 f13 : osascript -e 'tell application "System Events" to set frontApp to name of first application process whose frontmost is true' -e 'tell application frontApp to quit'
 
 # F16 (Space + S): Tmux Split-H (Rio) / Save (other apps)
-f16 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "s" "cmd - s"
+f16 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "s" "cmd - s"
 
 # F17 (Space + Y): Tmux Split-V (Rio) / Save (other apps)
-f17 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" "cmd - s"
+f17 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" "cmd - s"
 
 # --- [ Tmux Actions (Terminal Only) ] ---
 
 # F18 (Space + Z): Zoom pane (Rio only)
-f18 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "z" ""
+f18 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "z" ""
 
 # F19 (Space + X): Kill current pane (Rio only)
-f19 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "x" ""
+f19 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "x" ""
 
 # Shift+F16 (Space + V): Split pane vertically (Rio only)
-shift - f16 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" ""
+shift - f16 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" ""
 
 # Shift+F17 (Space + G): Tmux session/window chooser (Rio only)
-shift - f17 : /Users/thongvu/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "w" ""
+shift - f17 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "w" ""

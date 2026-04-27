@@ -1,82 +1,100 @@
 (defcfg
-  process-unmapped-keys yes
+  process-unmapped-keys yes  ;; Pass through keys not defined in defsrc
+  concurrent-tap-hold yes    ;; Allow holding modifier while tapping another key
+  log-layer-changes no       ;; Disable layer change logging to reduce I/O
   macos-dev-names-include (
     "0xE329BEB8F1D4D729"
     "0x2E7E3EBD4C615B55"
   )
 )
+
 (defsrc
   caps q w e r t y u i o p [ ]
   a s d f g h j k l ; '
   z x c v b n m , . /
   spc
 )
+
 (defvar
-  tap-timeout 150
-  hold-timeout 200
-  m-speed 10
-  m-delay 15
+  tap-timeout   180  ;; Max ms for a keypress to be considered a tap
+  hold-timeout  220  ;; Min ms for a keypress to be considered a hold
+  chord-timeout  50  ;; Max ms between two keys to be considered a chord
+  m-speed        10  ;; Mouse movement speed (pixels per tick)
+  m-delay        15  ;; Mouse movement delay between ticks (ms)
 )
-(defchords my-chords 100
-  (d f) esc
-  (j k) bspc
-  (k l) ent
-  (c v) tab
-  (m ,) S-tab
-  (x c) @clr
-  ;; Fallbacks cho Home Row Mods
-  (d) @d_alt
-  (f) @f_ctl
-  (j) @j_ctl
-  (k) @k_alt
-  (l) @l_met
-  (c) @c_media
-  (v) @v_nav
-  (m) m
-  (,) ,
-  (x) x
+
+;; defchordsv2: each chord has its own timeout and release strategy
+;; first-release: chord triggers as soon as any participating key is released
+;; disabled-layers: chord is inactive on these layers to avoid conflicts
+(defchordsv2
+  (d f) esc   100 first-release (nav num sym media hyper)
+  (j k) bspc  100 first-release (nav num sym media hyper)
+  (k l) ent   100 first-release (nav num sym media hyper)
+  (c v) tab   100 first-release (nav num sym media hyper)
+  (m ,) S-tab 100 first-release (nav num sym media hyper)
+  (x c) @clr  100 first-release (nav num sym media hyper)
 )
+
 (defalias
-  hyper (multi lmet lalt lctl lsft)
+  ;; Hyper = all four modifiers held simultaneously
+  ;; Useful for shortcuts that never conflict with any app
+  hyper      (multi lmet lalt lctl lsft)
+
+  ;; Caps Lock: tap = Escape, hold = Hyper layer
   caps_hyper (tap-hold-release $tap-timeout $hold-timeout esc (layer-toggle hyper))
-  ;; Home Row Mods
-  a_sft (tap-hold-release $tap-timeout $hold-timeout a lsft)
-  s_met (tap-hold-release $tap-timeout $hold-timeout s lmet)
-  d_alt (tap-hold-release $tap-timeout $hold-timeout d lalt)
-  f_ctl (tap-hold-release $tap-timeout $hold-timeout f lctl)
-  j_ctl (tap-hold-release $tap-timeout $hold-timeout j rctl)
-  k_alt (tap-hold-release $tap-timeout $hold-timeout k ralt)
-  l_met (tap-hold-release $tap-timeout $hold-timeout l rmet)
-  ;_sft (tap-hold-press $tap-timeout $hold-timeout ; rsft)
-  ;; Tmux Commands
-  tmux_s (macro C-a s)
-  tmux_v (macro C-a v)
-  tmux_x (macro C-a x)
-  tmux_g (macro C-a w)
-  tmux_copy (macro C-a u)
-  tmux_z (macro C-a z)
-  g_num (tap-hold-release $tap-timeout $hold-timeout g (layer-toggle num))
-  v_nav (tap-hold-release $tap-timeout $hold-timeout v (layer-toggle nav))
-  c_media (tap-hold-release $tap-timeout 150 c (layer-toggle media))
-  b_sym (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
-  spc_mouse (tap-hold-release $tap-timeout $hold-timeout spc (layer-toggle mouse))
-  ;; Media Signals
+
+  ;; Home Row Mods (HRM) — tap = letter, hold = modifier
+  ;; tap-hold-release: decision made when key is released, fewer false positives
+  a_sft    (tap-hold-release $tap-timeout $hold-timeout a lsft)
+  s_met    (tap-hold-release $tap-timeout $hold-timeout s lmet)
+  d_alt    (tap-hold-release $tap-timeout $hold-timeout d lalt)
+  f_ctl    (tap-hold-release $tap-timeout $hold-timeout f lctl)
+  j_ctl    (tap-hold-release $tap-timeout $hold-timeout j rctl)
+  k_alt    (tap-hold-release $tap-timeout $hold-timeout k ralt)
+  l_met    (tap-hold-release $tap-timeout $hold-timeout l rmet)
+  semi_sft (tap-hold-release $tap-timeout $hold-timeout ; rsft)
+
+  ;; Layer tap keys — tap = letter, hold = activate layer
+  g_num     (tap-hold-release $tap-timeout $hold-timeout g (layer-toggle num))
+  v_nav     (tap-hold-release $tap-timeout $hold-timeout v (layer-toggle nav))
+  c_media   (tap-hold-release $tap-timeout $hold-timeout c (layer-toggle media))
+  b_sym     (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
+
+  ;; Space: tap = space, hold = mouse layer
+  ;; 300ms threshold to avoid accidental activation while typing
+  spc_mouse (tap-hold-release $tap-timeout 300 spc (layer-toggle mouse))
+
+  ;; Tmux prefix macros (prefix = Ctrl+a)
+  tmux_s    (macro C-a s)  ;; session switcher
+  tmux_v    (macro C-a v)  ;; vertical split
+  tmux_x    (macro C-a x)  ;; close pane
+  tmux_g    (macro C-a w)  ;; window list
+  tmux_copy (macro C-a u)  ;; copy mode
+  tmux_z    (macro C-a z)  ;; zoom pane
+
+  ;; Media controls
+  ;; fine volume: Alt+Shift+vol adjusts in smaller increments on macOS
   vol_dn_fine (multi lalt lsft vold)
   vol_up_fine (multi lalt lsft volu)
-  vol_mute mute
-  meh_br_dn (multi lalt lsft brdn)
-  meh_br_up (multi lalt lsft brup)
-  ws_c A-c
-  ws_b A-b
-  ws_w A-w
-  ws_n A-n
-  ws_m A-m
-  ws_s A-s
-  all_cmd (multi lmet a)
-  br_back (multi lmet [)
-  br_fwd (multi lmet ])
+  vol_mute    mute
+  meh_br_dn   (multi lalt lsft brdn)  ;; fine brightness down
+  meh_br_up   (multi lalt lsft brup)  ;; fine brightness up
+
+  ;; Workspace and browser navigation
+  ws_c    A-c
+  ws_b    A-b
+  ws_w    A-w
+  ws_n    A-n
+  ws_m    A-m
+  ws_s    A-s
+  all_cmd (multi lmet a)   ;; Cmd+A select all
+  br_back (multi lmet [)   ;; browser back
+  br_fwd  (multi lmet ])   ;; browser forward
+
+  ;; Types "clear" + Enter in terminal
   clr (macro c l e a r ent)
-  ;; Context-aware signals to SKHD
+
+  ;; Function keys used as signals to SKHD (macOS hotkey daemon)
   meh_q (macro f13)
   meh_s (macro f16)
   meh_y (macro f17)
@@ -84,7 +102,9 @@
   meh_x (macro f19)
   meh_v (macro S-f16)
   meh_g (macro S-f17)
-  ;; Hyper keys for SKHD
+
+  ;; Hyper layer shortcuts — Ctrl+Cmd+Alt+Shift+key
+  ;; Safe combination that never conflicts with system or app shortcuts
   hyp_a (multi lctl lmet lalt lsft a)
   hyp_b (multi lctl lmet lalt lsft b)
   hyp_d (multi lctl lmet lalt lsft d)
@@ -96,51 +116,72 @@
   hyp_r (multi lctl lmet lalt lsft r)
   hyp_s (multi lctl lmet lalt lsft s)
   hyp_t (multi lctl lmet lalt lsft t)
-  cs_toggle (multi lctl lsft)
-  nvim_wa (macro S-; 100 w a l l 100 ent ent)
-  nvim_zz (macro S-z S-z)
-  nvim_zq (macro S-z S-q)
-  nvim_search /
+
+  cs_toggle   (multi lctl lsft)               ;; Ctrl+Shift toggle
+  nvim_wa     (macro S-; 100 w a l l 100 ent ent)  ;; :wall — save all buffers in nvim
+  nvim_zz     (macro S-z S-z)                 ;; ZZ — save and quit in nvim
+  nvim_zq     (macro S-z S-q)                 ;; ZQ — quit without saving in nvim
+  nvim_search /                                ;; forward search in nvim
 )
+
+;; Base layer — normal typing with HRM and layer toggles
 (deflayer base
   @caps_hyper _ _ _ _ _ _ _ _ _ _ _ _
-  @a_sft @s_met (chord my-chords d) (chord my-chords f) @g_num h (chord my-chords j) (chord my-chords k) (chord my-chords l) @;_sft _
-  _ (chord my-chords x) (chord my-chords c) (chord my-chords v) @b_sym _ (chord my-chords m) (chord my-chords ,) _ _
+  @a_sft @s_met @d_alt @f_ctl @g_num h @j_ctl @k_alt @l_met @semi_sft _
+  _ x @c_media @v_nav @b_sym _ m , _ _
   @spc_mouse
 )
+
+;; Nav layer — arrow keys and browser navigation
+;; Activated by holding v
 (deflayer nav
-  _  _  _  _  _  _  _  _  _  _  _  _  _
-  _  _  _  _  _  left down up right _ _
-  _  _  _  _  _  _  _  @br_back @br_fwd _
+  _ _ _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ left down up right _ _
+  _ _ _ _ _ _ _ @br_back @br_fwd _
   _
 )
+
+;; Num layer — numpad layout on right hand
+;; Activated by holding g
 (deflayer num
-  _  _  _  _  _  _  _  7  8  9  _  _  _
-  _  _  _  _  _  .  4  5  6  _ _
-  _  _  _  _  _  0  1  2  3  _
+  _ _ _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ . 4 5 6 _ _
+  _ _ _ _ _ 0 1 2 3 _
   _
 )
+
+;; Sym layer — symbols mapped to numpad positions for consistency
+;; Activated by holding b
 (deflayer sym
-  _  _  _  _  _  _  _  S-7 S-8 S-9 pp  _  _
-  _  _  _  _  _  S-4 S-5 S-6 _ _ _
-  _  _  _  _  _  S-0 S-1 S-2 S-3 _
+  _ _ _ _ _ _ _ S-7 S-8 S-9 pp _ _
+  _ _ _ _ _ S-4 S-5 S-6 _ _ _
+  _ _ _ _ _ S-0 S-1 S-2 S-3 _
   _
 )
-(deflayer media   
-  _  _  _  _  _  _  _  _  _  _  _  _  _
-  _  _  _  _  _  @meh_br_dn @vol_dn_fine @vol_up_fine @meh_br_up _ _
-  _  _  _  _  _  _  @vol_mute prev next pp
+
+;; Media layer — volume and brightness controls
+;; Activated by holding c
+(deflayer media
+  _ _ _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ @meh_br_dn @vol_dn_fine @vol_up_fine @meh_br_up _ _
+  _ _ _ _ _ _ @vol_mute prev next pp
   _
 )
+
+;; Mouse layer — pointer movement, clicks, scrolling, workspace switching
+;; Activated by holding Space
 (deflayer mouse
-  _  @meh_q  @ws_w  @cs_toggle  _  _  @meh_y  mlft  mmid  mrgt  _  @br_back  @br_fwd
-  @all_cmd  @meh_s  bspc  /  @meh_g  (movemouse-left $m-speed $m-delay)  (movemouse-down $m-speed $m-delay)  (movemouse-up $m-speed $m-delay)  (movemouse-right $m-speed $m-delay)  @br_back  @br_fwd
-  @meh_z  @meh_x  @ws_c  @meh_v  @ws_b  @ws_n  @ws_m  (mwheel-down 50 20)  (mwheel-up 50 20)  _
+  _ @meh_q @ws_w @cs_toggle _ _ @meh_y mlft mmid mrgt _ @br_back @br_fwd
+  @all_cmd @meh_s bspc / @meh_g (movemouse-left $m-speed $m-delay) (movemouse-down $m-speed $m-delay) (movemouse-up $m-speed $m-delay) (movemouse-right $m-speed $m-delay) @br_back @br_fwd
+  @meh_z @meh_x @ws_c @meh_v @ws_b @ws_n @ws_m (mwheel-down 50 20) (mwheel-up 50 20) _
   _
 )
+
+;; Hyper layer — nvim macros and app-level hyper shortcuts
+;; Activated by holding Caps Lock
 (deflayer hyper
-  _  @nvim_zz  @nvim_wa  @hyp_e  @hyp_r  @hyp_t  _  _  _  _  _  _  _
-  @hyp_a  @hyp_s  @hyp_d  @hyp_f  _  _  _  @hyp_k  @hyp_l  _  _
-  _  @nvim_zq  _  _  @hyp_b  _  @hyp_m  _  _  _
+  _ @nvim_zz @nvim_wa @hyp_e @hyp_r @hyp_t _ _ _ _ _ _ _
+  @hyp_a @hyp_s @hyp_d @hyp_f _ _ _ @hyp_k @hyp_l _ _
+  _ @nvim_zq _ _ @hyp_b _ @hyp_m _ _ _
   _
 )

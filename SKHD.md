@@ -161,3 +161,8 @@ lsof -p $(pgrep skhd | head -1) | grep skhdrc
 readlink ~/.config/skhd/skhdrc
 readlink /etc/kanata/config.kbd
 ``` 
+
+### Reload config 
+```bash
+skhd --reload
+``` 
