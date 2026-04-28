@@ -22,12 +22,20 @@ in {
       ripgrep
       fzf
       eza # ls
-      zoxide # cd
       git
       lazygit
       lazydocker
       delta
       duf
     ];
+
+    programs.zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+      enableNushellIntegration = true;
+      options = [
+        "--cmd cd"
+      ];
+    };
   };
 }
