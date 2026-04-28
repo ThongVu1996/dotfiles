@@ -28,11 +28,13 @@ local function apply_ui_theme()
     -- Transparency
     local groups = {
         "Normal", "NormalNC", "NormalFloat", "FloatBorder",
-		"TelescopeNormal", "TelescopeBorder", "TelescopePromptBorder",
-		"TelescopeResultsBorder", "TelescopePreviewBorder",
-		"SnacksPicker", "SnacksPickerBorder", "Pmenu", "SignColumn"
+        "TelescopeNormal", "TelescopeBorder", "TelescopePromptBorder",
+        "TelescopeResultsBorder", "TelescopePreviewBorder",
+        "SnacksPicker", "SnacksPickerBorder", "Pmenu", "SignColumn"
     }
-    for _, group in ipairs(groups) do hl(group, bg_none) end
+    for _, group in ipairs(groups) do 
+        vim.cmd("highlight " .. group .. " guibg=NONE ctermbg=NONE")
+    end
 
     -- Custom Palette Highlights
     hl("LineNr", { fg = c.base04 })

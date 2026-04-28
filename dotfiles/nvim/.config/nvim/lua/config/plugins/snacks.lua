@@ -110,6 +110,7 @@ return {
 		},
 		image = {
 			enabled = true,
+			force = true,
 			wo = {
 				winhighlight = "FloatBorder:WhichKeyBorder",
 			},
