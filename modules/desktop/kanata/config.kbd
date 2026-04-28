@@ -19,7 +19,7 @@
   tap-timeout   180  ;; Max ms for a keypress to be considered a tap
   hold-timeout  220  ;; Min ms for a keypress to be considered a hold
   chord-timeout  50  ;; Max ms between two keys to be considered a chord
-  m-speed        10  ;; Mouse movement speed (pixels per tick)
+  m-speed        20  ;; Mouse movement speed (pixels per tick)
   m-delay        15  ;; Mouse movement delay between ticks (ms)
 )
 
@@ -27,13 +27,13 @@
 ;; first-release: chord triggers as soon as any participating key is released
 ;; disabled-layers: chord is inactive on these layers to avoid conflicts
 (defchordsv2
-  (a s) @cs_toggle 100 first-release (nav num sym media hyper mouse)
-  (d f) esc   100 first-release (nav num sym media hyper)
-  (j k) bspc  100 first-release (nav num sym media hyper)
-  (k l) ent   100 first-release (nav num sym media hyper)
-  (c v) tab   100 first-release (nav num sym media hyper)
-  (m ,) S-tab 100 first-release (nav num sym media hyper)
-  (x c) @clr  100 first-release (nav num sym media hyper)
+  (a s) @cs_toggle 100 first-release (num sym media hyper space)
+  (d f) esc   100 first-release (num sym media hyper space)
+  (j k) bspc  100 first-release (num sym media hyper space)
+  (k l) ent   100 first-release (num sym media hyper space)
+  (c v) tab   100 first-release (num sym media hyper space)
+  (m ,) S-tab 100 first-release (num sym media hyper space)
+  (x c) @clr  100 first-release (num sym media hyper space)
 )
 
 (defalias
@@ -57,20 +57,18 @@
 
   ;; Layer tap keys — tap = letter, hold = activate layer
   g_num     (tap-hold-release $tap-timeout $hold-timeout g (layer-toggle num))
-  v_nav     (tap-hold-release $tap-timeout $hold-timeout v (layer-toggle nav))
-  c_media   (tap-hold-release $tap-timeout $hold-timeout c (layer-toggle media))
+  v_media   (tap-hold-release $tap-timeout $hold-timeout v (layer-toggle media))
   b_sym     (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
 
-  ;; Space: tap = space, hold = mouse layer
-  ;; 300ms threshold to avoid accidental activation while typing
-  spc_mouse (tap-hold-release $tap-timeout 300 spc (layer-toggle mouse))
+  ;; Space: tap = space, hold = space layer
+  spc_layer (tap-hold-release $tap-timeout $hold-timeout spc (layer-toggle space))
 
   ;; Tmux prefix macros (prefix = Ctrl+a)
   tmux_s    (macro C-a s)  ;; session switcher
   tmux_v    (macro C-a v)  ;; vertical split
   tmux_x    (macro C-a x)  ;; close pane
   tmux_g    (macro C-a w)  ;; window list
-  tmux_copy (macro C-a u)  ;; copy mode
+  tmux_copy (macro C-a u)  ;; toggle copy mode (matches tmux.conf binding)
   tmux_z    (macro C-a z)  ;; zoom pane
 
   ;; Media controls
@@ -130,18 +128,10 @@
 (deflayer base
   @caps_hyper _ _ _ _ _ _ _ _ _ _ _ _
   @a_sft @s_met @d_alt @f_ctl @g_num h @j_ctl @k_alt @l_met @semi_sft _
-  _ x @c_media @v_nav @b_sym _ m , _ _
-  @spc_mouse
+  _ x c @v_media @b_sym _ m , _ _
+  @spc_layer
 )
 
-;; Nav layer — arrow keys and browser navigation
-;; Activated by holding v
-(deflayer nav
-  _ _ _ _ _ _ _ _ _ _ _ _ _
-  _ _ _ _ _ left down up right _ _
-  _ _ _ _ _ _ _ @br_back @br_fwd _
-  _
-)
 
 ;; Num layer — numpad layout on right hand
 ;; Activated by holding g
@@ -170,12 +160,12 @@
   _
 )
 
-;; Mouse layer — pointer movement, clicks, scrolling, workspace switching
+;; Space layer — tmux and system shortcuts
 ;; Activated by holding Space
-(deflayer mouse
-  _ @meh_q @ws_w @cs_toggle _ _ @meh_y mlft mmid mrgt _ @br_back @br_fwd
-  @all_cmd @meh_s bspc / @meh_g (movemouse-left $m-speed $m-delay) (movemouse-down $m-speed $m-delay) (movemouse-up $m-speed $m-delay) (movemouse-right $m-speed $m-delay) @br_back @br_fwd
-  @meh_z @meh_x @ws_c @meh_v @ws_b @ws_n @ws_m (mwheel-down 50 20) (mwheel-up 50 20) _
+(deflayer space
+  _ @meh_q @ws_w @cs_toggle _ _ _ @tmux_copy _ _ _ @br_back @br_fwd
+  @all_cmd @meh_s _ _ @meh_g left down up right _ _
+  @meh_z @meh_x @ws_c _ @ws_b @ws_n @ws_m _ _ _
   _
 )
 
