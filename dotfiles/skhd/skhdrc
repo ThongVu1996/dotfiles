@@ -15,6 +15,9 @@ cmd + alt + ctrl + shift - k : open -a "$HOME/Applications/Home Manager Trampoli
 # Hyper + B: Zen Browser
 cmd + alt + ctrl + shift - b : open -a "/Applications/Zen.app"
 
+# Hyper + O: OrbStack
+cmd + alt + ctrl + shift - o : open -a "$HOME/Applications/Home Manager Trampolines/OrbStack.app"
+
 # Hyper + T: Rio Terminal
 cmd + alt + ctrl + shift - t : open -a "$HOME/Applications/Home Manager Trampolines/Rio.app"
 
