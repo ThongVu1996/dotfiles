@@ -1,0 +1,9 @@
+# Television configuration file
+# This file contains static settings. Colors are managed via Nix/Stylix.
+
+[ui]
+border_style = "rounded"
+show_icons = true
+
+shell = "fish"
+

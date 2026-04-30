@@ -63,11 +63,23 @@ f17 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" "cmd - s"
 # F18 (Space + Z): Zoom pane (Rio only)
 f18 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "z" ""
 
-# F19 (Space + X): Kill current pane (Rio only)
+# F19 (Space + X): Context-aware Kill (handled in dispatcher)
 f19 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "x" ""
+
+# Shift+F13 (Space + ,): Tmux previous window (Prefix + p)
+shift - f13 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "p" ""
+
+# Shift+F14 (Space + .): Tmux next window (Prefix + n)
+shift - f14 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "n" ""
+
+# Shift+F15 (Space + /): Tmux new window (Prefix + c)
+shift - f15 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "c" ""
 
 # Shift+F16 (Space + V): Split pane vertically (Rio only)
 shift - f16 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "v" ""
 
 # Shift+F17 (Space + G): Tmux session/window chooser (Rio only)
 shift - f17 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "w" ""
+
+# Shift+F18 (Space + T): Sesh session chooser (Rio only)
+shift - f18 : $HOME/nix-config/dotfiles/skhd/scripts/skhd_dispatcher.sh "t" ""

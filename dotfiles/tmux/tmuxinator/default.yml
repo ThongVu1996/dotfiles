@@ -1,0 +1,15 @@
+name: <%= @args[0] %>
+root: ~/Project/<%= @args[0] %>
+windows:
+  - BE:
+      layout: main-horizontal
+      root: <%= @args[1] %>
+      panes:
+        - nvim
+        - php artisan serve
+  - FE:
+      layout: tiled
+      root: <%= @args[2] %>
+      panes:
+        - nvim
+        - yarn dev

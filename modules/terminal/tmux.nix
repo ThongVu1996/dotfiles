@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.myConfig.terminal.tmux;
@@ -11,6 +12,11 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+
+    home.packages = with pkgs; [
+      tmuxinator
+    ];
+
     programs.tmux = {
       enable = true;
       extraConfig = ''

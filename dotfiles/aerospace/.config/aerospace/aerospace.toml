@@ -53,15 +53,15 @@ alt-shift-equal = 'resize smart +50'
 alt-c = 'workspace C' # Coding & Terminal
 alt-b = 'workspace B' # Browser
 alt-w = 'workspace W' # Work/Comm (Slack, Discord, Meet,...)
-alt-n = 'workspace N' # Notes/Docs
-alt-m = 'workspace M' # Music/Media/Game/Misc
+alt-d = 'workspace D' # Notes/Docs (Thay thế cho N)
+alt-p = 'workspace P' # Music/Media/Game/Misc (Thay thế cho M)
 alt-s = 'workspace S' # Settings/System
 
 alt-shift-c = 'move-node-to-workspace C'
 alt-shift-b = 'move-node-to-workspace B'
 alt-shift-w = 'move-node-to-workspace W'
-alt-shift-n = 'move-node-to-workspace N'
-alt-shift-m = 'move-node-to-workspace M'
+alt-shift-d = 'move-node-to-workspace D' # Thay thế cho N
+alt-shift-p = 'move-node-to-workspace P' # Thay thế cho M
 alt-shift-s = 'move-node-to-workspace S'
 
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -127,27 +127,27 @@ run = "move-node-to-workspace W"
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Preview'
-run = "move-node-to-workspace N"
+run = "move-node-to-workspace D" # Thay thế cho N
 
 [[on-window-detected]]
 if.app-id = 'com.apple.iBooksX'
-run = "move-node-to-workspace N"
+run = "move-node-to-workspace D" # Thay thế cho N
 
 [[on-window-detected]]
 if.app-id = 'info.sioyek.sioyek'
-run = "move-node-to-workspace N"
+run = "move-node-to-workspace D" # Thay thế cho N
  
 [[on-window-detected]]
 if.app-id = 'notion.id'
-run = "move-node-to-workspace N"
+run = "move-node-to-workspace D" # Thay thế cho N
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Notes'
-run = "move-node-to-workspace N"
+run = "move-node-to-workspace D" # Thay thế cho N
 
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
-run = "move-node-to-workspace N"
+run = "move-node-to-workspace D" # Thay thế cho N
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
@@ -179,8 +179,8 @@ W = 1
 C = 'main'
 B = 'main'
 S = 'main'
-N = 'secondary'
-M = 'secondary'
+D = 'secondary' # Thay thế cho N
+P = 'secondary' # Thay thế cho M
 
 #join 
 # alt-shift-; for service mode

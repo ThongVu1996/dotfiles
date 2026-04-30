@@ -27,6 +27,7 @@ in {
       lazydocker
       delta
       duf
+      yarn-berry
     ];
 
     programs.zoxide = {

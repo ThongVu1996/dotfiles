@@ -1,0 +1,21 @@
+# Sesh configuration file
+# For more info see: https://github.com/joshmedeski/sesh
+
+[[session]]
+name = "Nix Config ⚡️"
+path = "~/nix-config"
+startup_command = "nvim"
+
+[[session]]
+name = "documents"
+startup_command = "tmuxinator start default documents document-api document-admin"
+
+# tmuxinator start documents documents document-api document-admin
+#                  ^template  ^arg[0]   ^arg[1]     ^arg[2]
+
+# Import paths from other tools
+[zoxide]
+enable = true
+
+[tmux]
+enable = true

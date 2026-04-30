@@ -58,6 +58,8 @@
         web.enable = true;
         misc.enable = true;
         ai.enable = true;
+        sesh.enable = true;
+        television.enable = true;
       };
     };
 

@@ -17,8 +17,8 @@
 
 (defvar
   tap-timeout   180  ;; Max ms for a keypress to be considered a tap
-  hold-timeout  220  ;; Min ms for a keypress to be considered a hold
-  chord-timeout  50  ;; Max ms between two keys to be considered a chord
+  hold-timeout  280  ;; Min ms for a keypress to be considered a hold
+  chord-timeout 120  ;; Max ms between two keys to be considered a chord
   m-speed        20  ;; Mouse movement speed (pixels per tick)
   m-delay        15  ;; Mouse movement delay between ticks (ms)
 )
@@ -61,15 +61,13 @@
   b_sym     (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
 
   ;; Space: tap = space, hold = space layer
-  spc_layer (tap-hold-release $tap-timeout $hold-timeout spc (layer-toggle space))
+  ;; spc_layer (tap-hold-release $tap-timeout $hold-timeout spc (layer-toggle space))
+  ;; spc_layer (tap-hold-release 180 200 spc (layer-toggle space))
+  spc_layer (tap-hold-press-timeout 180 300 spc (layer-toggle space) spc)
+  ;;     ssspc_layer (tap-hold-press-timeout 150 280 spc (layer-toggle space) spc)
 
-  ;; Tmux prefix macros (prefix = Ctrl+a)
-  tmux_s    (macro C-a s)  ;; session switcher
-  tmux_v    (macro C-a v)  ;; vertical split
-  tmux_x    (macro C-a x)  ;; close pane
-  tmux_g    (macro C-a w)  ;; window list
-  tmux_copy (macro C-a u)  ;; toggle copy mode (matches tmux.conf binding)
-  tmux_z    (macro C-a z)  ;; zoom pane
+  ;; toggle copy mode (matches tmux.conf binding)
+  tmux_copy (macro C-a u)
 
   ;; Media controls
   ;; fine volume: Alt+Shift+vol adjusts in smaller increments on macOS
@@ -83,8 +81,8 @@
   ws_c    A-c
   ws_b    A-b
   ws_w    A-w
-  ws_n    A-n
-  ws_m    A-m
+  ws_d    A-d
+  ws_p    A-p
   ws_s    A-s
   all_cmd (multi lmet a)   ;; Cmd+A select all
   br_back (multi lmet [)   ;; browser back
@@ -97,10 +95,14 @@
   meh_q (macro f13)
   meh_s (macro f16)
   meh_y (macro f17)
-  meh_z (macro f18)
+  meh_m (macro f18)
   meh_x (macro f19)
+  meh_t (macro S-f18)
   meh_v (macro S-f16)
   meh_g (macro S-f17)
+  meh_comma (macro S-f13)
+  meh_dot   (macro S-f14)
+  meh_n (macro S-f15)
 
   ;; Hyper layer shortcuts — Ctrl+Cmd+Alt+Shift+key
   ;; Safe combination that never conflicts with system or app shortcuts
@@ -163,9 +165,16 @@
 ;; Space layer — tmux and system shortcuts
 ;; Activated by holding Space
 (deflayer space
-  _ @meh_q @ws_w @cs_toggle _ _ _ @tmux_copy _ _ _ @br_back @br_fwd
-  @all_cmd @meh_s _ _ @meh_g left down up right _ _
-  @meh_z @meh_x @ws_c _ @ws_b @ws_n @ws_m _ _ _
+  ;; caps q      w      e           r t      y u          i o p      [        ]
+  _    @meh_q @ws_w  @cs_toggle  _ @meh_t _ @tmux_copy _ _ @ws_p  @br_back @br_fwd
+
+  ;; a        s      d      f g      h    j    k  l     ; '
+  @all_cmd @meh_s @ws_d  _ @meh_g left down up right _ _
+
+  ;; z  x      c      v      b      n      m      ,          .        /
+  _  @meh_x @ws_c  @meh_v @ws_b  @meh_n @meh_m @meh_comma @meh_dot _
+
+  ;; spc
   _
 )
 

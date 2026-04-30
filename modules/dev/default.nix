@@ -5,5 +5,7 @@
     ./web.nix
     ./misc.nix
     ./ai.nix
+    ./sesh.nix
+    ./television.nix
   ];
 }

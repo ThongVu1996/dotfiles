@@ -127,9 +127,10 @@ Lớp **Space Layer** không chỉ đóng vai trò di chuột, mà còn là lu�
 **🖥️ Context-Aware Keys (Chỉ ở Terminal Rio -> Tmux, Còn lại -> Hành động Toàn cầu):**
 - [Kanata] Spc + s         | Rio: Split Ngang Tmux   / Toàn cầu: Save (Cmd + S) 💾
 - [Kanata] Spc + v         | Rio: Split Dọc Tmux     / Toàn cầu: Save (Cmd + S) 💾
-- [Kanata] Spc + z         | Rio: Zoom Toggle Tmux 
-- [Kanata] Spc + x         | Rio: Kill Pane Tmux     
+- [Kanata] Spc + z         | Rio: Zoom Toggle Tmux    
 - [Kanata] Spc + g         | Rio: Bật Session List Tmux
+- [Kanata] Spc + x         | Rio: Kill Pane (Mặc định) / Kill Session (Trong Television)
+- [Kanata] Spc + t         | Rio: Bật Sesh Session Picker (dùng Television)
 
 **⚡ Lệnh Hệ Thống Toàn Cầu (Giữ Space):**
 - [Kanata] Spc + q         | Quit App: Cmd + Q ❌
