@@ -147,6 +147,10 @@ Khi bạn kích hoạt `Hyper` (giữ CapsLock) cộng với 1 phím chữ, Kana
 > sleep 5
 > cat /Library/Logs/kanata.err.log
 > ```
+> Trường hợp lệnh trên lỗi thì dùng lệnh này 
+> ```bash
+>  sudo kanata --cfg /etc/kanata/config.kbd
+> ```
 > Log trống = thành công. Log có lỗi = đọc lỗi và fix.
 
 ### Verify config đang chạy đúng chưa

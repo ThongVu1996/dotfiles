@@ -73,6 +73,7 @@ in {
     xdg.configFile = {
       # --- Fish ---
       "fish/functions".source = symlink "${fishConfigDir}/functions";
+      "fish/conf.d/aliases.fish".source = symlink "${fishConfigDir}/conf.d/aliases.fish";
 
       # --- Nushell ---
       "nushell/config.nu".source = symlink "${nushellConfigDir}/nushell/config.nu";

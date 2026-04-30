@@ -56,18 +56,26 @@
   semi_sft (tap-hold-release $tap-timeout $hold-timeout ; rsft)
 
   ;; Layer tap keys — tap = letter, hold = activate layer
-  g_num     (tap-hold-release $tap-timeout $hold-timeout g (layer-toggle num))
-  v_media   (tap-hold-release $tap-timeout $hold-timeout v (layer-toggle media))
-  b_sym     (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
+  g_num       (tap-hold-release $tap-timeout $hold-timeout g (layer-toggle num))
+  c_media     (tap-hold-release $tap-timeout $hold-timeout c (layer-toggle media))
+  v_nav       (tap-hold-release $tap-timeout $hold-timeout v (layer-toggle nav))
+  m_aerospace (tap-hold-release $tap-timeout $hold-timeout m (layer-toggle aerospace))
+  b_sym       (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
 
   ;; Space: tap = space, hold = space layer
-  ;; spc_layer (tap-hold-release $tap-timeout $hold-timeout spc (layer-toggle space))
-  ;; spc_layer (tap-hold-release 180 200 spc (layer-toggle space))
-  spc_layer (tap-hold-press-timeout 180 300 spc (layer-toggle space) spc)
-  ;;     ssspc_layer (tap-hold-press-timeout 150 280 spc (layer-toggle space) spc)
+  spc_layer (tap-hold-release $tap-timeout $hold-timeout spc (layer-toggle space))
 
   ;; toggle copy mode (matches tmux.conf binding)
   tmux_copy (macro C-a u)
+  tmux_next_window (macro C-a n)
+  tmux_prev_window (macro C-a p)
+  tmux_zoom (macro C-a m)
+  tmux_new_window (macro C-a c)
+  tmux_split_horizontal (macro C-a s)
+  tmux_split_vertical (macro C-a v)
+  tmux_kill_pane (macro C-a x)
+  tmux_list_windows (macro C-a w)
+  tmux_list_sessions_can_create (macro t v s ent)
 
   ;; Media controls
   ;; fine volume: Alt+Shift+vol adjusts in smaller increments on macOS
@@ -84,25 +92,13 @@
   ws_d    A-d
   ws_p    A-p
   ws_s    A-s
-  all_cmd (multi lmet a)   ;; Cmd+A select all
+  cmd_a (multi lmet a)   ;; Cmd+A select all
+  cmd_q (multi lmet q)   ;; Cmd+Q quit app
   br_back (multi lmet [)   ;; browser back
   br_fwd  (multi lmet ])   ;; browser forward
 
   ;; Types "clear" + Enter in terminal
-  clr (macro c l e a r ent)
-
-  ;; Function keys used as signals to SKHD (macOS hotkey daemon)
-  meh_q (macro f13)
-  meh_s (macro f16)
-  meh_y (macro f17)
-  meh_m (macro f18)
-  meh_x (macro f19)
-  meh_t (macro S-f18)
-  meh_v (macro S-f16)
-  meh_g (macro S-f17)
-  meh_comma (macro S-f13)
-  meh_dot   (macro S-f14)
-  meh_n (macro S-f15)
+  clr (macro c l r ent)
 
   ;; Hyper layer shortcuts — Ctrl+Cmd+Alt+Shift+key
   ;; Safe combination that never conflicts with system or app shortcuts
@@ -130,7 +126,7 @@
 (deflayer base
   @caps_hyper _ _ _ _ _ _ _ _ _ _ _ _
   @a_sft @s_met @d_alt @f_ctl @g_num h @j_ctl @k_alt @l_met @semi_sft _
-  _ x c @v_media @b_sym _ m , _ _
+  _ x @c_media @v_nav @b_sym _ @m_aerospace , _ _
   @spc_layer
 )
 
@@ -162,19 +158,25 @@
   _
 )
 
+(deflayer nav
+  _ _ _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ left down up right _ _
+  _ _ _ _ _ _ _ _ _ _
+  _
+)
+
+(deflayer aerospace
+  _ _ @ws_w _ _ _ _ _ _ _ @ws_p _ _
+  _ @ws_s @ws_d _ _ _ _ _ _ _ _
+  _ _ @ws_c _ @ws_b _ _ _ _ _
+  _
+)
+
 ;; Space layer — tmux and system shortcuts
-;; Activated by holding Space
 (deflayer space
-  ;; caps q      w      e           r t      y u          i o p      [        ]
-  _    @meh_q @ws_w  @cs_toggle  _ @meh_t _ @tmux_copy _ _ @ws_p  @br_back @br_fwd
-
-  ;; a        s      d      f g      h    j    k  l     ; '
-  @all_cmd @meh_s @ws_d  _ @meh_g left down up right _ _
-
-  ;; z  x      c      v      b      n      m      ,          .        /
-  _  @meh_x @ws_c  @meh_v @ws_b  @meh_n @meh_m @meh_comma @meh_dot _
-
-  ;; spc
+  _ @cmd_q _ @cs_toggle _ @tmux_list_sessions_can_create _ @tmux_copy _ _ _ @br_back @br_fwd
+  @cmd_a @tmux_split_horizontal _ _ @tmux_list_windows _ _ _ _ _ _
+  _ @tmux_kill_pane _ @tmux_split_vertical _ @tmux_new_window @tmux_zoom @tmux_prev_window @tmux_next_window _
   _
 )
 

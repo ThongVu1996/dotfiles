@@ -28,6 +28,7 @@ in {
       delta
       duf
       yarn-berry
+      devenv
     ];
 
     programs.zoxide = {
