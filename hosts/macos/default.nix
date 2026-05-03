@@ -23,7 +23,7 @@
   # ================================================================
   # 2. USER CONFIGURATION (home-manager)
   # ================================================================
-  home-manager.users.${username} = {pkgs, lib, ...}: {
+  home-manager.users.${username} = {lib, ...}: {
     home = {
       inherit username;
       homeDirectory = "/Users/${username}";

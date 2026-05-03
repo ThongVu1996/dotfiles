@@ -7,7 +7,7 @@
   cfg = config.myConfig.dev.tools.sesh;
   inherit (config.myConfig) dotfilesPath;
   symlink = config.lib.file.mkOutOfStoreSymlink;
-  tmuxinatorDir = ./../../dotfiles/tmux/tmuxinator;  # path relative tới file sesh.nix
+  tmuxinatorDir = ./../../dotfiles/tmux/tmuxinator; # path relative tới file sesh.nix
 in {
   options.myConfig.dev.tools.sesh = {
     enable = lib.mkEnableOption "Enable Sesh tmux session manager";

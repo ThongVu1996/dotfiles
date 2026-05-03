@@ -19,7 +19,7 @@ in {
     environment.etc."kanata/config.kbd".source = ./kanata/config.kbd;
 
     # Define the system-level LaunchDaemon
-    # Running as a system daemon (root) is the key to low latency and 
+    # Running as a system daemon (root) is the key to low latency and
     # avoiding IOHIDDeviceOpen privilege errors on modern macOS (like Sequoia).
     launchd.daemons.kanata = {
       command = "/bin/sh -c 'sleep 5 && exec ${pkgs.kanata}/bin/kanata --cfg /etc/kanata/config.kbd --port 10000'";
