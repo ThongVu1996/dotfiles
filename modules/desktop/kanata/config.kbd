@@ -116,9 +116,9 @@
   hyp_t (multi lctl lmet lalt lsft t)
 
   cs_toggle   (multi lctl lsft)               ;; Ctrl+Shift toggle
-  nvim_wa     (macro S-; 100 w a l l 100 ent ent)  ;; :wall — save all buffers in nvim
-  nvim_zz     (macro S-z S-z)                 ;; ZZ — save and quit in nvim
-  nvim_zq     (macro S-z S-q)                 ;; ZQ — quit without saving in nvim
+  nvim_wa     (macro esc 100 S-; 100 w a l l 100 ent ent)  ;; :wall — save all buffers in nvim
+  nvim_zz     (macro esc 100 S-z S-z)                 ;; ZZ — save and quit in nvim
+  nvim_zq     (macro esc 100 S-z S-q)                 ;; ZQ — quit without saving in nvim
   nvim_search /                                ;; forward search in nvim
 )
 
