@@ -13,7 +13,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-
 -- Enable native document color & keymaps when LSP attaches
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
@@ -39,5 +38,33 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 			higroup = "IncSearch", -- Highlight group (IncSearch is typically orange/yellow)
 			timeout = 150, -- Duration of the highlight (ms)
 		})
+	end,
+})
+
+-- Auto switch input method for Vietnamese
+local function get_im()
+	return vim.trim(vim.fn.system("defaults read com.tuyenmai.openkey InputMethod"))
+end
+
+local function toggle_im()
+	vim.fn.system([[osascript -e 'tell application "System Events" to key code 56 using {control down}']])
+end
+
+local saved_im = "0"
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+	callback = function()
+		saved_im = get_im()
+		if saved_im == "1" then
+			toggle_im()
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("InsertEnter", {
+	callback = function()
+		if saved_im == "1" then
+			toggle_im()
+		end
 	end,
 })
