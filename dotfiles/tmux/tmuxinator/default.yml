@@ -1,15 +1,29 @@
 name: <%= @args[0] %>
 root: ~/Project/<%= @args[0] %>
+
 windows:
   - BE:
-      layout: main-horizontal
+      # =====================================================================
+      # HOW TO GET THIS CUSTOM LAYOUT STRING:
+      # 1. Open a new tmux session.
+      # 2. Manually split and resize the panes to your desired proportions.
+      # 3. Run this command in the terminal: `tmux list-windows`
+      # 4. Look for the output line corresponding to your window.
+      # 5. Copy the string right after the word "layout" (excluding the brackets).
+      #    Example: [layout <copy-this-long-string>]
+      # ==============================================mv=======================
+      layout: "38b5,210x48,0,0{114x48,0,0[114x39,0,0,1,114x8,0,40,11],95x48,115,0[95x23,115,0,9,95x24,115,24,10]}"
       root: <%= @args[1] %>
       panes:
         - nvim
         - php artisan serve
+        - clear
+        - clear
+      focused_pane: 1
   - FE:
       layout: tiled
       root: <%= @args[2] %>
       panes:
         - nvim
         - yarn dev
+      focused_pane: 1

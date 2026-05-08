@@ -7,9 +7,11 @@ path = "~/nix-config"
 startup_command = "nvim"
 
 [[session]]
-name = "documents"
-startup_command = "tmuxinator start default documents document-api document-admin"
-
+name = "docs-launcher"
+startup_command = '''
+tmuxinator start default documents document-api document-admin
+tmux kill-session -t docs-launcher
+'''
 # tmuxinator start documents documents document-api document-admin
 #                  ^template  ^arg[0]   ^arg[1]     ^arg[2]
 

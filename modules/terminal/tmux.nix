@@ -22,5 +22,8 @@ in {
         source-file ${dotfilesPath}/tmux/.tmux.conf
       '';
     };
+
+    xdg.configFile."tmuxinator/default.yml".source = 
+      config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/tmux/tmuxinator/default.yml";
   };
 }
