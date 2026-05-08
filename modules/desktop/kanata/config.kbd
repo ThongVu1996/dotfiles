@@ -17,7 +17,7 @@
 
 (defvar
   tap-timeout   180  ;; Max ms for a keypress to be considered a tap
-  hold-timeout  280  ;; Min ms for a keypress to be considered a hold
+  hold-timeout  300  ;; Min ms for a keypress to be considered a hold
   chord-timeout 120  ;; Max ms between two keys to be considered a chord
   m-speed        20  ;; Mouse movement speed (pixels per tick)
   m-delay        15  ;; Mouse movement delay between ticks (ms)
@@ -76,6 +76,10 @@
   tmux_kill_pane (macro C-a x)
   tmux_list_windows (macro C-a w)
   tmux_list_sessions_can_create (macro t v s ent)
+  tmux_resize_pane_up (macro C-a k)
+  tmux_resize_pane_down (macro C-a j)
+  tmux_resize_pane_left (macro C-a h)
+  tmux_resize_pane_right (macro C-a l)
 
   ;; Media controls
   ;; fine volume: Alt+Shift+vol adjusts in smaller increments on macOS
@@ -175,7 +179,7 @@
 ;; Space layer — tmux and system shortcuts
 (deflayer space
   _ @cmd_q _ @cs_toggle _ @tmux_list_sessions_can_create _ @tmux_copy _ _ _ @br_back @br_fwd
-  @cmd_a @tmux_split_horizontal _ _ @tmux_list_windows _ _ _ _ _ _
+  @cmd_a @tmux_split_horizontal _ _ @tmux_list_windows @tmux_resize_pane_left @tmux_resize_pane_down @tmux_resize_pane_up @tmux_resize_pane_right _ _
   _ @tmux_kill_pane _ @tmux_split_vertical _ @tmux_new_window @tmux_zoom @tmux_prev_window @tmux_next_window _
   _
 )
