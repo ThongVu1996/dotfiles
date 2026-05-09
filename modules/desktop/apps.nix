@@ -15,7 +15,7 @@ in {
       [
         keepassxc
         discord
-        antigravity
+        # antigravity
       ]
       ++ lib.optionals pkgs.stdenv.isDarwin [
         # dockDoor

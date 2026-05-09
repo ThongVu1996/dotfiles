@@ -7,7 +7,7 @@
 # --- [ Application Launchers (Hyper) ] ---
 
 # Hyper + A: Antigravity
-cmd + alt + ctrl + shift - a : open -a "$HOME/Applications/Home Manager Trampolines/Antigravity.app"
+cmd + alt + ctrl + shift - a : open -a "/Applications/Antigravity.app"
 
 # Hyper + K: KeePassXC
 cmd + alt + ctrl + shift - k : open -a "$HOME/Applications/Home Manager Trampolines/KeePassXC.app"

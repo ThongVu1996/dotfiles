@@ -35,6 +35,7 @@
         {
           nixpkgs.config.allowUnfree = true;
           nixpkgs.config.allowBroken = true;
+          nixpkgs.config.allowUnsupportedSystem = true;
         }
         # Add custom package to nixpkgs
         {

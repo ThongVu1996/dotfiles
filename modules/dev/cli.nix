@@ -27,7 +27,7 @@ in {
       lazydocker
       delta
       duf
-      yarn-berry
+      yarn
       devenv
     ];
 

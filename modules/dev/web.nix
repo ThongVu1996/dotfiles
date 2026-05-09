@@ -17,6 +17,7 @@ in {
       php82Packages.composer
       php82Packages.php-codesniffer
       dbeaver-bin
+      wkhtmltopdf
     ];
   };
 }
