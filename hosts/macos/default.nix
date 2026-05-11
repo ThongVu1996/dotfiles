@@ -48,6 +48,7 @@
         apps.enable = true;
         jankyborders.enable = true;
         skhd.enable = true;
+        zathura.enable = true;
       };
 
       editor.neovim.enable = true;

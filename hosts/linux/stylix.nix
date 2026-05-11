@@ -25,6 +25,7 @@
       starship.enable = true;
       wezterm.enable = true;
       rio.enable = true;
+      zathura.enable = true;
     };
   };
 }

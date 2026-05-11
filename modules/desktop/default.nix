@@ -4,5 +4,6 @@
     ./apps.nix
     ./jankyborders.nix
     ./skhd.nix
+    ./zathura.nix
   ];
 }

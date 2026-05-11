@@ -14,6 +14,7 @@
     desktop = {
       aerospace.enable = false; # Disabled on linux
       apps.enable = true;
+      zathura.enable = true;
     };
 
     editor.neovim.enable = true;
