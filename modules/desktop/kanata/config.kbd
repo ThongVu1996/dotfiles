@@ -3,16 +3,16 @@
   concurrent-tap-hold yes    ;; Allow holding modifier while tapping another key
   log-layer-changes no       ;; Disable layer change logging to reduce I/O
   macos-dev-names-include (
+    "0xD4359520DA829EC8"
     "0xE329BEB8F1D4D729"
-    "0x2E7E3EBD4C615B55"
   )
 )
 
 (defsrc
   caps q w e r t y u i o p [ ]
   a s d f g h j k l ; '
-  z x c v b n m , . /
-  spc
+  lsft z x c v b n m , . / rsft
+  lctl lmet lalt spc ralt rmet rctl
 )
 
 (defvar
@@ -130,8 +130,8 @@
 (deflayer base
   @caps_hyper _ _ _ _ _ _ _ _ _ _ _ _
   @a_sft @s_met @d_alt @f_ctl @g_num h @j_ctl @k_alt @l_met @semi_sft _
-  _ x @c_media @v_nav @b_sym _ @m_aerospace , _ _
-  @spc_layer
+  _ _ x @c_media @v_nav @b_sym _ @m_aerospace , _ _ _
+  _ _ _ @spc_layer _ _ _
 )
 
 
@@ -140,8 +140,8 @@
 (deflayer num
   _ _ _ _ _ _ = 7 8 9 _ _ _
   _ _ _ _ _ - 4 5 6 _ _
-  _ _ _ _ _ 0 1 2 3 _
-  _
+  _ _ _ _ _ _ 0 1 2 3 _ _
+  _ _ _ _ _ _ _
 )
 
 ;; Sym layer — symbols mapped to numpad positions for consistency
@@ -149,8 +149,8 @@
 (deflayer sym
   _ _ _ _ _ _ S-= S-7 S-8 S-9 pp _ _
   _ _ _ _ _ S-- S-4 S-5 S-6 _ _
-  _ _ _ _ _ S-0 S-1 S-2 S-3 _
-  _
+  _ _ _ _ _ _ S-0 S-1 S-2 S-3 _ _
+  _ _ _ _ _ _ _
 )
 
 ;; Media layer — volume and brightness controls
@@ -158,30 +158,30 @@
 (deflayer media
   _ _ _ _ _ _ _ _ _ _ _ _ _
   _ _ _ _ _ @meh_br_dn @vol_dn_fine @vol_up_fine @meh_br_up _ _
-  _ _ _ _ _ _ @vol_mute prev next pp
-  _
+  _ _ _ _ _ _ _ @vol_mute prev next pp _
+  _ _ _ _ _ _ _
 )
 
 (deflayer nav
   _ _ _ _ _ _ _ _ _ _ _ _ _
   _ _ _ _ _ left down up right _ _
-  _ _ _ _ _ _ _ _ _ _
-  _
+  _ _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _
 )
 
 (deflayer aerospace
   _ _ @ws_w _ _ _ _ _ _ _ @ws_p _ _
   _ @ws_s @ws_d _ _ _ _ _ _ _ _
-  _ _ @ws_c _ @ws_b _ _ _ _ _
-  _
+  _ _ _ @ws_c _ @ws_b _ _ _ _ _ _
+  _ _ _ _ _ _ _
 )
 
 ;; Space layer — tmux and system shortcuts
 (deflayer space
   _ @cmd_q _ @cs_toggle _ @tmux_list_sessions_can_create _ @tmux_copy _ _ _ @br_back @br_fwd
   @cmd_a @tmux_split_horizontal _ _ @tmux_list_windows @tmux_resize_pane_left @tmux_resize_pane_down @tmux_resize_pane_up @tmux_resize_pane_right _ _
-  _ @tmux_kill_pane _ @tmux_split_vertical _ @tmux_new_window @tmux_zoom @tmux_prev_window @tmux_next_window _
-  _
+  _ _ @tmux_kill_pane _ @tmux_split_vertical _ @tmux_new_window @tmux_zoom @tmux_prev_window @tmux_next_window _ _
+  _ _ _ @spc_layer _ _ _
 )
 
 ;; Hyper layer — nvim macros and app-level hyper shortcuts
@@ -189,6 +189,6 @@
 (deflayer hyper
   _ @nvim_zz @nvim_wa @hyp_e @hyp_r @hyp_t _ _ _ @hyp_o _ _ _
   @hyp_a @hyp_s @hyp_d @hyp_f _ _ _ @hyp_k @hyp_l _ _
-  _ @nvim_zq _ _ @hyp_b _ @hyp_m _ _ _
-  _
+  _ _ @nvim_zq _ _ @hyp_b _ @hyp_m _ _ _ _
+  _ _ _ _ _ _ _
 )
