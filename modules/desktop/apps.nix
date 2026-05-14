@@ -21,6 +21,7 @@ in {
         # dockDoor
         wifi-unredactor
         betterdisplay
+        look
       ];
   };
 }
