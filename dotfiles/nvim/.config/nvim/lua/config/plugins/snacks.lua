@@ -89,14 +89,6 @@ return {
 		lazygit = {
 			enabled = true,
 			configure = true,
-			config = {
-				-- Aplly for Nushell
-				os = {
-					editPreset = "",
-					edit = [[nu -c 'nvim --server $env.NVIM --remote-send "<C-\\\><C-n>:e {{filename}}<CR>:lua Snacks.lazygit()<CR>" out+err> /dev/null']],
-					open = [[nu -c 'nvim --server $env.NVIM --remote-send "<C-\\\><C-n>:e {{filename}}<CR>:lua Snacks.lazygit()<CR>"']],
-				},
-			},
 		},
 		gitbrowse = {
 			what = "branch",
@@ -150,13 +142,13 @@ return {
 			end,
 			desc = "Undo History",
 		},
-		{
-			"<leader><space>",
-			function()
-				Snacks.picker.smart()
-			end,
-			desc = "Smart Find Files",
-		},
+--		{
+--			"<leader><space>",
+--			function()
+--				Snacks.picker.smart()
+--			end,
+--			desc = "Smart Find Files",
+--		},
 		{
 			"<leader>,",
 			function()
@@ -231,57 +223,57 @@ return {
 			desc = "Rename File",
 		},
 		-- Find
-		{
-			"<leader>fb",
-			function()
-				Snacks.picker.buffers()
-			end,
-			desc = "Buffers",
-		},
-		{
-			"<leader>sw",
-			function()
-				Snacks.picker.grep_word()
-			end,
-			desc = "Visual selection or word",
-			mode = { "n", "x" },
-		},
+--		{
+--			"<leader>fb",
+--			function()
+--				Snacks.picker.buffers()
+--			end,
+--			desc = "Buffers",
+--		},
+--		{
+--			"<leader>sw",
+--			function()
+--				Snacks.picker.grep_word()
+--			end,
+--			desc = "Visual selection or word",
+--			mode = { "n", "x" },
+--		},
 		-- find
-		{
-			"<leader>ff",
-			function()
-				Snacks.picker.files({ hidden = true, ignored = true })
-			end,
-			desc = "Find Files",
-		},
-		{
-			"<leader>fg",
-			function()
-				Snacks.picker.git_files()
-			end,
-			desc = "Find Git Files",
-		},
-		{
-			"<leader>fp",
-			function()
-				Snacks.picker.projects()
-			end,
-			desc = "Find Projects",
-		},
-		{
-			"<leader>fr",
-			function()
-				Snacks.picker.recent()
-			end,
-			desc = "Find Recent",
-		},
-		{
-			"<leader>fs",
-			function()
-				Snacks.picker.grep({ regex = false, args = { "-F" }, prompt = "🔍 Plain Text Search: " })
-			end,
-			desc = "Grep (Fixed-String Mode)",
-		},
+--		{
+--			"<leader>ff",
+--			function()
+--				Snacks.picker.files({ hidden = true, ignored = true })
+--			end,
+--			desc = "Find Files",
+--		},
+--		{
+--			"<leader>fg",
+--			function()
+--				Snacks.picker.git_files()
+--			end,
+--			desc = "Find Git Files",
+--		},
+--		{
+--			"<leader>fp",
+--			function()
+--				Snacks.picker.projects()
+--			end,
+--			desc = "Find Projects",
+--		},
+--		{
+--			"<leader>fr",
+--			function()
+--				Snacks.picker.recent()
+--			end,
+--			desc = "Find Recent",
+--		},
+--		{
+--			"<leader>fs",
+--			function()
+--				Snacks.picker.grep({ regex = false, args = { "-F" }, prompt = "🔍 Plain Text Search: " })
+--			end,
+--			desc = "Grep (Fixed-String Mode)",
+--		},
 		-- Use regex
 		{
 			"<leader>sR",
