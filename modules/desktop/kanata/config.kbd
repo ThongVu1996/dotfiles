@@ -58,7 +58,7 @@
   ;; Layer tap keys — tap = letter, hold = activate layer
   g_num       (tap-hold-release $tap-timeout $hold-timeout g (layer-toggle num))
   c_media     (tap-hold-release $tap-timeout $hold-timeout c (layer-toggle media))
-  v_nav       (tap-hold-release $tap-timeout $hold-timeout v (layer-toggle nav))
+  v_nav       (tap-hold $tap-timeout $hold-timeout v (layer-toggle nav))
   m_aerospace (tap-hold-release $tap-timeout $hold-timeout m (layer-toggle aerospace))
   b_sym       (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
 
