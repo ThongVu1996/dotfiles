@@ -12,7 +12,7 @@ return {
 			},
 		},
 		indent = { enabled = true },
-		input = { enabled = false },
+		input = { enabled = true }, -- Enabled for opencode ask()
 		rename = { enabled = true },
 		notifier = {
 			enabled = true,
@@ -71,6 +71,9 @@ return {
 						vim.notify("⚠️ No item selected to copy", vim.log.levels.WARN)
 					end
 				end,
+				opencode_send = function(...)
+					return require("opencode").snacks_picker_send(...)
+				end,
 			},
 
 			win = {
@@ -81,6 +84,11 @@ return {
 							"copy_to_clipboard",
 							mode = { "n", "i" },
 							desc = "Copy notification history to Clipboard",
+						},
+						["<a-a>"] = {
+							"opencode_send",
+							mode = { "n", "i" },
+							desc = "Send to Opencode",
 						},
 					},
 				},

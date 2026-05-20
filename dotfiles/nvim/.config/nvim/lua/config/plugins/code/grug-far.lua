@@ -3,8 +3,8 @@ return {
 	config = function()
 		require("grug-far").setup({
 			keymaps = {
-				replace = { n = ",r" },
-				syncAll = { n = ",s" },
+				replace = { n = "<leader>rl" },
+				syncAll = { n = "<leader>ra" },
 				q = { n = "q" },
 			},
 		})
@@ -18,7 +18,7 @@ return {
 	end,
 	keys = {
 		{
-			"<leader>sr",
+			"<leader>ro",
 			function()
 				local grug = require("grug-far")
 				local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
@@ -31,6 +31,22 @@ return {
 			end,
 			mode = { "n", "v" },
 			desc = "Search and Replace",
+		},
+		{
+			"<leader>rs",
+			function()
+				local grug = require("grug-far")
+				local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+				grug.open({
+					engine = "astgrep",
+					transient = true,
+					prefills = {
+						filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+					},
+				})
+			end,
+			mode = { "n", "v" },
+			desc = "Search and Replace (AST)",
 		},
 	},
 }

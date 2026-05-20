@@ -18,13 +18,5 @@ in {
       ++ lib.optionals pkgs.stdenv.isDarwin [
         opencode
       ];
-
-    xdg.configFile."opencode/opencode.json".text = lib.mkIf pkgs.stdenv.isDarwin (builtins.toJSON {
-      "$schema" = "https://opencode.ai/config.json";
-      plugin = ["opencode-antigravity-auth@latest"];
-      provider = {
-        google = {models = {"antigravity-gemini-3-pro" = {name = "Gemini 3 Pro";};};};
-      };
-    });
   };
 }

@@ -84,6 +84,7 @@ in {
         cspell
         statix
         deadnix
+        phpstan
       ];
 
       # --- 4. DevOps & Backend ---
