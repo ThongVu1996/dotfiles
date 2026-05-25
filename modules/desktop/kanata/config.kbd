@@ -118,6 +118,7 @@
   hyp_r (multi lctl lmet lalt lsft r)
   hyp_s (multi lctl lmet lalt lsft s)
   hyp_t (multi lctl lmet lalt lsft t)
+  hyp_v (multi lctl lmet lalt lsft v)
 
   cs_toggle   (multi lctl lsft)               ;; Ctrl+Shift toggle
   nvim_wa     (macro esc 100 S-; 100 w a l l 100 ent ent)  ;; :wall — save all buffers in nvim
@@ -189,6 +190,6 @@
 (deflayer hyper
   _ @nvim_zz @nvim_wa @hyp_e @hyp_r @hyp_t _ _ _ @hyp_o _ _ _
   @hyp_a @hyp_s @hyp_d @hyp_f _ _ _ @hyp_k @hyp_l _ _
-  _ _ @nvim_zq _ _ @hyp_b _ @hyp_m _ _ _ _
+  _ _ @nvim_zq _ @hyp_v @hyp_b _ @hyp_m _ _ _ _
   _ _ _ _ _ _ _
 )
