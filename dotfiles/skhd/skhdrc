@@ -9,8 +9,8 @@
 # Hyper + A: Antigravity
 cmd + alt + ctrl + shift - a : open -a "/Applications/Antigravity.app"
 
-# Hyper + V: Auto-type (Super Paste) the latest screenshot path
-cmd + alt + ctrl + shift - v : osascript -e 'tell application "System Events" to keystroke "/private/tmp/ss_tmp.png "'
+# Hyper + V: Auto-type (Super Paste) the latest screenshot path (with anti-overwrite)
+cmd + alt + ctrl + shift - v : ~/nix-config/dotfiles/skhd/scripts/paste_screenshot.sh
 
 # Hyper + K: KeePassXC
 cmd + alt + ctrl + shift - k : open -a "$HOME/Applications/Home Manager Trampolines/KeePassXC.app"
