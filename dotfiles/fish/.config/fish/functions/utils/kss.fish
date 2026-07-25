@@ -49,11 +49,22 @@ function kss --description 'Git add (optional), run nix-ss, and reload Kanata'
         else
             # If process does NOT exist, start it manually
             set_color yellow
-            echo "⚠️ Kanata process not found. Starting manually..."
+            echo "⚠️ Kanata process not found. Attempting to start via launchctl..."
             set_color normal
             
-            # Run Kanata manually with the correct config path
-            sudo kanata --cfg ~/nix-config/modules/desktop/kanata/config.kbd
+            # Use launchctl to start or kickstart the system daemon instead of running in foreground
+            sudo launchctl kickstart -k system/org.nixos.kanata 2>/dev/null || sudo launchctl kickstart -k system/com.kanata.kanata 2>/dev/null
+            
+            echo "⏳ Waiting 5 seconds for Kanata service to restart..."
+            sleep 5
+            
+            if test -f /Library/Logs/kanata.err.log
+                cat /Library/Logs/kanata.err.log
+            end
+            
+            set_color green
+            echo "🎉 Kanata started successfully via launchd!"
+            set_color normal
         end
     else
         # If build_status is not 0
