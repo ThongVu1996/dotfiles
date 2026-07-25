@@ -42,10 +42,10 @@ alt-k = 'focus up'
 alt-l = 'focus right'
 alt-f = 'fullscreen'
 
-alt-ctrl-h = 'move left'
-alt-ctrl-j = 'move down'
-alt-ctrl-k = 'move up'
-alt-ctrl-l = 'move right'
+shift-ctrl-h = 'move left'
+shift-ctrl-j = 'move down'
+shift-ctrl-k = 'move up'
+shift-ctrl-l = 'move right'
 
 alt-ctrl-minus = 'resize smart -50'
 alt-ctrl-equal = 'resize smart +50'
@@ -57,12 +57,12 @@ alt-d = 'workspace D' # Notes/Docs (Thay thế cho N)
 alt-p = 'workspace P' # Music/Media/Game/Misc (Thay thế cho M)
 alt-s = 'workspace S' # Settings/System
 
-alt-ctrl-c = 'move-node-to-workspace C'
-alt-ctrl-b = 'move-node-to-workspace B'
-alt-ctrl-w = 'move-node-to-workspace W'
-alt-ctrl-d = 'move-node-to-workspace D' # Thay thế cho N
-alt-ctrl-p = 'move-node-to-workspace P' # Thay thế cho M
-alt-ctrl-s = 'move-node-to-workspace S'
+shift-ctrl-c = 'move-node-to-workspace C'
+shift-ctrl-b = 'move-node-to-workspace B'
+shift-ctrl-w = 'move-node-to-workspace W'
+shift-ctrl-d = 'move-node-to-workspace D' # Thay thế cho N
+shift-ctrl-p = 'move-node-to-workspace P' # Thay thế cho M
+shift-ctrl-s = 'move-node-to-workspace S'
 
 alt-ctrl-tab = 'move-workspace-to-monitor --wrap-around next'
 
