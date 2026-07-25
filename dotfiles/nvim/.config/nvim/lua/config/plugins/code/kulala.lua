@@ -3,12 +3,13 @@ return {
 	ft = { "http", "rest" },
 	keys = {
 		-- Navigation (Optimized for home row)
-		{ "<leader>rn", "<cmd>lua require('kulala').jump_next()<cr>", desc = "Jump to next request" },
-		{ "<leader>rp", "<cmd>lua require('kulala').jump_prev()<cr>", desc = "Jump to previous request" },
+		{ "<leader>rj", "<cmd>lua require('kulala').jump_next()<cr>", desc = "Jump to next request" },
+		{ "<leader>rk", "<cmd>lua require('kulala').jump_prev()<cr>", desc = "Jump to previous request" },
 
 		-- Execution
-		{ "<leader>rr", "<cmd>lua require('kulala').run()<cr>", desc = "Run current request" },
-		{ "<leader>ra", "<cmd>lua require('kulala').run_all()<cr>", desc = "Run all requests in file" },
+		{ "<leader>sr", "<cmd>lua require('kulala').run()<cr>", desc = "Run current request" },
+		{ "<leader>sa", "<cmd>lua require('kulala').run_all()<cr>", desc = "Run all requests in file" },
+		{ "<leader>sb", "<cmd>lua require('kulala').scratchpad()<cr>", desc = "Open scratchpad" },
 		{ "<leader>rt", "<cmd>lua require('kulala').toggle_view()<cr>", desc = "Toggle between Body and Headers" },
 
 		-- Utilities
