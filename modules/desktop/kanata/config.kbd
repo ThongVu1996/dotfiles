@@ -3,8 +3,8 @@
   concurrent-tap-hold yes    ;; Allow holding modifier while tapping another key
   log-layer-changes no       ;; Disable layer change logging to reduce I/O
   macos-dev-names-include (
-    "0xD4359520DA829EC8"
-    "0xE329BEB8F1D4D729"
+    "0x783F00069C879FA9"
+    "0x2E7E3EBD4C615B55"
   )
 )
 
@@ -18,7 +18,7 @@
 (defvar
   tap-timeout   180  ;; Max ms for a keypress to be considered a tap
   hold-timeout  300  ;; Min ms for a keypress to be considered a hold
-  chord-timeout 120  ;; Max ms between two keys to be considered a chord
+  chord-timeout 250  ;; Max ms between two keys to be considered a chord
   m-speed        20  ;; Mouse movement speed (pixels per tick)
   m-delay        15  ;; Mouse movement delay between ticks (ms)
 )
@@ -58,7 +58,7 @@
   ;; Layer tap keys — tap = letter, hold = activate layer
   g_num       (tap-hold-release $tap-timeout $hold-timeout g (layer-toggle num))
   c_media     (tap-hold-release $tap-timeout $hold-timeout c (layer-toggle media))
-  v_nav       (tap-hold $tap-timeout $hold-timeout v (layer-toggle nav))
+  v_nav       (tap-hold-release $tap-timeout $hold-timeout v (layer-toggle nav))
   m_aerospace (tap-hold-release $tap-timeout $hold-timeout m (layer-toggle aerospace))
   b_sym       (tap-hold-release $tap-timeout $hold-timeout b (layer-toggle sym))
 
@@ -80,6 +80,8 @@
   tmux_resize_pane_down (macro C-a j)
   tmux_resize_pane_left (macro C-a h)
   tmux_resize_pane_right (macro C-a l)
+  tmux_log f12
+  tmux_find (macro C-a f)
 
   ;; Media controls
   ;; fine volume: Alt+Shift+vol adjusts in smaller increments on macOS
@@ -179,8 +181,8 @@
 
 ;; Space layer — tmux and system shortcuts
 (deflayer space
-  _ @cmd_q _ @cs_toggle _ @tmux_list_sessions_can_create _ @tmux_copy _ _ _ @br_back @br_fwd
-  @cmd_a @tmux_split_horizontal _ _ @tmux_list_windows @tmux_resize_pane_left @tmux_resize_pane_down @tmux_resize_pane_up @tmux_resize_pane_right _ _
+  _ @cmd_q _ @cs_toggle _ @tmux_list_sessions_can_create _ @tmux_copy _ _ @tmux_log @br_back @br_fwd
+  @cmd_a @tmux_split_horizontal _ @tmux_find @tmux_list_windows @tmux_resize_pane_left @tmux_resize_pane_down @tmux_resize_pane_up @tmux_resize_pane_right _ _
   _ _ @tmux_kill_pane _ @tmux_split_vertical _ @tmux_new_window @tmux_zoom @tmux_prev_window @tmux_next_window _ _
   _ _ _ @spc_layer _ _ _
 )
