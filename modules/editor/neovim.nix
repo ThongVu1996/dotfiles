@@ -57,7 +57,7 @@ in {
     home.packages = let
       # --- 1. Neovim Core & Tree-sitter ---
       neovimTools = with pkgs; [
-        tree-sitter-cli
+        tree-sitter
       ];
 
       # --- 2. Language Servers (LSP) ---

@@ -6,11 +6,11 @@
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "look";
-  version = "0.5.0";
+  version = "0.6.10";
 
   src = fetchurl {
     url = "https://github.com/kunkka19xx/look/releases/download/v${version}/Look-${version}-macOS.zip";
-    hash = "sha256-U1HOQb9qUbMeuUp1mbH/RkOJcRLYymh7nBg/jwWmN+U=";
+    hash = "sha256-3LgxmQWvSwIlZJUzNsMwlXUMeWEYgRak1RBUEgsJumI=";
   };
 
   nativeBuildInputs = [unzip];
