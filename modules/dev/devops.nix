@@ -28,6 +28,7 @@ in {
         cloudflared
         vault
         ansible
+        lazyssh
       ]
       ++ lib.optionals pkgs.stdenv.isDarwin [
         orbstack # replace docker kubectl for macos
