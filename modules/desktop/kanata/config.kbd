@@ -3,6 +3,7 @@
   concurrent-tap-hold yes    ;; Allow holding modifier while tapping another key
   log-layer-changes no       ;; Disable layer change logging to reduce I/O
   macos-dev-names-include (
+    "Gaming Keyboard"
     "0x783F00069C879FA9"
     "0x2E7E3EBD4C615B55"
   )

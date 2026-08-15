@@ -14,9 +14,8 @@ in {
     # Install kanata package system-wide
     environment.systemPackages = [pkgs.kanata];
 
-    # Deploy the configuration file to /etc/kanata/config.kbd
-    # System daemons have reliable access to /etc
-    environment.etc."kanata/config.kbd".source = ./kanata/config.kbd;
+    # Deploy the configuration file to /etc/kanata/config.kbd with a permanent Nix store path
+    environment.etc."kanata/config.kbd".text = builtins.readFile ./kanata/config.kbd;
 
     # Define the system-level LaunchDaemon
     # Running as a system daemon (root) is the key to low latency and
