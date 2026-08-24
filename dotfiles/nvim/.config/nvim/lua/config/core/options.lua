@@ -55,3 +55,6 @@ opt.swapfile = false
 
 -- font
 opt.guifont = "JetBrainsMono Nerd Font:h14"
+
+-- display input command
+opt.showcmdloc = "statusline"
